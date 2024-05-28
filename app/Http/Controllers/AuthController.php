@@ -21,8 +21,9 @@ class AuthController extends Controller
             $id = $result->id;
             $name = $result->name;
             $email = $result->email;
+            $photo = $result->photo;
 
-            session(['auth'=>true, 'id'=>$id, 'name'=>$name, 'email'=>$email]);
+            session(['auth'=>true, 'id'=>$id, 'name'=>$name, 'email'=>$email, 'photo'=>$photo]);
             session(['message'=>'Login Successful!  Welcome Back, ' . $name . '.', 'type'=>'success']);
 
             return redirect('/admin/index');

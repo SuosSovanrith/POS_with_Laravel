@@ -58,25 +58,15 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="mb-3 col-md-4">
+                            <div class="mb-3 col-md-6">
                                 <label for="Quantity" class="form-label">Quantity</label>
                                 <input type="number" class="form-control" min="0" name="Quantity" id="Quantity" required>
                             </div>
-                            <div class="mb-3 col-md-4">
-                                <label for="Price_In" class="form-label">Price In</label>
-                                <input type="number" class="form-control" step="0.01" min="0" name="Price_In" id="Price_In" required>
-                            </div>
-                            <div class="mb-3 col-md-4">
-                                <label for="Price_Out" class="form-label">Price Out</label>
-                                <input type="number" class="form-control" step="0.01" min="0" name="Price_Out" id="Price_Out" required>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="Barcode" class="form-label">Barcode</label>
-                                <input type="text" class="form-control" min="0" name="Barcode" id="Barcode" placeholder="Eg. 12345">
+                                <input type="text" class="form-control" min="0" name="Barcode" id="Barcode" placeholder="Eg. 12345" required>
                             </div>
-                            <div class="mb-3 col-md-6">
+                            <!-- <div class="mb-3 col-md-6">
                                 <label for="In_Stock" class="form-label">In Stock</label>
                                 <div class="select-style-2">
                                     <div class="select-position select-sm">
@@ -86,6 +76,16 @@
                                         </select>     
                                     </div>
                                 </div>                       
+                            </div> -->
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="Price_In" class="form-label">Price In</label>
+                                <input type="number" class="form-control" step="0.01" min="0" name="Price_In" id="Price_In" required>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="Price_Out" class="form-label">Price Out</label>
+                                <input type="number" class="form-control" step="0.01" min="0" name="Price_Out" id="Price_Out" required>
                             </div>
                         </div>
                         <div class="row">
@@ -142,8 +142,8 @@
                                 <th class="p-3">Image</th>
                                 <th class="p-3">ID</th>
                                 <th class="p-3">Name</th>
-                                <th class="p-3">Category</th>
-                                <th class="p-3">Supplier</th>
+                                <!-- <th class="p-3">Category</th>
+                                <th class="p-3">Supplier</th> -->
                                 <th class="p-3">Barcode</th>
                                 <th class="p-3">Quantity</th>
                                 <th class="p-3">Price In</th>
@@ -156,22 +156,22 @@
                         <tbody>
                             @foreach($products as $product)
                             <tr>
-                                <td class="min-width p-3" style="width:96px;">
-                                    <img src="{{ asset($product->image) }}" alt="Image" width="96"/>
+                                <td class="min-width p-3" style="width:69px;">
+                                    <img src="{{ asset($product->image) }}" alt="Image" width="69"/>
                                     <p style="display:none;">{{$product->image}}</p>
                                 </td>
                                 <td class="min-width p-3">
                                     <p>{{$product->id}}</p>
                                 </td>
-                                <td class="min-width p-3">
+                                <td class="min-width p-3"  style="width: 150px;">
                                     <p>{{$product->product_name}}</p>
                                 </td>
-                                <td class="min-width p-3">
+                                <!-- <td class="min-width p-3">
                                     <p>{{$product->category_id}}</p>
                                 </td>
                                 <td class="min-width p-3">
                                     <p>{{$product->supplier_id}}</p>
-                                </td>
+                                </td> --> 
                                 <td class="min-width p-3">
                                     <p>{{$product->barcode}}</p>
                                 </td>
@@ -185,15 +185,16 @@
                                     <p>${{$product->price_out}}</p>
                                 </td>
                                 <td class="min-width p-3">
-                                    @if ($product->in_stock == 0)
-                                        <span class="status-btn close-btn text-center">Out of Stock</span>
+                                    @if ($product->quantity == 0)
+                                        <span class="status-btn close-btn text-center" style="width: 100px;">Out of Stock</span>
                                     @else
-                                        <span class="status-btn success-btn text-center">In Stock</span>    
+                                        <span class="status-btn success-btn text-center" style="width: 100px;">In Stock</span>    
                                     @endif
                                 </td>
                                 <td class="p-3">
-                                    <a href="#" class="BtnEditProduct btn text-primary"><i class="lni lni-pencil-alt"></i></a>
-                                    <a href="#" class="BtnDeleteProduct btn text-danger"><i class="lni lni-trash-can"></i></a>
+                                    <a href="#" class="BtnEditProduct text-primary" style="width: 20px;"><i class="lni lni-pencil-alt"></i></a>
+                                    <a href="/productview/{{$product->id}}" target="_blank" class="BtnViewProduct text-success" style="width: 20px;"><i class="lni lni-eye"></i></a>
+                                    <a href="#" class="BtnDeleteProduct text-danger" style="width: 20px;"><i class="lni lni-trash-can"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -224,46 +225,49 @@
         }
     });
 
-    // for update user
+    // for update Product
     $(function() {
 
-        // auto fill form of user from edit id
-        $("#TblMain").on('click', '.BtnEditUser', function() {
+        // auto fill form of Product from edit id
+        $("#TblMain").on('click', '.BtnEditProduct', function() {
             $("#FormModal").modal("show");
-            $("#Password").removeAttr('required')
 
             var current_row = $(this).closest('tr');
-            var Photo = current_row.find('td').eq(0).text().trim();
+            var Image = current_row.find('td').eq(0).text().trim();
             var Id = current_row.find('td').eq(1).text().trim();
-            var Name = current_row.find('td').eq(2).text().trim();
-            var Email = current_row.find('td').eq(3).text().trim();
-            var Position = current_row.find('td').eq(4).text().trim();
-            var Phone = current_row.find('td').eq(5).text().trim();
-            var Address = current_row.find('td').eq(6).text().trim();
+            var Product_Name = current_row.find('td').eq(2).text().trim();
+            var Category_Id = current_row.find('td').eq(3).text().trim();
+            var Supplier_Id = current_row.find('td').eq(4).text().trim();
+            var Barcode = current_row.find('td').eq(3).text().trim();
+            var Quantity = current_row.find('td').eq(4).text().trim();
+            var Price_In = current_row.find('td').eq(5).text().trim().slice(1);
+            var Price_Out = current_row.find('td').eq(6).text().trim().slice(1);
 
-            $('#CurrentPhoto').val(Photo);
+            $('#CurrentImage').val(Image);
             $("#Id").val(Id);
-            $("#Name").val(Name);
-            $("#Email").val(Email);
-            $("#Position_Id option[value='" + Position + "']").attr("selected","selected");
-            $("#Phone").val(Phone);
-            $("#Address").val(Address);
+            $("#Product_Name").val(Product_Name);
+            $("#Category_Id option[value='" + Category_Id + "']").attr("selected","selected");
+            $("#Supplier_Id option[value='" + Supplier_Id + "']").attr("selected","selected");
+            $("#Barcode").val(Barcode);
+            $("#Quantity").val(Quantity);
+            $("#Price_In").val(Price_In);
+            $("#Price_Out").val(Price_Out);
         });
 
     });
 
-    // for delete user
+    // for delete Product
     $(function() {
 
-        $("#TblMain").on('click', '.BtnDeleteUser', function() {
+        $("#TblMain").on('click', '.BtnDeleteProduct', function() {
             var current_row = $(this).closest('tr');
             var Id = current_row.find('td').eq(1).text();
 
             if (confirm("Are you sure you want to delete?")) {
-                $.post('/deleteuser', {
+                $.post('/deleteproduct', {
                     id: Id
                 }, function(data) {
-                    window.location.href = "/admin/users";
+                    window.location.href = "/admin/products";
                 });
             }
         });
@@ -278,11 +282,13 @@
     $(".btn-close").click(function() {
             $('#CurrentPhoto').val("");
             $("#Id").val("");
-            $("#Name").val("");
-            $("#Email").val("");
-            $("#Phone").val("");
-            $("#Address").val("");
-            $("#Position_Id option[value='N/A']").attr("selected","selected");
+            $("#Product_Name").val("");
+            $("#Category_Id option[value='']").attr("selected","selected");
+            $("#Supplier_Id option[value='']").attr("selected","selected");
+            $("#Barcode").val("");
+            $("#Quantity").val("");
+            $("#Price_In").val("");
+            $("#Price_Out").val("");
     });
     
 </script>

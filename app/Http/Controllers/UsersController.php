@@ -13,7 +13,7 @@ class UsersController extends Controller
     //
     public function UsersView(){
         $position = PositionModel::all();
-        $result = User::paginate(10);
+        $result = User::paginate(5);
 
         return view('admin.users', ['users'=>$result, 'position'=>$position]);
     }

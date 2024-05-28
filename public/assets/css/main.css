@@ -5,7 +5,7 @@
 html {
   scroll-behavior: smooth;
 }
-
+card-con
 body {
   font-family: "JetBrainsMono Nerd Font", sans-serif !important;
   font-weight: normal;
@@ -1422,9 +1422,9 @@ h6,
 }
 @media only screen and (min-width: 550px) and (max-width: 767px) {
   .card-style-5 .card-image {
-    margin-right: 20px;
+    margin-right: 5px;
     margin-bottom: 0px;
-    max-width: 180px;
+    max-width: 200px;
   }
 }
 .card-style-5 .card-image a {

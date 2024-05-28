@@ -47,3 +47,4 @@ Route::post('/deleteposition', [PositionController::class, 'DeletePosition']);
 Route::post('/addproduct', [ProductsController::class, 'AddProduct']);
 Route::post('/updateproduct', [ProductsController::class, 'UpdateProduct']);
 Route::post('/deleteproduct', [ProductsController::class, 'DeleteProduct']);
+Route::get('/productview/{id}', [ProductsController::class, 'ViewProduct']);

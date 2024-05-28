@@ -9,8 +9,7 @@ class ProductsController extends Controller
 {
     public function ProductsView(){
         // $position = PositionModel::all();
-        $result = ProductsModel::paginate(10);
-        // $result = DB::table('users')->paginate(10);
+        $result = ProductsModel::latest()->paginate(5);
 
         return view('admin.products', ['products'=>$result]);
     }
@@ -26,7 +25,7 @@ class ProductsController extends Controller
         $result->Price_In = $rq->Price_In;
         $result->Price_Out = $rq->Price_Out;
         $result->Barcode = $rq->Barcode;
-        $result->In_Stock = $rq->In_Stock;
+        // $result->In_Stock = $rq->In_Stock;
 
         if($rq->hasfile('Image')){
             $NewImage=$rq->file('Image')->getClientOriginalName();
@@ -54,14 +53,13 @@ class ProductsController extends Controller
 
         $result = ProductsModel::Find($rq->Id);
 
-        $result->Name = $rq->Name;
-        $result->Email = $rq->Email;
-        if($rq->Password!=""){
-            $result->Password = $rq->Password;
-        }
-        $result->Phone_number = $rq->Phone;
-        $result->Address = $rq->Address;
-        $result->Position_id = $rq->Position_Id;
+        $result->Product_Name = $rq->Product_Name;
+        $result->Category_Id = $rq->Category_Id;
+        $result->Supplier_Id = $rq->Supplier_Id;
+        $result->Quantity = $rq->Quantity;
+        $result->Price_In = $rq->Price_In;
+        $result->Price_Out = $rq->Price_Out;
+        $result->Barcode = $rq->Barcode;
 
         if($rq->hasfile('Image')){
             $NewImage=$rq->file('Image')->getClientOriginalName();
@@ -74,11 +72,11 @@ class ProductsController extends Controller
         $result->save();
 
         if (isset($result)){
-            session(['message'=>'User updated successfully!', 'type'=>'success']);
-            return redirect('/admin/users');
+            session(['message'=>'Product updated successfully!', 'type'=>'success']);
+            return redirect('/admin/products');
         }else{
-            session(['message'=>'User failed to be updated!', 'type'=>'danger']);
-            return redirect('/admin/users');
+            session(['message'=>'Product failed to be updated!', 'type'=>'danger']);
+            return redirect('/admin/products');
         }
     }
 
@@ -88,9 +86,16 @@ class ProductsController extends Controller
         $deleted->delete();
 
         if (isset($deleted)){
-            session(['message'=>'User deleted successfully!', 'type'=>'success']);
+            session(['message'=>'Product deleted successfully!', 'type'=>'success']);
         }else{
-            session(['message'=>'User failed to be deleted!', 'type'=>'danger']);
+            session(['message'=>'Product failed to be deleted!', 'type'=>'danger']);
         }
+    }
+
+    // View Single Product
+    public function ViewProduct(Request $rq){
+        $result = ProductsModel::find($rq->id);
+
+        return view('admin.productview', ['products'=>$result]);
     }
 }
