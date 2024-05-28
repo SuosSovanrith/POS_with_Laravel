@@ -34,7 +34,6 @@
                 <div class="modal-footer">
                     <input type="submit" id="BtnAddPosition" class="btn btn-primary" value="Add" />
                     <input type="submit" id="BtnUpdatePosition" class="btn btn-success" value="Update" formaction="/updateposition"/>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
@@ -64,7 +63,7 @@
                         <h3>Position</h3>
                     </div>
                     <div class="col-md-6">
-                        <div align="right"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New User</b></a></div>
+                        <div align="right"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Position</b></a></div>
                     </div>
                 </div>
                 <div class="table-wrapper table-responsive">
@@ -81,7 +80,7 @@
                             @foreach($position as $item)
                             <tr>
                                 <td class="min-width p-3">
-                                    <p>{{$item->position_id}}</p>
+                                    <p>{{$item->id}}</p>
                                 </td>
                                 <td class="min-width p-3">
                                     <p>{{$item->position_name}}</p>
@@ -156,6 +155,14 @@
     $("#AddPopup").click(function() {
         $("#FormModal").modal("show");
     });
+
+    // clear form
+    $(".btn-close").click(function() {
+        $("#Position_Id").val("");
+        $("#Position_Name").val("");
+    });
+
+
 </script>
 
 @endsection

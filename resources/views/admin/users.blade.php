@@ -43,11 +43,11 @@
                             <div class=" col-md-12">
                                 <label for="Position_Id" class="form-label">Position</label>
                                 <div class="select-style-2">
-                                    <div class="select-position">
+                                    <div class="select-position select-sm">
                                         <select name="Position_Id" id="Position_Id">
-                                            <option value="N/A">None</option>
+                                            <option value="">None</option>
                                             @foreach ($position as $item)
-                                                <option value="{{$item->position_id}}" >{{$item->position_name}}</option>
+                                                <option value="{{$item->id}}" >{{$item->position_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -79,7 +79,6 @@
                 <div class="modal-footer">
                     <input type="submit" id="BtnAddUser" class="btn btn-primary" value="Add" />
                     <input type="submit" id="BtnUpdateUser" class="btn btn-success" value="Update" formaction="/updateuser"/>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
@@ -160,6 +159,7 @@
                         </tbody>
                     </table>
                     <!-- end table -->
+                    {{$users->render()}}
                     
                 </div>
             </div>
@@ -204,7 +204,6 @@
             $("#Name").val(Name);
             $("#Email").val(Email);
             $("#Position_Id option[value='" + Position + "']").attr("selected","selected");
-
             $("#Phone").val(Phone);
             $("#Address").val(Address);
         });
@@ -232,6 +231,18 @@
     $("#AddPopup").click(function() {
         $("#FormModal").modal("show");
     });
+
+    // clear form
+    $(".btn-close").click(function() {
+            $('#CurrentPhoto').val("");
+            $("#Id").val("");
+            $("#Name").val("");
+            $("#Email").val("");
+            $("#Phone").val("");
+            $("#Address").val("");
+            $("#Position_Id option[value='N/A']").attr("selected","selected");
+    });
+    
 </script>
 
 @endsection

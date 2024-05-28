@@ -13,8 +13,7 @@ class UsersController extends Controller
     //
     public function UsersView(){
         $position = PositionModel::all();
-        $result = User::all();
-        // $result = DB::table('users')->paginate(10);
+        $result = User::paginate(10);
 
         return view('admin.users', ['users'=>$result, 'position'=>$position]);
     }
@@ -86,7 +85,7 @@ class UsersController extends Controller
 
     // Delete
     public function DeleteUser(Request $rq){
-        $deleted = PositionModel::find($rq->id);
+        $deleted = User::find($rq->id);
         $deleted->delete();
 
         if (isset($deleted)){

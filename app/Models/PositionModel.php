@@ -12,9 +12,8 @@ class PositionModel extends Model
     protected $table="Position";
 
     protected $fillable = [
-        'position_id',
         'position_name',
     ];
 
-    protected  $primaryKey = 'position_id';
+    // protected  $primaryKey = 'position_id';
 }
