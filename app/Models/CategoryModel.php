@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PositionModel extends Model
+class CategoryModel extends Model
 {
     use HasFactory;
 
-    protected $table="Position";
+    protected $table="category";
 
     protected $fillable = [
-        'position_name',
+        'category_name',
     ];
 
-    protected  $primaryKey = 'position_id';
+    protected  $primaryKey = 'category_id';
+
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\CategoryController;
 
 // Auth
 Route::get('/', function () {
@@ -31,6 +32,7 @@ Route::middleware(Admin::class)->group(function(){
     Route::get('/admin/users', [UsersController::class, 'UsersView']);
     Route::get('/admin/position', [PositionController::class, 'PositionView']);
     Route::get('/admin/products', [ProductsController::class, 'ProductsView']);
+    Route::get('/admin/category', [CategoryController::class, 'CategoryView']);
 });
 
 // User
@@ -47,4 +49,8 @@ Route::post('/deleteposition', [PositionController::class, 'DeletePosition']);
 Route::post('/addproduct', [ProductsController::class, 'AddProduct']);
 Route::post('/updateproduct', [ProductsController::class, 'UpdateProduct']);
 Route::post('/deleteproduct', [ProductsController::class, 'DeleteProduct']);
-Route::get('/productview/{id}', [ProductsController::class, 'ViewProduct']);
+
+// Category
+Route::post('/addcategory', [CategoryController::class, 'AddCategory']);
+Route::post('/updatecategory', [CategoryController::class, 'UpdateCategory']);
+Route::post('/deletecategory', [CategoryController::class, 'DeleteCategory']);

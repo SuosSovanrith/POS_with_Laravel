@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', 'Position')
+@section('title', 'Category')
 
-@section('sidebar_people', 'active')
-@section('sidebar_position', 'active')
+@section('sidebar_products', 'active')
+@section('sidebar_category', 'active')
 
 @section('content')
 
@@ -12,28 +12,28 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="FormModalLabel">Position Form</h1>
+                <h1 class="modal-title fs-5" id="FormModalLabel">Category Form</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/addposition" method="POST" enctype="multipart/form-data">
+            <form action="/addcategory" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <section class="container">
                         @csrf
                         <div class="row">
                             <div class="mb-3 col-md-12">
-                                <label for="Position_Id" class="form-label">Position Id</label>
-                                <input type="text" class="form-control" name="Position_Id" id="Position_Id">
+                                <label for="Category_Id" class="form-label">Category Id</label>
+                                <input type="text" class="form-control" name="Category_Id" id="Category_Id">
                             </div>
                             <div class="mb-3 col-md-12">
-                                <label for="Position_Name" class="form-label">Position Name</label>
-                                <input type="text" class="form-control" name="Position_Name" id="Position_Name" required>
+                                <label for="Category_Name" class="form-label">Category Name</label>
+                                <input type="text" class="form-control" name="Category_Name" id="Category_Name" required>
                             </div>
                         </div>
                     </section>
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" id="BtnAddPosition" class="btn btn-primary" value="Add" />
-                    <input type="submit" id="BtnUpdatePosition" class="btn btn-success" value="Update" formaction="/updateposition"/>
+                    <input type="submit" id="BtnAddCategory" class="btn btn-primary" value="Add" />
+                    <input type="submit" id="BtnUpdateCategory" class="btn btn-success" value="Update" formaction="/updatecategory"/>
                 </div>
             </form>
         </div>
@@ -60,10 +60,10 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <h3>Position</h3>
+                        <h3>Category</h3>
                     </div>
                     <div class="col-md-6">
-                        <div align="right"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Position</b></a></div>
+                        <div align="right"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Category</b></a></div>
                     </div>
                 </div>
                 <div class="table-wrapper table-responsive">
@@ -71,23 +71,23 @@
                         <thead>
                             <tr>
                                 <th class="p-3">ID</th>
-                                <th class="p-3">Position</th>
+                                <th class="p-3">Category</th>
                                 <th class="p-3">Action</th>
                             </tr>
                             <!-- end table row-->
                         </thead>
                         <tbody>
-                            @foreach($position as $item)
+                            @foreach($category as $item)
                             <tr>
                                 <td class="min-width p-3">
-                                    <p>{{$item->position_id}}</p>
+                                    <p>{{$item->category_id}}</p>
                                 </td>
                                 <td class="min-width p-3">
-                                    <p>{{$item->position_name}}</p>
+                                    <p>{{$item->category_name}}</p>
                                 </td>
                                 <td class="p-3">
-                                    <a href="#" class="BtnEditPosition btn text-primary"><i class="lni lni-pencil-alt"></i></a>
-                                    <a href="#" class="BtnDeletePosition btn text-danger"><i class="lni lni-trash-can"></i></a>
+                                    <a href="#" class="BtnEditCategory btn text-primary"><i class="lni lni-pencil-alt"></i></a>
+                                    <a href="#" class="BtnDeleteCategory btn text-danger"><i class="lni lni-trash-can"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -95,8 +95,7 @@
                         </tbody>
                     </table>
                     <!-- end table -->
-                    {{$position->render()}}
-
+                    {{$category->render()}}
                 </div>
             </div>
             <!-- end card -->
@@ -118,35 +117,35 @@
         }
     });
 
-    // for update Position
+    // for update Category
     $(function() {
 
-        // auto fill form of Position from edit id
-        $("#TblMain").on('click', '.BtnEditPosition', function() {
+        // auto fill form of Category from edit id
+        $("#TblMain").on('click', '.BtnEditCategory', function() {
             $("#FormModal").modal("show");
 
             var current_row = $(this).closest('tr');
-            var Position_Id = current_row.find('td').eq(0).text().trim();
-            var Position_Name = current_row.find('td').eq(1).text().trim();
+            var Category_Id = current_row.find('td').eq(0).text().trim();
+            var Category_Name = current_row.find('td').eq(1).text().trim();
 
-            $("#Position_Id").val(Position_Id);
-            $("#Position_Name").val(Position_Name);
+            $("#Category_Id").val(Category_Id);
+            $("#Category_Name").val(Category_Name);
         });
 
     });
 
-    // for delete position
+    // for delete Category
     $(function() {
 
-        $("#TblMain").on('click', '.BtnDeletePosition', function() {
+        $("#TblMain").on('click', '.BtnDeleteCategory', function() {
             var current_row = $(this).closest('tr');
-            var Position_Id = current_row.find('td').eq(0).text();
+            var Category_Id = current_row.find('td').eq(0).text();
 
             if (confirm("Are you sure you want to delete?")) {
-                $.post('/deleteposition', {
-                    position_id: Position_Id
+                $.post('/deletecategory', {
+                    category_id: Category_Id
                 }, function(data) {
-                    window.location.href = "/admin/position";
+                    window.location.href = "/admin/category";
                 });
             }
         });
@@ -159,8 +158,8 @@
 
     // clear form
     $(".btn-close").click(function() {
-        $("#Position_Id").val("");
-        $("#Position_Name").val("");
+        $("#Category_Id").val("");
+        $("#Category_Name").val("");
     });
 
 

@@ -45,7 +45,7 @@
                                 <div class="select-style-2">
                                     <div class="select-position select-sm">
                                         <select name="Position_Id" id="Position_Id">
-                                            <option value="">None</option>
+                                            <option value="2">Guest</option>
                                             @foreach ($position as $item)
                                                 <option value="{{$item->id}}" >{{$item->position_name}}</option>
                                             @endforeach
@@ -141,13 +141,16 @@
                                     <p>{{$user->email}}</p>
                                 </td>
                                 <td class="min-width p-3">
-                                    <p>{{$user->position_id}}</p>
+                                    <p>{{$user->position_name}}</p>
                                 </td>
                                 <td class="min-width p-3" style="display: none;">
                                     <p>{{$user->phone_number}}</p>
                                 </td>
                                 <td class="min-width p-3" style="display: none;">
                                     <p>{{$user->address}}</p>
+                                </td>
+                                <td class="min-width p-3" style="display: none;">
+                                    <p>{{$user->position_id}}</p>
                                 </td>
                                 <td class="p-3">
                                     <a href="#" class="BtnEditUser btn text-primary"><i class="lni lni-pencil-alt"></i></a>
@@ -195,9 +198,9 @@
             var Id = current_row.find('td').eq(1).text().trim();
             var Name = current_row.find('td').eq(2).text().trim();
             var Email = current_row.find('td').eq(3).text().trim();
-            var Position = current_row.find('td').eq(4).text().trim();
             var Phone = current_row.find('td').eq(5).text().trim();
             var Address = current_row.find('td').eq(6).text().trim();
+            var Position = current_row.find('td').eq(7).text().trim();
 
             $('#CurrentPhoto').val(Photo);
             $("#Id").val(Id);

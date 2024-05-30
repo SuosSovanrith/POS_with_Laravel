@@ -35,10 +35,9 @@
                                 <div class="select-style-2">
                                     <div class="select-position select-sm">
                                         <select name="Category_Id" id="Category_Id">
-                                            <option value="">None</option>
-                                        {{--    @foreach ($category as $item)
-                                                <option value="{{$item->id}}" >{{$item->category_name}}</option>
-                                            @endforeach --}}
+                                            @foreach ($category as $item)
+                                                <option value="{{$item->category_id}}" >{{$item->category_name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -50,7 +49,7 @@
                                         <select name="Supplier_Id" id="Supplier_Id">
                                             <option value="">None</option>
                                         {{--    @foreach ($supplier as $item)
-                                                <option value="{{$item->id}}" >{{$item->supplier_name}}</option>
+                                                <option value="{{$item->supplier_id}}" >{{$item->supplier_name}}</option>
                                             @endforeach --}}
                                         </select>
                                     </div>
@@ -109,6 +108,21 @@
     </div>
 </div>
 
+<!-- Product View Modal-->
+<div class="modal fade" id="FormModalProduct" tabindex="-1" aria-labelledby="FormModalProductLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="FormModalProductLabel">Products</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="row g-0" id="ProductViewCard">
+                <!-- Content via JQuery -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- ========== tables-wrapper start ========== -->
 <div class="tables-wrapper">
     <div class="row">
@@ -142,8 +156,6 @@
                                 <th class="p-3">Image</th>
                                 <th class="p-3">ID</th>
                                 <th class="p-3">Name</th>
-                                <!-- <th class="p-3">Category</th>
-                                <th class="p-3">Supplier</th> -->
                                 <th class="p-3">Barcode</th>
                                 <th class="p-3">Quantity</th>
                                 <th class="p-3">Price In</th>
@@ -157,7 +169,7 @@
                             @foreach($products as $product)
                             <tr>
                                 <td class="min-width p-3" style="width:69px;">
-                                    <img src="{{ asset($product->image) }}" alt="Image" width="69"/>
+                                    <img src="{{asset($product->image)}}" alt="Image" width="69"/>
                                     <p style="display:none;">{{$product->image}}</p>
                                 </td>
                                 <td class="min-width p-3">
@@ -166,12 +178,6 @@
                                 <td class="min-width p-3"  style="width: 150px;">
                                     <p>{{$product->product_name}}</p>
                                 </td>
-                                <!-- <td class="min-width p-3">
-                                    <p>{{$product->category_id}}</p>
-                                </td>
-                                <td class="min-width p-3">
-                                    <p>{{$product->supplier_id}}</p>
-                                </td> --> 
                                 <td class="min-width p-3">
                                     <p>{{$product->barcode}}</p>
                                 </td>
@@ -185,15 +191,27 @@
                                     <p>${{$product->price_out}}</p>
                                 </td>
                                 <td class="min-width p-3">
-                                    @if ($product->quantity == 0)
-                                        <span class="status-btn close-btn text-center" style="width: 100px;">Out of Stock</span>
+                                    @if ($product->in_stock == 0)
+                                    <span class="status-btn close-btn text-center" style="width: 100px;">Out of Stock</span>
                                     @else
-                                        <span class="status-btn success-btn text-center" style="width: 100px;">In Stock</span>    
+                                    <span class="status-btn success-btn text-center" style="width: 100px;">In Stock</span>    
                                     @endif
                                 </td>
+                                <td class="min-width p-3" style="display: none;">
+                                    <p>{{$product->category_id}}</p>
+                                </td>
+                                <td class="min-width p-3" style="display: none;">
+                                    <p>{{$product->supplier_id}}</p>
+                                </td> 
+                                <td class="min-width p-3" style="display: none;">
+                                    <p>{{$product->category_name}}</p>
+                                </td>
+                                <td class="min-width p-3" style="display: none;">
+                                    <p>{{$product->supplier_name}}</p>
+                                </td> 
                                 <td class="p-3">
                                     <a href="#" class="BtnEditProduct text-primary" style="width: 20px;"><i class="lni lni-pencil-alt"></i></a>
-                                    <a href="/productview/{{$product->id}}" target="_blank" class="BtnViewProduct text-success" style="width: 20px;"><i class="lni lni-eye"></i></a>
+                                    <a href="#" class="BtnViewProduct text-success" style="width: 20px;"><i class="lni lni-eye"></i></a>
                                     <a href="#" class="BtnDeleteProduct text-danger" style="width: 20px;"><i class="lni lni-trash-can"></i></a>
                                 </td>
                             </tr>
@@ -236,12 +254,12 @@
             var Image = current_row.find('td').eq(0).text().trim();
             var Id = current_row.find('td').eq(1).text().trim();
             var Product_Name = current_row.find('td').eq(2).text().trim();
-            var Category_Id = current_row.find('td').eq(3).text().trim();
-            var Supplier_Id = current_row.find('td').eq(4).text().trim();
             var Barcode = current_row.find('td').eq(3).text().trim();
             var Quantity = current_row.find('td').eq(4).text().trim();
             var Price_In = current_row.find('td').eq(5).text().trim().slice(1);
             var Price_Out = current_row.find('td').eq(6).text().trim().slice(1);
+            var Category_Id = current_row.find('td').eq(8).text().trim();
+            var Supplier_Id = current_row.find('td').eq(9).text().trim();
 
             $('#CurrentImage').val(Image);
             $("#Id").val(Id);
@@ -277,20 +295,64 @@
     $("#AddPopup").click(function() {
         $("#FormModal").modal("show");
     });
-
+    
     // clear form
     $(".btn-close").click(function() {
-            $('#CurrentPhoto').val("");
-            $("#Id").val("");
-            $("#Product_Name").val("");
-            $("#Category_Id option[value='']").attr("selected","selected");
-            $("#Supplier_Id option[value='']").attr("selected","selected");
-            $("#Barcode").val("");
-            $("#Quantity").val("");
-            $("#Price_In").val("");
-            $("#Price_Out").val("");
+        $('#CurrentImage').val("");
+        $("#Id").val("");
+        $("#Product_Name").val("");
+        $("#Category_Id option[value='']").attr("selected","selected");
+        $("#Supplier_Id option[value='']").attr("selected","selected");
+        $("#Barcode").val("");
+        $("#Quantity").val("");
+        $("#Price_In").val("");
+        $("#Price_Out").val("");
     });
     
+    
+    // open product view form
+    $(".BtnViewProduct").click(function() {
+        $("#FormModalProduct").modal("show");
+
+        var current_row = $(this).closest('tr');
+        var Image = current_row.find('td').eq(0).text().trim();
+        var Id = current_row.find('td').eq(1).text().trim();
+        var Product_Name = current_row.find('td').eq(2).text().trim();
+        var Barcode = current_row.find('td').eq(3).text().trim();
+        var Quantity = current_row.find('td').eq(4).text().trim();
+        var Price_In = current_row.find('td').eq(5).text().trim().slice(1);
+        var Price_Out = current_row.find('td').eq(6).text().trim().slice(1);
+        var Category_Name = current_row.find('td').eq(10).text().trim();
+        var Supplier_Name = current_row.find('td').eq(11).text().trim();
+
+        if(Quantity < 1){
+            In_Stock = "<span class='status-btn close-btn text-center'>Out of Stock</span>";
+        }else{
+            In_Stock = " <span class='status-btn success-btn text-center'>In Stock</span>";
+        }
+        
+        $("#ProductViewCard").html(
+        '<div class="col-md-6 justify-content-center p-3">' +
+        '<img src="http://127.0.0.1:8000/'+  Image + '" class="img-fluid rounded-start" alt="Product Image" width="100%">' +
+        '</div>' +
+        '<div class="col-md-1">' +
+        '</div>' + 
+        '<div class="col-md-5 p-2 pt-5 ">' +
+        '<h2>' +  Id + '. ' + Product_Name + '</h2> <br/>' +
+        '<p>' +
+        '<b>Category: </b> ' + Category_Name + ' <br/>' +
+        '<b>Supplier: </b> ' + Supplier_Name + ' <br/>' +
+        '<b>Barcode: </b> ' + Barcode + ' <br/>' +
+        '<b>Quantity: </b> ' + Quantity + ' <br/>' +
+        '<b>Price In: </b> $' + Price_In + ' <br/>' +
+        '<b>Price Out: </b> $' + Price_Out + ' <br/><br/>' +
+        '<b>In Stock: </b> ' + In_Stock +
+        '</p>' +
+        '</div>'
+        );
+
+    });
+
 </script>
 
 @endsection

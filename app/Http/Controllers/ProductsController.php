@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductsModel;
+use App\Models\CategoryModel;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
     public function ProductsView(){
-        // $position = PositionModel::all();
-        $result = ProductsModel::latest()->paginate(5);
+        $category = CategoryModel::all();
+        $result = ProductsModel::Join('category', 'products.category_id', '=', 'category.category_id')->orderBy('products.id', 'desc')->paginate(5);
 
-        return view('admin.products', ['products'=>$result]);
+        return view('admin.products', ['products'=>$result, 'category'=>$category]);
     }
 
     public function AddProduct(Request $rq){
@@ -25,7 +26,11 @@ class ProductsController extends Controller
         $result->Price_In = $rq->Price_In;
         $result->Price_Out = $rq->Price_Out;
         $result->Barcode = $rq->Barcode;
-        // $result->In_Stock = $rq->In_Stock;
+        if($result->Quantity > 0){
+            $result->In_Stock = 1;
+        }else{
+            $result->In_Stock = 0;
+        }
 
         if($rq->hasfile('Image')){
             $NewImage=$rq->file('Image')->getClientOriginalName();
@@ -60,6 +65,11 @@ class ProductsController extends Controller
         $result->Price_In = $rq->Price_In;
         $result->Price_Out = $rq->Price_Out;
         $result->Barcode = $rq->Barcode;
+        if($result->Quantity > 0){
+            $result->In_Stock = 1;
+        }else{
+            $result->In_Stock = 0;
+        }
 
         if($rq->hasfile('Image')){
             $NewImage=$rq->file('Image')->getClientOriginalName();
