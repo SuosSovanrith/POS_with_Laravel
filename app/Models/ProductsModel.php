@@ -22,4 +22,7 @@ class ProductsModel extends Model
         'in_stock',
         'image',
     ];
+
+    protected  $primaryKey = 'product_id';
+
 }

@@ -173,7 +173,7 @@
                                     <p style="display:none;">{{$product->image}}</p>
                                 </td>
                                 <td class="min-width p-3">
-                                    <p>{{$product->id}}</p>
+                                    <p>{{$product->product_id}}</p>
                                 </td>
                                 <td class="min-width p-3"  style="width: 150px;">
                                     <p>{{$product->product_name}}</p>

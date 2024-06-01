@@ -31,9 +31,9 @@ class UsersController extends Controller
 
         if($rq->hasfile('Photo')){
             $NewPhoto=$rq->file('Photo')->getClientOriginalName();
-            $rq->Photo->move(public_path('images/users/'), $NewPhoto);
+            $rq->Photo->move(public_path('assets/images/users/'), $NewPhoto);
             
-            $result->Photo = 'images/users/'.$NewPhoto;
+            $result->Photo = 'assets/images/users/'.$NewPhoto;
             
         }else{
             $result->Photo = "";
@@ -66,9 +66,9 @@ class UsersController extends Controller
 
         if($rq->hasfile('Photo')){
             $NewPhoto=$rq->file('Photo')->getClientOriginalName();
-            $rq->Photo->move(public_path('images/users/'), $NewPhoto);
+            $rq->Photo->move(public_path('assets/images/users/'), $NewPhoto);
             
-            $result->Photo = 'images/users/'.$NewPhoto;
+            $result->Photo = 'assets/images/users/'.$NewPhoto;
             
         } //when update image, if no image us chosen, then don't update
 

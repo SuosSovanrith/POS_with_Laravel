@@ -86,7 +86,7 @@
                 </a>
               </li>
               <li class="nav-item @yield('sidebar_customers')">
-                <a href="/admin/customers">
+                <a href="/admin/customer">
                   <span class="icon" style="width:20px; height:20px;">
                     <i class="lni lni-customer"></i>
                   </span>
@@ -94,7 +94,7 @@
                 </a>
               </li>
               <li class="nav-item @yield('sidebar_suppliers')">
-                <a href="/admin/suppliers">
+                <a href="/admin/supplier">
                   <span class="icon" style="width:20px; height:20px;">
                     <i class="lni lni-delivery"></i>
                   </span>

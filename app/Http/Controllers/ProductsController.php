@@ -10,8 +10,7 @@ class ProductsController extends Controller
 {
     public function ProductsView(){
         $category = CategoryModel::all();
-        $result = ProductsModel::Join('category', 'products.category_id', '=', 'category.category_id')->orderBy('products.id', 'desc')->paginate(5);
-
+        $result = ProductsModel::Join('category', 'products.category_id', '=', 'category.category_id')->orderBy('products.product_id', 'desc')->paginate(5);
         return view('admin.products', ['products'=>$result, 'category'=>$category]);
     }
 
@@ -34,9 +33,9 @@ class ProductsController extends Controller
 
         if($rq->hasfile('Image')){
             $NewImage=$rq->file('Image')->getClientOriginalName();
-            $rq->Image->move(public_path('images/products/'), $NewImage);
+            $rq->Image->move(public_path('assets/images/products/'), $NewImage);
             
-            $result->Image = 'images/products/'.$NewImage;
+            $result->Image = 'assets/images/products/'.$NewImage;
             
         }else{
             $result->Image = "";
@@ -73,9 +72,9 @@ class ProductsController extends Controller
 
         if($rq->hasfile('Image')){
             $NewImage=$rq->file('Image')->getClientOriginalName();
-            $rq->Image->move(public_path('images/products/'), $NewImage);
+            $rq->Image->move(public_path('assets/images/products/'), $NewImage);
             
-            $result->Image = 'images/products/'.$NewImage;
+            $result->Image = 'assets/images/products/'.$NewImage;
             
         } //when update image, if no image us chosen, then don't update
 

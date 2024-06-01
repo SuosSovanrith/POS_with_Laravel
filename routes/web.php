@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\CustomerController;
 
 // Auth
 Route::get('/', function () {
@@ -33,6 +35,8 @@ Route::middleware(Admin::class)->group(function(){
     Route::get('/admin/position', [PositionController::class, 'PositionView']);
     Route::get('/admin/products', [ProductsController::class, 'ProductsView']);
     Route::get('/admin/category', [CategoryController::class, 'CategoryView']);
+    Route::get('/admin/supplier', [SupplierController::class, 'SupplierView']);
+    Route::get('/admin/customer', [CustomerController::class, 'CustomerView']);
 });
 
 // User
@@ -54,3 +58,13 @@ Route::post('/deleteproduct', [ProductsController::class, 'DeleteProduct']);
 Route::post('/addcategory', [CategoryController::class, 'AddCategory']);
 Route::post('/updatecategory', [CategoryController::class, 'UpdateCategory']);
 Route::post('/deletecategory', [CategoryController::class, 'DeleteCategory']);
+
+// Supplier
+Route::post('/addsupplier', [SupplierController::class, 'AddSupplier']);
+Route::post('/updatesupplier', [SupplierController::class, 'UpdateSupplier']);
+Route::post('/deletesupplier', [SupplierController::class, 'DeleteSupplier']);
+
+// Customer
+Route::post('/addcustomer', [CustomerController::class, 'AddCustomer']);
+Route::post('/updatecustomer', [CustomerController::class, 'UpdateCustomer']);
+Route::post('/deletecustomer', [CustomerController::class, 'DeleteCustomer']);
