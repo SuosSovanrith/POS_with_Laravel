@@ -473,7 +473,7 @@
                         </div>
                         <div>
                           <h6 class="fw-500">{{session('name')}}</h6>
-                          <p>Admin</p>
+                          <p>{{session('position_name')}}</p>
                         </div>
                       </div>
                     </div>

@@ -45,7 +45,6 @@
                                 <div class="select-style-2">
                                     <div class="select-position select-sm">
                                         <select name="Position_Id" id="Position_Id">
-                                            <option value="2">Guest</option>
                                             @foreach ($position as $item)
                                                 <option value="{{$item->position_id}}" >{{$item->position_name}}</option>
                                             @endforeach
