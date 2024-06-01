@@ -41,7 +41,7 @@
 </div>
 
 <!-- ========== tables-wrapper start ========== -->
-<div class="tables-wrapper">
+<div class="tables-wrapper shadow-sm">
     <div class="row">
         <div class="col-lg-12">
             <div class="card-style mb-30">

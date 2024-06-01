@@ -3619,11 +3619,11 @@ h6,
 /* =========== Sidebar css =========== */
 .sidebar-nav-wrapper {
   background: #fff;
-  width: 250px;
+  width: 240px;
   padding: 20px 0px;
   height: 100vh;
   position: fixed;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   top: 0;
   left: 0;

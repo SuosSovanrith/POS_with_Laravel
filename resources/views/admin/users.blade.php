@@ -47,7 +47,7 @@
                                         <select name="Position_Id" id="Position_Id">
                                             <option value="2">Guest</option>
                                             @foreach ($position as $item)
-                                                <option value="{{$item->id}}" >{{$item->position_name}}</option>
+                                                <option value="{{$item->position_id}}" >{{$item->position_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -86,7 +86,7 @@
 </div>
 
 <!-- ========== tables-wrapper start ========== -->
-<div class="tables-wrapper">
+<div class="tables-wrapper shadow-sm">
     <div class="row">
         <div class="col-lg-12">
             <div class="card-style mb-30">

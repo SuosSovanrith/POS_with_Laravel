@@ -523,7 +523,7 @@
 
       <!-- ========== section start ========== -->
       <section class="section">
-        <div class="container-fluid p-0 pt-3">
+        <div class="container-fluid p-3 pt-5">
           <!-- ========== title-wrapper start ========== -->
           @yield('content')
         </div>
