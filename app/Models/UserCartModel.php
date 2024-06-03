@@ -16,4 +16,7 @@ class UserCartModel extends Model
         'product_id',
         'quantity',
     ];
+
+    protected  $primaryKey = 'cart_id';
+
 }

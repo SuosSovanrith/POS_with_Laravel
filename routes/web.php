@@ -70,3 +70,7 @@ Route::post('/deletesupplier', [SupplierController::class, 'DeleteSupplier']);
 Route::post('/addcustomer', [CustomerController::class, 'AddCustomer']);
 Route::post('/updatecustomer', [CustomerController::class, 'UpdateCustomer']);
 Route::post('/deletecustomer', [CustomerController::class, 'DeleteCustomer']);
+
+// Cart
+Route::post('/addcart', [CartController::class, 'AddCart']);
+Route::post('/updatecartquantity', [CartController::class, 'UpdateCartQuantity']);

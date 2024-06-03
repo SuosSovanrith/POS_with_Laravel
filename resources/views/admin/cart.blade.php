@@ -10,26 +10,40 @@
             <!-- Left side -->
             <div class="col-md-6">
                 <div class="card-style shadow">
-                    <div class="row">
+                        <div class="row">
                         <!-- Barcode -->
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" name="ScanBarcode" id="ScanBarcode" placeholder="Scan Barcode...">
-                        </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="ScanBarcode" id="ScanBarcode" placeholder="Scan Barcode...">
+                            </div>
                         <!-- Customer -->
-                        <div class="col-lg-6">
-                            <div class="select-style-2">
-                                <div class="select-position select-sm">
-                                    <select name="Customer_Id" id="Customer_Id">
-                                        @foreach ($customer as $item)
+                            <div class="col-md-6">
+                                <div class="select-style-2">
+                                    <div class="select-position select-sm">
+                                        <select name="Customer_Id" id="Customer_Id">
+                                            @foreach ($customer as $item)
                                             <option value="{{$item->customer_id}}" >{{$item->customer_name}}</option>
-                                        @endforeach
-                                    </select>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     
                         <!-- Product List -->
                         <div class="row mb-3">
+
+                            <!-- Alert Message -->
+                            @if (session('message'))
+                            <div class="alert-box {{session('type')}}-alert">
+                                <div class="alert">
+                                    <p class="text-medium">
+                                    {{session('message')}}
+                                    {{session()->forget(['message','type']);}}
+                                    </p>
+                                </div>
+                                </div>        
+                            @endif
+                            
                             <div class="table-wrapper table-responsive">
                                 <table class="table table table-hover table-striped" id="TblMain">
                                     <thead>
@@ -41,21 +55,22 @@
                                         <!-- end table row-->
                                     </thead>
                                     <tbody>
-                                        {{ $total = 0}}
+                                        <?php $total = 0; ?>
                                         @foreach ($cart as $item)
                                             <tr>
                                                 <td class="min-width p-3">
                                                     <p>{{$item->product_name}}</p>
                                                 </td>
                                                 <td class="min-width p-3">
-                                                    <input type="number" class="form-control" min="0" name="Quantity" id="Quantity" value="{{$item->quantity}}" style="max-width: 70px; display:inline;">
+                                                    <input type="number" class="form-control Cart_Quantity" min="0" name="Cart_Quantity" id="Cart_Quantity" value="{{$item->cart_quantity}}" style="max-width: 52px; display:inline;">
+                                                    <p style="display: none;">{{$item->cart_id}}</p>
                                                     <button class="BtnDeleteProduct text-danger" style="width: 16px; background:transparent; border-style:none; display:inline;"><i class="lni lni-trash-can"></i></button>
                                                 </td>
                                                 <td class="min-width p-3">
-                                                    <p>${{number_format($item->price_out * $item->quantity, 2, '.', ',')}}</p>
+                                                    <p>${{number_format($item->price_out * $item->cart_quantity, 2, '.', ',')}}</p>
                                                 </td>
                                             </tr>   
-                                            {{ $total += $item->price_out * $item->quantity}}
+                                            <?php $total += $item->price_out * $item->cart_quantity; ?>
                                         @endforeach
                                         <!-- end table row -->
                                     </tbody>
@@ -87,8 +102,6 @@
 
                     </div>
                 </div>
-            </div>
-
         <!-- End left side -->
 
         <!-- Right Side -->
@@ -135,6 +148,43 @@
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    // for add cart
+    $('#ScanBarcode').keypress(function (e) {
+        if (e.which == 13) {
+            var Barcode = $("#ScanBarcode").val();
+            $.post('/addcart', {
+                    Barcode: Barcode
+                }, function(data) {
+                    window.location.href = "/admin/cart";
+            });
+        }
+    });
+    
+    // for update quantity
+    $('.Cart_Quantity').focusin(function () {
+        var Cart_Quantity = $(this).val();
+
+        $('.Cart_Quantity').focusout(function () {
+            $(this).val(Cart_Quantity)
+        });
+
+    });
+
+    $('.Cart_Quantity').keypress(function (e) {
+        if (e.which == 13) {
+            var Cart_Quantity = $(this).val();
+            var current_row = $(this).closest('tr');
+            var Cart_Id = current_row.find('td').eq(1).text().trim();
+
+            $.post('/updatecartquantity', {
+                Cart_Quantity: Cart_Quantity,
+                Cart_Id: Cart_Id
+            }, function(data) {
+                window.location.href = "/admin/cart";
+            });
         }
     });
 
