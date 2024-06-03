@@ -14,13 +14,13 @@ class CartController extends Controller
 
         $customer = CustomerModel::all();
         $products = ProductsModel::all();
+
         $user_id = session('user_id');
 
         $cart = UserCartModel::join('users', 'user_cart.user_id', '=', 'users.user_id')
         ->join('products', 'user_cart.product_id', '=', 'products.product_id')
         ->where('users.user_id', '=', $user_id)
         ->get();
-
 
         return view('admin.cart', ['cart'=>$cart, 'customer'=>$customer, 'products'=>$products]);
     }
@@ -61,6 +61,37 @@ class CartController extends Controller
                 session(['message'=>"Added ". $product->product_name . " to cart.", 'type'=>'success']);
             }
         }
+    }
+
+    public function AddCartImage($Barcode){
+        
+    $user_id = session('user_id');
+
+    // Check if already have product in cart
+    $checkInCart = UserCartModel::join('products', 'user_cart.product_id', '=', 'products.product_id')
+    ->where('products.barcode', '=', $Barcode)
+    ->where('user_cart.user_id', '=', $user_id)
+    ->first();
+
+    if(isset($checkInCart)){
+        $checkInCart->cart_quantity = $checkInCart->cart_quantity + 1;
+        $checkInCart->save();
+
+        session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'success']);
+    }else{
+        $product = ProductsModel::where('barcode', '=', $Barcode)->first();
+        $result = new UserCartModel();
+    
+        $result->user_id = $user_id;
+        $result->product_id = $product->product_id;
+        $result->cart_quantity = 1;
+        $result->save();
+
+        session(['message'=>"Added ". $product->product_name . " to cart.", 'type'=>'success']);
+    }
+        
+    return redirect('/admin/cart');
+
     }
 
     public function UpdateCartQuantity(Request $rq){
@@ -116,4 +147,22 @@ class CartController extends Controller
         session(['message'=>"Removed all items from cart.", 'type'=>'success']);
         
     }
+
+    public function SearchProduct(Request $rq){
+        
+        // Search product
+        $search = $rq->input('Product_Search');
+        $searchproducts = ProductsModel::where('product_name', 'LIKE', '%'.$search.'%')->get();
+        
+        $customer = CustomerModel::all();
+        $user_id = session('user_id');
+
+        $cart = UserCartModel::join('users', 'user_cart.user_id', '=', 'users.user_id')
+        ->join('products', 'user_cart.product_id', '=', 'products.product_id')
+        ->where('users.user_id', '=', $user_id)
+        ->get();
+
+        return view('admin.cart', ['cart'=>$cart, 'customer'=>$customer, 'products'=>$searchproducts]);
+    }
+
 }

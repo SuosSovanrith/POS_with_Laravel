@@ -109,7 +109,11 @@
                 <div class="card-style shadow">
                     <!-- Search Product -->
                     <div class="input-style-2">
-                        <input type="text" class="form-control" name="Product_Search" id="Product_Search" placeholder="Search Product...">
+                        <form action="/searchproduct" method="post" id="SearchForm">
+                            @csrf
+                            <input type="text" class="form-control" name="Product_Search" id="Product_Search" placeholder="Search Product...">
+                            <input type="submit" class="form-control" id="SearchSubmit" style="display: none;">
+                        </form>
                         <span class="icon"> <i class="lni lni-magnifier"></i> </span>
                     </div>
 
@@ -118,11 +122,11 @@
 
                         <!-- Product Item-->
                         @foreach ($products as $product)
-                            <div class="col-md-3 col-sm-4">
-                                <div class="card-style-2 mb-30">
+                            <div class="col-md-3 col-sm-4" style="height: 170px;">
+                                <div class="card-style-2 mb-30" style="height: 170px;">
                                     <div class="card-image">
-                                        <a href="#0">
-                                        <img src="{{asset($product->image)}}" alt="">
+                                        <a href="/addcartimage/{{$product->barcode}}">
+                                            <img src="{{asset($product->image)}}" alt="">
                                         </a>
                                     </div>
                                     <div class="card-content">
@@ -211,6 +215,13 @@
                 });
             }
         });
+    
+    // for search product
+    $('#Product_Search').keypress(function (e) {
+        if (e.which == 13) {
+            $('#SearchSubmit').click();
+        }
+    });
 
     // for update Product
     $(function() {

@@ -1,5 +1,5 @@
 /*===========================
-		COMMON css alert
+		COMMON css input-style-2
 ===========================*/
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 html {
@@ -2128,7 +2128,7 @@ a
 .input-style-2 label {
   font-size: 14px;
   font-weight: 500;
-  color: #1A2142;
+  color: #365CF5;
   display: block;
   margin-bottom: 10px;
 }
@@ -2138,7 +2138,8 @@ a
   background: rgba(239, 239, 239, 0.5);
   border: 1px solid #e5e5e5;
   border-radius: 4px;
-  padding: 16px;
+  padding: 6px;
+  padding-left: 15px;
   color: #5d657b;
   resize: none;
   transition: all 0.3s;
@@ -2164,7 +2165,8 @@ a
   position: absolute;
   right: 0;
   bottom: 0;
-  padding: 17px;
+  padding: 5px;
+  padding-right: 10px;
 }
 
 .input-style-3 {
