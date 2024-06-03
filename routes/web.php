@@ -74,3 +74,5 @@ Route::post('/deletecustomer', [CustomerController::class, 'DeleteCustomer']);
 // Cart
 Route::post('/addcart', [CartController::class, 'AddCart']);
 Route::post('/updatecartquantity', [CartController::class, 'UpdateCartQuantity']);
+Route::post('/deletecart', [CartController::class, 'DeleteCart']);
+Route::post('/clearcart', [CartController::class, 'ClearCart']);

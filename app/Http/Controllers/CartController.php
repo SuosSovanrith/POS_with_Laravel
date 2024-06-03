@@ -13,6 +13,7 @@ class CartController extends Controller
     public function CartView(){
 
         $customer = CustomerModel::all();
+        $products = ProductsModel::all();
         $user_id = session('user_id');
 
         $cart = UserCartModel::join('users', 'user_cart.user_id', '=', 'users.user_id')
@@ -21,7 +22,7 @@ class CartController extends Controller
         ->get();
 
 
-        return view('admin.cart', ['cart'=>$cart, 'customer'=>$customer]);
+        return view('admin.cart', ['cart'=>$cart, 'customer'=>$customer, 'products'=>$products]);
     }
 
     public function AddCart(Request $rq){
@@ -46,7 +47,8 @@ class CartController extends Controller
             if(isset($checkInCart)){
                 $checkInCart->cart_quantity = $checkInCart->cart_quantity + 1;
                 $checkInCart->save();
-    
+
+                session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'success']);
             }else{
                 $product = ProductsModel::where('barcode', '=', $barcode)->first();
                 $result = new UserCartModel();
@@ -55,6 +57,8 @@ class CartController extends Controller
                 $result->product_id = $product->product_id;
                 $result->cart_quantity = 1;
                 $result->save();
+                
+                session(['message'=>"Added ". $product->product_name . " to cart.", 'type'=>'success']);
             }
         }
     }
@@ -76,6 +80,40 @@ class CartController extends Controller
             $result = UserCartModel::find($Cart_Id);
             $result->cart_quantity = $Cart_Quantity;
             $result->save();
+
+            $getProduct = ProductsModel::find($result->product_id);
+            session(['message'=>"Updated ". $getProduct->product_name . "'s quantity.", 'type'=>'success']);
         }
+    }
+
+    public function DeleteCart(Request $rq){
+        
+        $validator = Validator::make($rq->all(),[
+            'Cart_Id' => 'required|exists:user_cart,cart_id',
+        ]);
+
+        if ($validator->fails()) {
+            session(['message'=>"Cart item not found!" , 'type'=>'danger']);
+        }else{
+
+            $Cart_Id = $rq->Cart_Id;
+            
+            $result = UserCartModel::find($Cart_Id);
+            $result->delete();
+
+            $getProduct = ProductsModel::find($result->product_id);
+            session(['message'=>"Removed " . $getProduct->product_name . " from cart.", 'type'=>'success']);
+        }
+    }
+
+    public function ClearCart(Request $rq){
+        
+        $user_id = session('user_id');
+            
+        $result = UserCartModel::where('user_id', '=', $user_id);
+        $result->delete();
+
+        session(['message'=>"Removed all items from cart.", 'type'=>'success']);
+        
     }
 }

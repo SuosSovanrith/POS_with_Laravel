@@ -64,7 +64,7 @@
                                                 <td class="min-width p-3">
                                                     <input type="number" class="form-control Cart_Quantity" min="0" name="Cart_Quantity" id="Cart_Quantity" value="{{$item->cart_quantity}}" style="max-width: 52px; display:inline;">
                                                     <p style="display: none;">{{$item->cart_id}}</p>
-                                                    <button class="BtnDeleteProduct text-danger" style="width: 16px; background:transparent; border-style:none; display:inline;"><i class="lni lni-trash-can"></i></button>
+                                                    <button class="BtnDeleteCart text-danger" style="width: 16px; background:transparent; border-style:none; display:inline;"><i class="lni lni-trash-can"></i></button>
                                                 </td>
                                                 <td class="min-width p-3">
                                                     <p>${{number_format($item->price_out * $item->cart_quantity, 2, '.', ',')}}</p>
@@ -92,7 +92,7 @@
 
                         <div class="row">
                             <div class="col">
-                                <button class="main-btn danger-btn btn-hover" style="height: 40px;">Clear</button>
+                                <button class="main-btn danger-btn btn-hover BtnClearCart" style="height: 40px;">Clear</button>
                             </div>
                             <div class="col" align="right">
                                 <button href="#0" class="main-btn primary-btn btn-hover" style="height: 40px;">Submit</button>
@@ -117,18 +117,20 @@
                     <div class="row" id="Product_List">
 
                         <!-- Product Item-->
-                        <div class="col-md-3 col-sm-4">
-                            <div class="card-style-2 mb-30">
-                                <div class="card-image">
-                                    <a href="#0">
-                                    <img src="http://127.0.0.1:8000/assets/images/products/coke_can.png" alt="">
-                                    </a>
+                        @foreach ($products as $product)
+                            <div class="col-md-3 col-sm-4">
+                                <div class="card-style-2 mb-30">
+                                    <div class="card-image">
+                                        <a href="#0">
+                                        <img src="{{asset($product->image)}}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="card-content">
+                                        <h4 align="center">{{$product->product_name}}</h4>
+                                    </div>
                                 </div>
-                                <div class="card-content">
-                                    <h4 align="center">Coca-Cola Can</h4>
-                                </div>
-                            </div>
-                        </div>
+                            </div>      
+                        @endforeach
                         <!-- End Product Item -->
 
                     </div>
@@ -187,6 +189,28 @@
             });
         }
     });
+    
+    // for delete cart
+        $(".BtnDeleteCart").click(function() {
+            var current_row = $(this).closest('tr');
+            var Cart_Id = current_row.find('td').eq(1).text().trim();
+
+            if (confirm("Are you sure you want to delete?")) {
+                $.post('/deletecart', {
+                    Cart_Id: Cart_Id
+                }, function(data) {
+                    window.location.href = "/admin/cart";
+                });
+            }
+        });
+        $(".BtnClearCart").click(function() {
+            if (confirm("Are you sure you clear cart?")) {
+                $.post('/clearcart', {
+                }, function(data) {
+                    window.location.href = "/admin/cart";
+                });
+            }
+        });
 
     // for update Product
     $(function() {
