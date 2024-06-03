@@ -73,7 +73,7 @@ Route::post('/deletecustomer', [CustomerController::class, 'DeleteCustomer']);
 
 // Cart
 Route::post('/addcart', [CartController::class, 'AddCart']);
-Route::get('/addcartimage/{Barcode}', [CartController::class, 'AddCartImage']);
+Route::get('/addcartimage/{product_id}', [CartController::class, 'AddCartImage']);
 Route::post('/updatecartquantity', [CartController::class, 'UpdateCartQuantity']);
 Route::post('/deletecart', [CartController::class, 'DeleteCart']);
 Route::post('/clearcart', [CartController::class, 'ClearCart']);

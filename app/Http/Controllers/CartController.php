@@ -63,13 +63,13 @@ class CartController extends Controller
         }
     }
 
-    public function AddCartImage($Barcode){
+    public function AddCartImage($product_id){
         
     $user_id = session('user_id');
 
     // Check if already have product in cart
     $checkInCart = UserCartModel::join('products', 'user_cart.product_id', '=', 'products.product_id')
-    ->where('products.barcode', '=', $Barcode)
+    ->where('products.product_id', '=', $product_id)
     ->where('user_cart.user_id', '=', $user_id)
     ->first();
 
@@ -79,11 +79,11 @@ class CartController extends Controller
 
         session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'success']);
     }else{
-        $product = ProductsModel::where('barcode', '=', $Barcode)->first();
+        $product = ProductsModel::where('product_id', '=', $product_id)->first();
         $result = new UserCartModel();
     
         $result->user_id = $user_id;
-        $result->product_id = $product->product_id;
+        $result->product_id = $product_id;
         $result->cart_quantity = 1;
         $result->save();
 

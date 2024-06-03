@@ -125,7 +125,7 @@
                             <div class="col-md-3 col-sm-4" style="height: 170px;">
                                 <div class="card-style-2 mb-30" style="height: 170px;">
                                     <div class="card-image">
-                                        <a href="/addcartimage/{{$product->barcode}}">
+                                        <a href="/addcartimage/{{$product->product_id}}">
                                             <img src="{{asset($product->image)}}" alt="">
                                         </a>
                                     </div>
