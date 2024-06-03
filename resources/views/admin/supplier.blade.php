@@ -89,7 +89,7 @@
                         <h3>Suppliers</h3>
                     </div>
                     <div class="col-md-6">
-                        <div align="right"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Spplier</b></a></div>
+                        <div align="right"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Supplier</b></a></div>
                     </div>
                 </div>
                 <div class="table-wrapper table-responsive">

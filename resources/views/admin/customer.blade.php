@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="Email" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="Email" id="Email" placeholder="name@example.com" required>
+                                <input type="email" class="form-control" name="Email" id="Email" placeholder="name@example.com">
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="Phone" class="form-label">Phone</label>
@@ -79,7 +79,7 @@
                         <h3>Customers</h3>
                     </div>
                     <div class="col-md-6">
-                        <div align="right"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Spplier</b></a></div>
+                        <div align="right"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Customer</b></a></div>
                     </div>
                 </div>
                 <div class="table-wrapper table-responsive">

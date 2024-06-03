@@ -9,7 +9,7 @@ class CustomerController extends Controller
 {
     //
     public function CustomerView(){
-        $result = CustomerModel::paginate(5);
+        $result = CustomerModel::orderBy('customer.customer_id', 'desc')->paginate(5);
 
         return view('admin.customer', ['customers'=>$result]);
     }

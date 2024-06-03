@@ -153,12 +153,20 @@
               <span class="text">Orders</span>
             </a>
             <ul id="ddmenu_4" class="collapse dropdown-nav">
+              <li class="nav-item @yield('sidebar_cart')">
+                <a href="/admin/cart">
+                  <span class="icon" style="width:20px; height:20px;">
+                    <i class="lni lni-cart"></i>
+                  </span>
+                  <span class="text">Cart</span>
+                </a>
+              </li>
               <li class="nav-item @yield('sidebar_order')">
                 <a href="/admin/orders">
                   <span class="icon" style="width:20px; height:20px;">
                     <i class="lni lni-shopify"></i>
                   </span>
-                  <span class="text">Orders</span>
+                  <span class="text">Order</span>
                 </a>
               </li>
               <li class="nav-item @yield('sidebar_invoice')">

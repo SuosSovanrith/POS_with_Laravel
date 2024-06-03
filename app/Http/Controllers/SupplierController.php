@@ -9,7 +9,7 @@ class SupplierController extends Controller
 {
     //
     public function SupplierView(){
-        $result = SupplierModel::paginate(5);
+        $result = SupplierModel::orderBy('supplier.supplier_id', 'desc')->paginate(5);
 
         return view('admin.supplier', ['suppliers'=>$result]);
     }

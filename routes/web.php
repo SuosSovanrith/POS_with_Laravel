@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CartController;
 
 // Auth
 Route::get('/', function () {
@@ -37,6 +38,7 @@ Route::middleware(Admin::class)->group(function(){
     Route::get('/admin/category', [CategoryController::class, 'CategoryView']);
     Route::get('/admin/supplier', [SupplierController::class, 'SupplierView']);
     Route::get('/admin/customer', [CustomerController::class, 'CustomerView']);
+    Route::get('/admin/cart', [CartController::class, 'CartView']);
 });
 
 // User

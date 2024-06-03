@@ -59,7 +59,7 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="Quantity" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" min="0" name="Quantity" id="Quantity" required>
+                                <input type="number" class="form-control" min="0" name="Quantity" id="Quantity" value="0" required>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="Barcode" class="form-label">Barcode</label>
@@ -80,11 +80,11 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="Price_In" class="form-label">Price In</label>
-                                <input type="number" class="form-control" step="0.01" min="0" name="Price_In" id="Price_In" required>
+                                <input type="number" class="form-control" step="0.01" min="0" name="Price_In" id="Price_In" value="0" required>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="Price_Out" class="form-label">Price Out</label>
-                                <input type="number" class="form-control" step="0.01" min="0" name="Price_Out" id="Price_Out" required>
+                                <input type="number" class="form-control" step="0.01" min="0" name="Price_Out" id="Price_Out" value="0" required>
                             </div>
                         </div>
                         <div class="row">
