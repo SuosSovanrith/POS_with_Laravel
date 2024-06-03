@@ -133,7 +133,7 @@
                                     <p style="display:none;">{{$user->photo}}</p>
                                 </td>
                                 <td class="min-width p-3">
-                                    <p>{{$user->id}}</p>
+                                    <p>{{$user->user_id}}</p>
                                 </td>
                                 <td class="min-width p-3">
                                     <p>{{$user->name}}</p>
@@ -202,7 +202,7 @@
             var Phone = current_row.find('td').eq(5).text().trim();
             var Address = current_row.find('td').eq(6).text().trim();
             var Position = current_row.find('td').eq(7).text().trim();
-
+            
             $('#CurrentPhoto').val(Photo);
             $("#Id").val(Id);
             $("#Name").val(Name);
@@ -244,7 +244,9 @@
             $("#Email").val("");
             $("#Phone").val("");
             $("#Address").val("");
-            $("#Position_Id option[value='N/A']").attr("selected","selected");
+            $("#Position_Id option:selected").each(function () {
+               $(this).removeAttr('selected'); 
+            });
     });
     
 </script>

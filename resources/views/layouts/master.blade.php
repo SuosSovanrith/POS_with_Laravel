@@ -158,7 +158,7 @@
                   <span class="icon" style="width:20px; height:20px;">
                     <i class="lni lni-cart"></i>
                   </span>
-                  <span class="text">Cart</span>
+                  <span class="text">POS</span>
                 </a>
               </li>
               <li class="nav-item @yield('sidebar_order')">

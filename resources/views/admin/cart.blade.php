@@ -2,34 +2,131 @@
 
 @section('title', 'Carts')
 
-@section('sidebar_products', 'active')
+@section('sidebar_orders', 'active')
 @section('sidebar_cart', 'active')
 
 @section('content')
-    <div class="tables-wrapper shadow-sm">
         <div class="row">
-            <div class="col-md-6 col-lg-5">
-                <div class="row">
-                    <div class="col">
-                        <input type="text" class="form-control" name="ScanBarcode" id="ScanBarcode" placeholder="Scan Barcode...">
-                    </div>
-                    <div class="col">
-                        <div class="select-style-2">
-                            <div class="select-position select-sm">
-                                <select name="Customer_Id" id="Customer_Id">
-                                    @foreach ($customer as $item)
-                                        <option value="{{$item->customer_id}}" >{{$item->customer_name}}</option>
-                                    @endforeach
-                                </select>
+            <!-- Left side -->
+            <div class="col-md-6">
+                <div class="card-style shadow">
+                    <div class="row">
+                        <!-- Barcode -->
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" name="ScanBarcode" id="ScanBarcode" placeholder="Scan Barcode...">
+                        </div>
+                        <!-- Customer -->
+                        <div class="col-lg-6">
+                            <div class="select-style-2">
+                                <div class="select-position select-sm">
+                                    <select name="Customer_Id" id="Customer_Id">
+                                        @foreach ($customer as $item)
+                                            <option value="{{$item->customer_id}}" >{{$item->customer_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                    
+                        <!-- Product List -->
+                        <div class="row mb-3">
+                            <div class="table-wrapper table-responsive">
+                                <table class="table table table-hover table-striped" id="TblMain">
+                                    <thead>
+                                        <tr>
+                                            <th class="p-3">Product</th>
+                                            <th class="p-3">Quantity</th>
+                                            <th class="p-3">Price</th>
+                                        </tr>
+                                        <!-- end table row-->
+                                    </thead>
+                                    <tbody>
+                                        {{ $total = 0}}
+                                        @foreach ($cart as $item)
+                                            <tr>
+                                                <td class="min-width p-3">
+                                                    <p>{{$item->product_name}}</p>
+                                                </td>
+                                                <td class="min-width p-3">
+                                                    <input type="number" class="form-control" min="0" name="Quantity" id="Quantity" value="{{$item->quantity}}" style="max-width: 70px; display:inline;">
+                                                    <button class="BtnDeleteProduct text-danger" style="width: 16px; background:transparent; border-style:none; display:inline;"><i class="lni lni-trash-can"></i></button>
+                                                </td>
+                                                <td class="min-width p-3">
+                                                    <p>${{number_format($item->price_out * $item->quantity, 2, '.', ',')}}</p>
+                                                </td>
+                                            </tr>   
+                                            {{ $total += $item->price_out * $item->quantity}}
+                                        @endforeach
+                                        <!-- end table row -->
+                                    </tbody>
+                                </table>
+                                <!-- end table -->
+                            </div>
+                        </div>
+                        <!-- End Product List -->
+
+                        <!-- Total / Btn-->
+                        <div class="row mb-3">
+                            <div class="col">
+                                <b>Total: </b>
+                            </div>
+                            <div class="col">
+                                <h4 class="text-danger" align="right">${{number_format($total, 2, '.', ',')}}</h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <button class="main-btn danger-btn btn-hover" style="height: 40px;">Clear</button>
+                            </div>
+                            <div class="col" align="right">
+                                <button href="#0" class="main-btn primary-btn btn-hover" style="height: 40px;">Submit</button>
+                            </div>
+                        </div>
+                        <!-- End Total / Btn-->
+
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6">Hi</div>
+        <!-- End left side -->
+
+        <!-- Right Side -->
+            <div class="col-md-6">
+                <div class="card-style shadow">
+                    <!-- Search Product -->
+                    <div class="input-style-2">
+                        <input type="text" class="form-control" name="Product_Search" id="Product_Search" placeholder="Search Product...">
+                        <span class="icon"> <i class="lni lni-magnifier"></i> </span>
+                    </div>
+
+                    <!-- List Products -->
+                    <div class="row" id="Product_List">
+
+                        <!-- Product Item-->
+                        <div class="col-md-3 col-sm-4">
+                            <div class="card-style-2 mb-30">
+                                <div class="card-image">
+                                    <a href="#0">
+                                    <img src="http://127.0.0.1:8000/assets/images/products/coke_can.png" alt="">
+                                    </a>
+                                </div>
+                                <div class="card-content">
+                                    <h4 align="center">Coca-Cola Can</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Product Item -->
+
+                    </div>
+                    <!-- End Product List -->
+                </div>
+            </div>
+        <!-- End right side -->
+
         </div>
-    </div>
+    <!-- End Content -->
+
 @endsection
 
 @section('script')

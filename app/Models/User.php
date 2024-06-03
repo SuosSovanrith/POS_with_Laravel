@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-use App\Models\PositionModel;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\ProductsModel;
 
 class User extends Authenticatable
 {
@@ -27,6 +27,8 @@ class User extends Authenticatable
         'address',
         'photo',
     ];
+
+    protected  $primaryKey = 'user_id';
 
     /**
      * The attributes that should be hidden for serialization.

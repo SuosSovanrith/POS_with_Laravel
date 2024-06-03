@@ -48,9 +48,9 @@
                                     <div class="select-position select-sm">
                                         <select name="Supplier_Id" id="Supplier_Id">
                                             <option value="">None</option>
-                                        {{--    @foreach ($supplier as $item)
+                                            @foreach ($supplier as $item)
                                                 <option value="{{$item->supplier_id}}" >{{$item->supplier_name}}</option>
-                                            @endforeach --}}
+                                            @endforeach 
                                         </select>
                                     </div>
                                 </div>
@@ -301,8 +301,12 @@
         $('#CurrentImage').val("");
         $("#Id").val("");
         $("#Product_Name").val("");
-        $("#Category_Id option[value='']").attr("selected","selected");
-        $("#Supplier_Id option[value='']").attr("selected","selected");
+        $("#Category_Id option:selected").each(function () {
+               $(this).removeAttr('selected'); 
+            });
+        $("#Supplier_Id option:selected").each(function () {
+               $(this).removeAttr('selected'); 
+            });
         $("#Barcode").val("");
         $("#Quantity").val("");
         $("#Price_In").val("");

@@ -13,7 +13,7 @@ class UsersController extends Controller
     //
     public function UsersView(){
         $position = PositionModel::all();
-        $result = User::join('position', 'users.position_id', '=', 'position.position_id')->orderBy('users.id', 'desc')->paginate(5);
+        $result = User::join('position', 'users.position_id', '=', 'position.position_id')->orderBy('users.user_id', 'desc')->paginate(5);
 
         return view('admin.users', ['users'=>$result, 'position'=>$position]);
     }

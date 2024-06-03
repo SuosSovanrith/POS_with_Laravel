@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductsModel;
 use App\Models\CategoryModel;
+use App\Models\SupplierModel;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
     public function ProductsView(){
         $category = CategoryModel::all();
-        $result = ProductsModel::Join('category', 'products.category_id', '=', 'category.category_id')->orderBy('products.product_id', 'desc')->paginate(5);
-        return view('admin.products', ['products'=>$result, 'category'=>$category]);
+        $supplier = SupplierModel::all();
+        $result = ProductsModel::Join('category', 'products.category_id', '=', 'category.category_id')->Join('supplier', 'products.supplier_id', '=', 'supplier.supplier_id')->orderBy('products.product_id', 'desc')->paginate(5);
+        return view('admin.products', ['products'=>$result, 'category'=>$category, 'supplier'=>$supplier]);
     }
 
     public function AddProduct(Request $rq){

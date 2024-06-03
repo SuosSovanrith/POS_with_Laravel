@@ -12,19 +12,19 @@ class AuthController extends Controller
         $Email = $rq->input('Email');
         $Password = $rq->input('Password');
 
-        $result = DB::table('users')->join('position', 'users.id', '=', 'position.position_id')
+        $result = DB::table('users')->join('position', 'users.user_id', '=', 'position.position_id')
         ->where('users.email', '=', $Email)
         ->where('users.password', '=', $Password)
         ->first();
 
         if(isset($result)){
-            $id = $result->id;
+            $user_id = $result->user_id;
             $name = $result->name;
             $email = $result->email;
             $photo = $result->photo;
             $position_name = $result->position_name;
 
-            session(['auth'=>true, 'id'=>$id, 'name'=>$name, 'email'=>$email, 'photo'=>$photo, 'position_name'=>$position_name]);
+            session(['auth'=>true, 'user_id'=>$user_id, 'name'=>$name, 'email'=>$email, 'photo'=>$photo, 'position_name'=>$position_name]);
             session(['message'=>'Login Successful!  Welcome Back, ' . $name . '.', 'type'=>'success']);
 
             return redirect('/admin/index');

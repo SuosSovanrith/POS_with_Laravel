@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="Email" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="Email" id="Email" placeholder="name@example.com" required>
+                                <input type="email" class="form-control" name="Email" id="Email" placeholder="name@example.com">
                             </div>
                         </div>
                         <div class="row">
@@ -44,12 +44,12 @@
                                 <label for="Address" class="form-label">Address</label>
                                 <input type="text" class="form-control" name="Address" id="Address" placeholder="Eg. Phnom Penh,Cambodia...">
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="Photo" class="form-label">Photo</label>
                                 <input type="file" class="form-control" name="Photo" id="Photo">
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="CurrentPhoto" class="form-label">Current Photo</label> <br>
                                 <input type="text" class="form-control" name="CurrentPhoto" id="CurrentPhoto" value="None" disabled>
