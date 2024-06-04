@@ -162,7 +162,7 @@
                 </a>
               </li>
               <li class="nav-item @yield('sidebar_order')">
-                <a href="/admin/orders">
+                <a href="/admin/order">
                   <span class="icon" style="width:20px; height:20px;">
                     <i class="lni lni-shopify"></i>
                   </span>

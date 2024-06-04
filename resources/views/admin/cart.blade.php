@@ -17,7 +17,7 @@
                             </div>
                         <!-- Customer -->
                             <div class="col-md-6">
-                                <div class="select-style-2">
+                                <div class="select-style-1">
                                     <div class="select-position select-sm">
                                         <select name="Customer_Id" id="Customer_Id">
                                             @foreach ($customer as $item)
@@ -55,7 +55,7 @@
                                         <!-- end table row-->
                                     </thead>
                                     <tbody>
-                                        <?php $total = 0; ?>
+                                        <?php $total = 0; $cart_item = 0; ?>
                                         @foreach ($cart as $item)
                                             <tr>
                                                 <td class="min-width p-3">
@@ -70,7 +70,7 @@
                                                     <p>${{number_format($item->price_out * $item->cart_quantity, 2, '.', ',')}}</p>
                                                 </td>
                                             </tr>   
-                                            <?php $total += $item->price_out * $item->cart_quantity; ?>
+                                            <?php $total += $item->price_out * $item->cart_quantity; $cart_item += 1?>
                                         @endforeach
                                         <!-- end table row -->
                                     </tbody>
@@ -92,10 +92,10 @@
 
                         <div class="row">
                             <div class="col">
-                                <button class="main-btn danger-btn btn-hover BtnClearCart" style="height: 40px;">Clear</button>
+                                <button class="main-btn danger-btn btn-hover BtnClearCart" style="height: 40px;" <?php if($cart_item == 0){ echo('disabled'); } ?> >Clear</button>
                             </div>
                             <div class="col" align="right">
-                                <button href="#0" class="main-btn primary-btn btn-hover" style="height: 40px;">Submit</button>
+                                <button href="#0" class="main-btn primary-btn btn-hover BtnSubmitOrder" style="height: 40px;" <?php if($cart_item == 0){ echo('disabled'); } ?> >Submit</button>
                             </div>
                         </div>
                         <!-- End Total / Btn-->
@@ -150,6 +150,7 @@
 
 @section('script')
 
+<script src="https://unpkg.com/@jarstone/dselect/dist/js/dselect.js"></script>
 <script>
     $.ajaxSetup({
         headers: {
@@ -221,6 +222,28 @@
         if (e.which == 13) {
             $('#SearchSubmit').click();
         }
+    });
+
+        
+    // for add order
+    $(".BtnSubmitOrder").click(function() {
+            var customer_id = $('#Customer_Id').val();
+
+            if (confirm("Are you sure you want to make the order?")) {
+                $.post('/addorder', {
+                    customer_id: customer_id
+                }, function(data) {
+                    window.location.href = "/admin/order";
+                });
+            }
+        });
+
+    // Customer Search Select
+    var customer_search = document.querySelector("#Customer_Id");
+
+    dselect(customer_search, {
+        search: true,
+        maxHeight: '700px'
     });
 
     // for update Product

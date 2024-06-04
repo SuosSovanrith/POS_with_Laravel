@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 // Auth
 Route::get('/', function () {
@@ -39,6 +40,7 @@ Route::middleware(Admin::class)->group(function(){
     Route::get('/admin/supplier', [SupplierController::class, 'SupplierView']);
     Route::get('/admin/customer', [CustomerController::class, 'CustomerView']);
     Route::get('/admin/cart', [CartController::class, 'CartView']);
+    Route::get('/admin/order', [OrderController::class, 'OrderView']);
 });
 
 // User
@@ -78,3 +80,6 @@ Route::post('/updatecartquantity', [CartController::class, 'UpdateCartQuantity']
 Route::post('/deletecart', [CartController::class, 'DeleteCart']);
 Route::post('/clearcart', [CartController::class, 'ClearCart']);
 Route::post('/searchproduct', [CartController::class, 'SearchProduct']);
+
+// Order
+Route::post('/addorder', [OrderController::class, 'AddOrder']);
