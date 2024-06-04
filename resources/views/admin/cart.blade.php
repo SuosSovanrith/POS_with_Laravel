@@ -59,7 +59,8 @@
                                         @foreach ($cart as $item)
                                             <tr>
                                                 <td class="min-width p-3">
-                                                    <p>{{$item->product_name}}</p>
+                                                    <img src="{{asset($item->image)}}" width="60" style="display:inline;">
+                                                    <p  style="display:inline;">{{$item->product_name}}</p>
                                                 </td>
                                                 <td class="min-width p-3">
                                                     <input type="number" class="form-control Cart_Quantity" min="0" name="Cart_Quantity" id="Cart_Quantity" value="{{$item->cart_quantity}}" style="max-width: 52px; display:inline;">
@@ -122,10 +123,13 @@
 
                         <!-- Product Item-->
                         @foreach ($products as $product)
-                            <div class="col-md-3 col-sm-4" style="height: 170px;">
-                                <div class="card-style-2 mb-30" style="height: 170px;">
-                                    <div class="card-image">
-                                        <a href="/addcartimage/{{$product->product_id}}">
+                            <div class="col-md-3 col-sm-4 position-relative mb-3" style="height: 170px;">
+                                <span class="position-absolute top-0 end translate-middle badge rounded-pill bg-danger"  style="z-index:2;">
+                                {{$product->quantity}}
+                                </span>
+                                <div class="card-style-2 mb-30" style="height: 170px; <?php if($product->in_stock < 1) echo(' color:crimson;"'); ?>">
+                                    <div class="card-image" >
+                                        <a href="/addcartimage/{{$product->product_id}}" <?php if($product->in_stock < 1) echo('style="pointer-events: none"'); ?>>
                                             <img src="{{asset($product->image)}}" alt="">
                                         </a>
                                     </div>

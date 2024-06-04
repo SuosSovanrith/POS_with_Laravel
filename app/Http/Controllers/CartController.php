@@ -13,7 +13,7 @@ class CartController extends Controller
     public function CartView(){
 
         $customer = CustomerModel::all();
-        $products = ProductsModel::all();
+        $products = ProductsModel::orderBy('in_stock', 'desc')->get();
 
         $user_id = session('user_id');
 
@@ -44,13 +44,14 @@ class CartController extends Controller
             ->where('user_cart.user_id', '=', $user_id)
             ->first();
             
+            $product = ProductsModel::where('barcode', '=', $barcode)->first();
+
             if(isset($checkInCart)){
                 $checkInCart->cart_quantity = $checkInCart->cart_quantity + 1;
                 $checkInCart->save();
 
                 session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'success']);
             }else{
-                $product = ProductsModel::where('barcode', '=', $barcode)->first();
                 $result = new UserCartModel();
     
                 $result->user_id = $user_id;
@@ -60,37 +61,47 @@ class CartController extends Controller
                 
                 session(['message'=>"Added ". $product->product_name . " to cart.", 'type'=>'success']);
             }
+
+            // Update product quantity 
+            $product->quantity = $product->quantity - 1;
+            $product->save();
+
         }
     }
 
     public function AddCartImage($product_id){
-        
-    $user_id = session('user_id');
+            
+        $user_id = session('user_id');
 
-    // Check if already have product in cart
-    $checkInCart = UserCartModel::join('products', 'user_cart.product_id', '=', 'products.product_id')
-    ->where('products.product_id', '=', $product_id)
-    ->where('user_cart.user_id', '=', $user_id)
-    ->first();
+        // Check if already have product in cart
+        $checkInCart = UserCartModel::join('products', 'user_cart.product_id', '=', 'products.product_id')
+        ->where('products.product_id', '=', $product_id)
+        ->where('user_cart.user_id', '=', $user_id)
+        ->first();
 
-    if(isset($checkInCart)){
-        $checkInCart->cart_quantity = $checkInCart->cart_quantity + 1;
-        $checkInCart->save();
-
-        session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'success']);
-    }else{
         $product = ProductsModel::where('product_id', '=', $product_id)->first();
-        $result = new UserCartModel();
-    
-        $result->user_id = $user_id;
-        $result->product_id = $product_id;
-        $result->cart_quantity = 1;
-        $result->save();
 
-        session(['message'=>"Added ". $product->product_name . " to cart.", 'type'=>'success']);
-    }
+        if(isset($checkInCart)){
+            $checkInCart->cart_quantity = $checkInCart->cart_quantity + 1;
+            $checkInCart->save();
+
+            session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'success']);
+        }else{
+            $result = new UserCartModel();
         
-    return redirect('/admin/cart');
+            $result->user_id = $user_id;
+            $result->product_id = $product_id;
+            $result->cart_quantity = 1;
+            $result->save();
+
+            session(['message'=>"Added ". $product->product_name . " to cart.", 'type'=>'success']);
+        }
+            
+        // Update product quantity 
+        $product->quantity = $product->quantity - 1;
+        $product->save();
+            
+        return redirect('/admin/cart');
 
     }
 
@@ -109,11 +120,20 @@ class CartController extends Controller
             $Cart_Quantity = $rq->Cart_Quantity;
             
             $result = UserCartModel::find($Cart_Id);
+
+            // Get true update quantity
+            $update_quantity = $Cart_Quantity - $result->cart_quantity;
+
             $result->cart_quantity = $Cart_Quantity;
             $result->save();
 
-            $getProduct = ProductsModel::find($result->product_id);
-            session(['message'=>"Updated ". $getProduct->product_name . "'s quantity.", 'type'=>'success']);
+            // Update product quantity 
+            $product = ProductsModel::find($result->product_id);
+            $product->quantity = $product->quantity - $update_quantity;
+            $product->save();
+
+            session(['message'=>"Updated ". $product->product_name . "'s quantity.", 'type'=>'success']);
+            
         }
     }
 
@@ -130,10 +150,16 @@ class CartController extends Controller
             $Cart_Id = $rq->Cart_Id;
             
             $result = UserCartModel::find($Cart_Id);
+            $cart_quantity = $result->cart_quantity;
+
             $result->delete();
 
-            $getProduct = ProductsModel::find($result->product_id);
-            session(['message'=>"Removed " . $getProduct->product_name . " from cart.", 'type'=>'success']);
+            // Update product quantity 
+            $product = ProductsModel::find($result->product_id);
+            $product->quantity = $product->quantity + $cart_quantity;
+            $product->save();
+
+            session(['message'=>"Removed " . $product->product_name . " from cart.", 'type'=>'success']);
         }
     }
 
@@ -141,6 +167,15 @@ class CartController extends Controller
         
         $user_id = session('user_id');
             
+        $cart = UserCartModel::where('user_id', '=', $user_id)->get();
+
+        // update product quantity
+        foreach ($cart as $item){
+            $product = ProductsModel::find($item->product_id);
+            $product->quantity = $product->quantity + $item->cart_quantity;
+            $product->save();   
+        }
+
         $result = UserCartModel::where('user_id', '=', $user_id);
         $result->delete();
 
@@ -152,7 +187,7 @@ class CartController extends Controller
         
         // Search product
         $search = $rq->input('Product_Search');
-        $searchproducts = ProductsModel::where('product_name', 'LIKE', '%'.$search.'%')->get();
+        $searchproducts = ProductsModel::where('product_name', 'LIKE', '%'.$search.'%')->orderBy('in_stock', 'desc')->get();
         
         $customer = CustomerModel::all();
         $user_id = session('user_id');

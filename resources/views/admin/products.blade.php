@@ -47,7 +47,6 @@
                                 <div class="select-style-2">
                                     <div class="select-position select-sm">
                                         <select name="Supplier_Id" id="Supplier_Id">
-                                            <option value="">None</option>
                                             @foreach ($supplier as $item)
                                                 <option value="{{$item->supplier_id}}" >{{$item->supplier_name}}</option>
                                             @endforeach 
@@ -150,7 +149,7 @@
                     </div>
                 </div>
                 <div class="table-wrapper table-responsive">
-                    <table class="table table-sm table-hover table-striped" id="TblMain">
+                    <table class="table table-sm table-hover" id="TblMain">
                         <thead>
                             <tr>
                                 <th class="p-3">Image</th>

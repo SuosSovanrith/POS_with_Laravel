@@ -6,6 +6,7 @@ use App\Models\ProductsModel;
 use App\Models\CategoryModel;
 use App\Models\SupplierModel;
 use Illuminate\Http\Request;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class ProductsController extends Controller
 {
@@ -17,6 +18,11 @@ class ProductsController extends Controller
     }
 
     public function AddProduct(Request $rq){
+   
+        // Barcode
+        $barcode_rand = rand(100000,999999);
+        $generatorPNG = new BarcodeGeneratorPNG();
+        $barcodeimage = $generatorPNG->getBarcode($barcode_rand, $generatorPNG::TYPE_CODE_128);
 
         $result = new ProductsModel();
 
@@ -26,7 +32,8 @@ class ProductsController extends Controller
         $result->Quantity = $rq->Quantity;
         $result->Price_In = $rq->Price_In;
         $result->Price_Out = $rq->Price_Out;
-        $result->Barcode = $rq->Barcode;
+        $result->Barcode = $barcode_rand;
+
         if($result->Quantity > 0){
             $result->In_Stock = 1;
         }else{
@@ -65,7 +72,8 @@ class ProductsController extends Controller
         $result->Quantity = $rq->Quantity;
         $result->Price_In = $rq->Price_In;
         $result->Price_Out = $rq->Price_Out;
-        $result->Barcode = $rq->Barcode;
+        // $result->Barcode = $rq->Barcode;
+
         if($result->Quantity > 0){
             $result->In_Stock = 1;
         }else{
