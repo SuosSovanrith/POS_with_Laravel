@@ -143,6 +143,7 @@
 
                     </div>
                     <!-- End Product List -->
+                    {{ $products->render()}}
                 </div>
             </div>
         <!-- End right side -->

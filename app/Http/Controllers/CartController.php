@@ -12,13 +12,15 @@ class CartController extends Controller
 {
     public function CartView(){
 
-        $customer = CustomerModel::all();
-        $products = ProductsModel::orderBy('in_stock', 'desc')->get();
+        $customer = CustomerModel::select(['customer_id', 'customer_name'])->get();
+        $products = ProductsModel::select(['product_id', 'product_name', 'quantity', 'image', 'in_stock'])->orderBy('in_stock', 'desc')->paginate(12);
 
         $user_id = session('user_id');
 
         $cart = UserCartModel::join('users', 'user_cart.user_id', '=', 'users.user_id')
         ->join('products', 'user_cart.product_id', '=', 'products.product_id')
+        ->select('user_cart.cart_id', 'user_cart.product_id', 'products.product_name', 'products.image', 'user_cart.cart_quantity', 'user_cart.created_at', 'products.price_out')
+        ->latest()
         ->where('users.user_id', '=', $user_id)
         ->get();
 
@@ -44,7 +46,7 @@ class CartController extends Controller
             ->where('user_cart.user_id', '=', $user_id)
             ->first();
             
-            $product = ProductsModel::where('barcode', '=', $barcode)->first();
+            $product = ProductsModel::where('barcode', '=', $barcode)->select(['product_id', 'product_name', 'quantity'])->first();
 
             if(isset($checkInCart)){
                 $checkInCart->cart_quantity = $checkInCart->cart_quantity + 1;
@@ -79,7 +81,7 @@ class CartController extends Controller
         ->where('user_cart.user_id', '=', $user_id)
         ->first();
 
-        $product = ProductsModel::where('product_id', '=', $product_id)->first();
+        $product = ProductsModel::where('product_id', '=', $product_id)->select(['product_id', 'product_name', 'quantity'])->first();
 
         if(isset($checkInCart)){
             $checkInCart->cart_quantity = $checkInCart->cart_quantity + 1;
@@ -167,7 +169,7 @@ class CartController extends Controller
         
         $user_id = session('user_id');
             
-        $cart = UserCartModel::where('user_id', '=', $user_id)->get();
+        $cart = UserCartModel::where('user_id', '=', $user_id)->select(['product_id', 'cart_quantity'])->get();
 
         // update product quantity
         foreach ($cart as $item){
@@ -187,14 +189,16 @@ class CartController extends Controller
         
         // Search product
         $search = $rq->input('Product_Search');
-        $searchproducts = ProductsModel::where('product_name', 'LIKE', '%'.$search.'%')->orderBy('in_stock', 'desc')->get();
+        $searchproducts = ProductsModel::where('product_name', 'LIKE', '%'.$search.'%')->select(['product_id', 'product_name', 'quantity', 'image', 'in_stock'])->orderBy('in_stock', 'desc')->paginate(12);
         
-        $customer = CustomerModel::all();
+        $customer = CustomerModel::select(['customer_id', 'customer_name'])->get();
         $user_id = session('user_id');
 
         $cart = UserCartModel::join('users', 'user_cart.user_id', '=', 'users.user_id')
         ->join('products', 'user_cart.product_id', '=', 'products.product_id')
         ->where('users.user_id', '=', $user_id)
+        ->select('user_cart.cart_id', 'user_cart.product_id', 'products.product_name', 'products.image', 'user_cart.cart_quantity', 'user_cart.created_at', 'products.price_out')
+        ->latest()
         ->get();
 
         return view('admin.cart', ['cart'=>$cart, 'customer'=>$customer, 'products'=>$searchproducts]);

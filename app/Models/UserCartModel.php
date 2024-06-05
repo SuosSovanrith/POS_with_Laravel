@@ -14,7 +14,7 @@ class UserCartModel extends Model
     protected $fillable = [
         'user_id',
         'product_id',
-        'quantity',
+        'cart_quantity',
     ];
 
     protected  $primaryKey = 'cart_id';
