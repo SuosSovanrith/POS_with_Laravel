@@ -6,7 +6,7 @@ use App\Models\ProductsModel;
 use App\Models\CategoryModel;
 use App\Models\SupplierModel;
 use Illuminate\Http\Request;
-use Picqer\Barcode\BarcodeGeneratorPNG;
+use Picqer;
 
 class ProductsController extends Controller
 {
@@ -17,13 +17,20 @@ class ProductsController extends Controller
         return view('admin.products', ['products'=>$result, 'category'=>$category, 'supplier'=>$supplier]);
     }
 
+    public function GenBarcode(){
+        $barcode_rand = rand(1000000,1999999);
+        $result = ProductsModel::select('barcode')->get();
+
+        if($result->contains('barcode', $barcode_rand)){
+            $this->GenBarcode();
+        }
+
+        return $barcode_rand;
+
+    }
+
     public function AddProduct(Request $rq){
    
-        // Barcode
-        $barcode_rand = rand(100000,999999);
-        $generatorPNG = new BarcodeGeneratorPNG();
-        $barcodeimage = $generatorPNG->getBarcode($barcode_rand, $generatorPNG::TYPE_CODE_128);
-
         $result = new ProductsModel();
 
         $result->Product_Name = $rq->Product_Name;
@@ -32,7 +39,16 @@ class ProductsController extends Controller
         $result->Quantity = $rq->Quantity;
         $result->Price_In = $rq->Price_In;
         $result->Price_Out = $rq->Price_Out;
-        $result->Barcode = $barcode_rand;
+
+        // Barcode
+        if(isset($rq->Barcode)){
+            $barcode_rand = $this->GenBarcode();  
+            $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
+            $barcodeimage = $generator->getBarcode($barcode_rand, $generator::TYPE_CODE_128);
+
+            $result->Barcode = $barcode_rand;
+            $result->barcode_image = $barcodeimage;
+        }
 
         if($result->Quantity > 0){
             $result->In_Stock = 1;
@@ -72,7 +88,15 @@ class ProductsController extends Controller
         $result->Quantity = $rq->Quantity;
         $result->Price_In = $rq->Price_In;
         $result->Price_Out = $rq->Price_Out;
-        // $result->Barcode = $rq->Barcode;
+
+        if(isset($rq->Barcode)){
+            $barcode_rand = $this->GenBarcode();  
+            $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
+            $barcodeimage = $generator->getBarcode($barcode_rand, $generator::TYPE_CODE_128);
+
+            $result->Barcode = $barcode_rand;
+            $result->barcode_image = $barcodeimage;
+        }
 
         if($result->Quantity > 0){
             $result->In_Stock = 1;
@@ -112,9 +136,9 @@ class ProductsController extends Controller
     }
 
     // View Single Product
-    public function ViewProduct(Request $rq){
-        $result = ProductsModel::find($rq->id);
+    // public function ViewProduct(Request $rq){
+    //     $result = ProductsModel::find($rq->id);
 
-        return view('admin.productview', ['products'=>$result]);
-    }
+    //     return view('admin.productview', ['products'=>$result]);
+    // }
 }

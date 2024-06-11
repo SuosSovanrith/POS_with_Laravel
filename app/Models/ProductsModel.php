@@ -19,6 +19,7 @@ class ProductsModel extends Model
         'price_in',
         'price_out',
         'barcode',
+        'barcode_image',
         'in_stock',
         'image',
     ];

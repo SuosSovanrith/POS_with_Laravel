@@ -14,6 +14,7 @@ class OrderModel extends Model
     protected $fillable = [
         'customer_id',
         'user_id',
+        'total'
     ];
 
     protected  $primaryKey = 'order_id';

@@ -24,7 +24,7 @@
                     </div>        
                 @endif
 
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col-md-6">
                         <h3>Orders</h3>
                     </div>
@@ -32,6 +32,27 @@
                         <div align="right"><a href="/admin/cart" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Order</b></a></div>
                     </div>
                 </div>
+                
+                <div class="row">
+                    <div class="col-md-7"></div>
+                    <div class="col-md-5">
+                        <form action="/searchorder" method="post" id="SearchForm">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <input type="date" class="form-control border border-dark" name="Start_Date" value="<?php if(isset($start_date)){echo($start_date);}?>">
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="date" class="form-control border border-dark" name="End_Date" value="<?php if(isset($end_date)){echo($end_date);}?>">
+                                </div>  
+                                <div class="col-md-2">
+                                    <input type="submit" class="btn btn-primary" id="SearchSubmit" value="Filter">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="table-wrapper table-responsive">
                     <table class="table table-sm table-hover table-striped" id="TblMain">
                         <thead>
@@ -39,6 +60,11 @@
                                 <th class="p-3">ID</th>
                                 <th class="p-3">Customer</th>
                                 <th class="p-3">User</th>
+                                <th class="p-3">Total</th>
+                                <th class="p-3">Recieved</th>
+                                <th class="p-3">Status</th>
+                                <th class="p-3">To Pay</th>
+                                <th class="p-3">Time</th>
                                 <th class="p-3">Action</th>
                             </tr>
                             <!-- end table row-->
@@ -50,10 +76,33 @@
                                     <p>{{$order->order_id}}</p>
                                 </td>
                                 <td class="min-width p-3"  style="width: 150px;">
-                                    <p>{{$order->customer_id}}</p>
+                                    <p>{{$order->customer_name}}</p>
                                 </td>
                                 <td class="min-width p-3">
-                                    <p>{{$order->user_id}}</p>
+                                    <p>{{$order->name}}</p>
+                                </td>
+                                <td class="min-width p-3">
+                                    <p>${{number_format($order->total, 2, '.', ',')}}</p>
+                                </td>
+                                <td class="min-width p-3">
+                                    <p>${{number_format($order->amount, 2, '.', ',')}}</p>
+                                </td>
+                                <td class="min-width p-3">
+                                    @if ($order->amount == 0)
+                                        <span class="status-btn close-btn text-center" style="width: 80px;">Unpaid</span>
+                                    @elseif ($order->amount < $order->total) 
+                                        <span class="status-btn warning-btn text-center" style="width: 80px;">Partial</span>
+                                    @elseif ($order->amount > $order->total) 
+                                        <span class="status-btn info-btn text-center" style="width: 80px;">Change</span>
+                                    @else
+                                        <span class="status-btn success-btn text-center" style="width: 80px;">Paid</span>
+                                    @endif
+                                </td>
+                                <td class="min-width p-3">
+                                    <p>${{number_format($order->total-$order->amount, 2, '.', ',')}}</p>
+                                </td>
+                                <td class="min-width p-3">
+                                    <p>{{$order->created_at}}</p>
                                 </td>
                                 <td class="p-3">
                                     <a href="#" class="BtnEditProduct text-primary" style="width: 20px;"><i class="lni lni-pencil-alt"></i></a>

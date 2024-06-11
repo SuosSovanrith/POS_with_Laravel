@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigInteger("category_id")->nullable();
             $table->bigInteger("supplier_id")->nullable();
             $table->string("barcode")->unique();
+            $table->text("barcode_image")->nullable();
             $table->integer("quantity")->default(0);
             $table->decimal("price_in", 8, 2)->default(0);
             $table->decimal("price_out", 8, 2)->default(0);

@@ -61,8 +61,11 @@
                                 <input type="number" class="form-control" min="0" name="Quantity" id="Quantity" value="0" required>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label for="Barcode" class="form-label">Barcode</label>
-                                <input type="text" class="form-control" min="0" name="Barcode" id="Barcode" placeholder="Eg. 12345" required>
+                                <br/>
+                                <div class="form-check form-switch toggle-switch">
+                                    <label class="form-check-label" for="Barcode">Barcode</label>
+                                    <input class="form-check-input" type="checkbox" name="Barcode" id="Barcode" value="1" checked required>
+                                </div>
                             </div>
                             <!-- <div class="mb-3 col-md-6">
                                 <label for="In_Stock" class="form-label">In Stock</label>
@@ -152,15 +155,15 @@
                     <table class="table table-sm table-hover" id="TblMain">
                         <thead>
                             <tr>
-                                <th class="p-3">Image</th>
-                                <th class="p-3">ID</th>
-                                <th class="p-3">Name</th>
-                                <th class="p-3">Barcode</th>
-                                <th class="p-3">Quantity</th>
-                                <th class="p-3">Price In</th>
-                                <th class="p-3">Price Out</th>
-                                <th class="p-3">In Stock</th>
-                                <th class="p-3">Action</th>
+                                <th class="p-2">Image</th>
+                                <th class="p-2">ID</th>
+                                <th class="p-2">Name</th>
+                                <th class="p-2">Barcode</th>
+                                <th class="p-2">Quantity</th>
+                                <th class="p-2">Price In</th>
+                                <th class="p-2">Price Out</th>
+                                <th class="p-2">In Stock</th>
+                                <th class="p-2">Action</th>
                             </tr>
                             <!-- end table row-->
                         </thead>
@@ -177,7 +180,8 @@
                                 <td class="min-width p-3"  style="width: 150px;">
                                     <p>{{$product->product_name}}</p>
                                 </td>
-                                <td class="min-width p-3">
+                                <td align="center" class="min-width p-3">
+                                    <?php echo($product->barcode_image) ?>
                                     <p>{{$product->barcode}}</p>
                                 </td>
                                 <td class="min-width p-3">
@@ -207,6 +211,10 @@
                                 </td>
                                 <td class="min-width p-3" style="display: none;">
                                     <p>{{$product->supplier_name}}</p>
+                                </td> 
+                                </td>
+                                <td class="min-width p-3" style="display: none;">
+                                    <?php echo($product->barcode_image) ?>
                                 </td> 
                                 <td class="p-3">
                                     <a href="#" class="BtnEditProduct text-primary" style="width: 20px;"><i class="lni lni-pencil-alt"></i></a>
@@ -253,7 +261,7 @@
             var Image = current_row.find('td').eq(0).text().trim();
             var Id = current_row.find('td').eq(1).text().trim();
             var Product_Name = current_row.find('td').eq(2).text().trim();
-            var Barcode = current_row.find('td').eq(3).text().trim();
+            // var Barcode = current_row.find('td').eq(3).text().trim();
             var Quantity = current_row.find('td').eq(4).text().trim();
             var Price_In = current_row.find('td').eq(5).text().trim().slice(1);
             var Price_Out = current_row.find('td').eq(6).text().trim().slice(1);
@@ -265,7 +273,8 @@
             $("#Product_Name").val(Product_Name);
             $("#Category_Id option[value='" + Category_Id + "']").attr("selected","selected");
             $("#Supplier_Id option[value='" + Supplier_Id + "']").attr("selected","selected");
-            $("#Barcode").val(Barcode);
+            $("#Barcode").prop('required', false);
+            $("#Barcode").prop("checked", false );
             $("#Quantity").val(Quantity);
             $("#Price_In").val(Price_In);
             $("#Price_Out").val(Price_Out);
@@ -306,7 +315,8 @@
         $("#Supplier_Id option:selected").each(function () {
                $(this).removeAttr('selected'); 
             });
-        $("#Barcode").val("");
+        $("#Barcode").prop('required', true);
+        $("#Barcode").prop("checked", true );
         $("#Quantity").val("");
         $("#Price_In").val("");
         $("#Price_Out").val("");
@@ -327,26 +337,26 @@
         var Price_Out = current_row.find('td').eq(6).text().trim().slice(1);
         var Category_Name = current_row.find('td').eq(10).text().trim();
         var Supplier_Name = current_row.find('td').eq(11).text().trim();
+        var BarcodeImage = current_row.find('td').eq(12).html();
 
         if(Quantity < 1){
             In_Stock = "<span class='status-btn close-btn text-center'>Out of Stock</span>";
         }else{
             In_Stock = " <span class='status-btn success-btn text-center'>In Stock</span>";
         }
-        
+        console.log(BarcodeImage);
         $("#ProductViewCard").html(
         '<div class="col-md-6 justify-content-center p-3">' +
         '<img src="http://127.0.0.1:8000/'+  Image + '" class="img-fluid rounded-start" alt="Product Image" width="100%">' +
         '</div>' +
-        '<div class="col-md-1">' +
-        '</div>' + 
         '<div class="col-md-5 p-2 pt-5 ">' +
         '<h2>' +  Id + '. ' + Product_Name + '</h2> <br/>' +
         '<p>' +
         '<b>Category: </b> ' + Category_Name + ' <br/>' +
         '<b>Supplier: </b> ' + Supplier_Name + ' <br/>' +
-        '<b>Barcode: </b> ' + Barcode + ' <br/>' +
-        '<b>Quantity: </b> ' + Quantity + ' <br/>' +
+        '<b>Barcode: </b> ' + Barcode + 
+        BarcodeImage +
+        ' <br/>' +'<b>Quantity: </b> ' + Quantity + ' <br/>' +
         '<b>Price In: </b> $' + Price_In + ' <br/>' +
         '<b>Price Out: </b> $' + Price_Out + ' <br/><br/>' +
         '<b>In Stock: </b> ' + In_Stock +

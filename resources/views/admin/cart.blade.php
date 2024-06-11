@@ -72,7 +72,9 @@
                                                 </td>
                                             </tr>   
                                             <?php $total += $item->price_out * $item->cart_quantity; $cart_item += 1?>
-                                        @endforeach
+                                            @endforeach
+
+                                        <input type="hidden" id="TotalAmount" value="<?=$total?>"/>
                                         <!-- end table row -->
                                     </tbody>
                                 </table>
@@ -123,18 +125,25 @@
 
                         <!-- Product Item-->
                         @foreach ($products as $product)
-                            <div class="col-md-3 col-sm-4 position-relative mb-3" style="height: 170px;">
-                                <span class="position-absolute top-0 end translate-middle badge rounded-pill bg-danger"  style="z-index:2;">
-                                {{$product->quantity}}
-                                </span>
-                                <div class="card-style-2 mb-30" style="height: 170px; <?php if($product->in_stock < 1) echo(' color:crimson;"'); ?>">
+                            <div class="col-md-3 col-lg-2 position-relative">
+                                @if ($product->in_stock == 1)
+                                    <span class="position-absolute top-0 end translate-middle badge rounded-pill bg-danger"  style="z-index:2;">
+                                    {{$product->quantity}}
+                                    </span>   
+                                @endif
+                                <div class="card-style-2 mb-30 position-relative px-0">
+                                    @if ($product->in_stock == 0)
+                                        <span class="position-absolute bottom-50 text-center" style="background-color: rgba(255, 255, 255, 0.7);">
+                                            <h4 class="text-danger">Out of Stock</h4>
+                                        </span>
+                                    @endif      
                                     <div class="card-image" >
                                         <a href="/addcartimage/{{$product->product_id}}" <?php if($product->in_stock < 1) echo('style="pointer-events: none"'); ?>>
                                             <img src="{{asset($product->image)}}" alt="">
                                         </a>
                                     </div>
                                     <div class="card-content">
-                                        <h4 align="center">{{$product->product_name}}</h4>
+                                        <h5 align="center">{{$product->product_name}}</h5>
                                     </div>
                                 </div>
                             </div>      
@@ -232,15 +241,32 @@
         
     // for add order
     $(".BtnSubmitOrder").click(function() {
-            var customer_id = $('#Customer_Id').val();
+        Swal.fire({
+            title: "Enter Recieved Amount",
+            input: "text",
+            inputAttributes: {
+                autocapitalize: "off"
+            },
+            inputValue: $('#TotalAmount').val(),
+            showCancelButton: true,
+            confirmButtonText: "Submit",
+            showLoaderOnConfirm: true,
+            preConfirm: async (amount) => {
+                var customer_id = $('#Customer_Id').val();
 
-            if (confirm("Are you sure you want to make the order?")) {
                 $.post('/addorder', {
-                    customer_id: customer_id
+                    customer_id: customer_id,
+                    amount: amount
                 }, function(data) {
                     window.location.href = "/admin/order";
                 });
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+            if (result.isConfirmed) {
             }
+            });
+
         });
 
     // Customer Search Select

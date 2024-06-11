@@ -39,6 +39,8 @@ class CartController extends Controller
 
             $barcode = $rq->Barcode;
             $user_id = session('user_id');
+
+            $product = ProductsModel::where('barcode', '=', $barcode)->select(['product_id', 'product_name', 'quantity'])->first();
             
             // Check if already have product in cart
             $checkInCart = UserCartModel::join('products', 'user_cart.product_id', '=', 'products.product_id')
@@ -46,22 +48,28 @@ class CartController extends Controller
             ->where('user_cart.user_id', '=', $user_id)
             ->first();
             
-            $product = ProductsModel::where('barcode', '=', $barcode)->select(['product_id', 'product_name', 'quantity'])->first();
-
             if(isset($checkInCart)){
                 $checkInCart->cart_quantity = $checkInCart->cart_quantity + 1;
                 $checkInCart->save();
-
-                session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'success']);
-            }else{
-                $result = new UserCartModel();
-    
-                $result->user_id = $user_id;
-                $result->product_id = $product->product_id;
-                $result->cart_quantity = 1;
-                $result->save();
                 
-                session(['message'=>"Added ". $product->product_name . " to cart.", 'type'=>'success']);
+                session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'danger']);
+                }else{
+                    
+                
+                if($product->quantity < 1){
+                    session(['message'=>$product->product_name . " out of stock.", 'type'=>'danger']);
+
+                }else{
+                    $result = new UserCartModel();
+        
+                    $result->user_id = $user_id;
+                    $result->product_id = $product->product_id;
+                    $result->cart_quantity = 1;
+                    $result->save();
+                    
+                    session(['message'=>"Added ". $product->product_name . " to cart.", 'type'=>'success']);
+                }
+
             }
 
             // Update product quantity 
@@ -74,6 +82,8 @@ class CartController extends Controller
     public function AddCartImage($product_id){
             
         $user_id = session('user_id');
+        
+        $product = ProductsModel::where('product_id', '=', $product_id)->select(['product_id', 'product_name', 'quantity'])->first();
 
         // Check if already have product in cart
         $checkInCart = UserCartModel::join('products', 'user_cart.product_id', '=', 'products.product_id')
@@ -81,14 +91,14 @@ class CartController extends Controller
         ->where('user_cart.user_id', '=', $user_id)
         ->first();
 
-        $product = ProductsModel::where('product_id', '=', $product_id)->select(['product_id', 'product_name', 'quantity'])->first();
-
         if(isset($checkInCart)){
             $checkInCart->cart_quantity = $checkInCart->cart_quantity + 1;
             $checkInCart->save();
-
+            
             session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'success']);
+
         }else{
+            
             $result = new UserCartModel();
         
             $result->user_id = $user_id;
@@ -97,6 +107,7 @@ class CartController extends Controller
             $result->save();
 
             session(['message'=>"Added ". $product->product_name . " to cart.", 'type'=>'success']);
+            
         }
             
         // Update product quantity 
@@ -126,16 +137,24 @@ class CartController extends Controller
             // Get true update quantity
             $update_quantity = $Cart_Quantity - $result->cart_quantity;
 
-            $result->cart_quantity = $Cart_Quantity;
-            $result->save();
-
-            // Update product quantity 
+            // Check if there are enough in stock
             $product = ProductsModel::find($result->product_id);
-            $product->quantity = $product->quantity - $update_quantity;
-            $product->save();
 
-            session(['message'=>"Updated ". $product->product_name . "'s quantity.", 'type'=>'success']);
-            
+            if($product->quantity < $update_quantity){
+                session(['message'=>"Not enough ". $product->product_name . " in stock (" . $product->quantity . ")", 'type'=>'danger']);
+
+            }else{
+
+                $result->cart_quantity = $Cart_Quantity;
+                $result->save();
+    
+                // Update product quantity 
+                $product->quantity = $product->quantity - $update_quantity;
+                $product->save();
+    
+                session(['message'=>"Updated ". $product->product_name . "'s quantity.", 'type'=>'success']);
+
+            }
         }
     }
 
