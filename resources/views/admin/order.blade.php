@@ -2,7 +2,6 @@
 
 @section('title', 'Orders')
 
-@section('sidebar_orders', 'active')
 @section('sidebar_order', 'active')
 
 @section('content')
@@ -53,10 +52,10 @@
                     </div>
                 </div>
 
-                <div class="table-wrapper table-responsive">
+                <div class="table-wrapper table-responsive mt-3">
                     <table class="table table-sm table-hover table-striped" id="TblMain">
                         <thead>
-                            <tr>
+                            <tr class="bg-secondary">
                                 <th class="p-3">ID</th>
                                 <th class="p-3">Customer</th>
                                 <th class="p-3">User</th>
@@ -70,6 +69,7 @@
                             <!-- end table row-->
                         </thead>
                         <tbody>
+                            <?php $total_report = 0;  $total_received = 0;?>
                             @foreach($orders as $order)
                             <tr>
                                 <td class="min-width p-3">
@@ -110,7 +110,21 @@
                                     <a href="#" class="BtnDeleteProduct text-danger" style="width: 20px;"><i class="lni lni-trash-can"></i></a>
                                 </td>
                             </tr>
+
+                            <?php $total_report += $order->total; $total_received += $order->amount; ?>
+
                             @endforeach
+                            <tr class="bg-secondary">
+                                <td  class="p-3"></td>
+                                <td  class="p-3"></td>
+                                <td  class="p-3"></td>
+                                <td  class="p-3"><h5>${{ $total_report }}</h5></td>
+                                <td  class="p-3"><h5>${{ $total_received }}</h5></td>
+                                <td  class="p-3"></td>
+                                <td  class="p-3"></td>
+                                <td  class="p-3"></td>
+                                <td  class="p-3"></td>
+                            </tr>
                             <!-- end table row -->
                         </tbody>
                     </table>
@@ -134,7 +148,7 @@
             <div class="col-12">
                 <div class="row">
                         <div class="col-lg-12"  id="PrintReceipt">
-                            <div class="card">
+                            {{-- <div class="card">
                                 <div class="card-body">
                                     <div class="invoice-title">
                                         <h4 class="float-end font-size-15"><span class="badge bg-success font-size-12 ms-2">Paid</span></h4>
@@ -226,7 +240,7 @@
                                         </div><!-- end table responsive -->
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div><!-- end col -->
                         <div class="d-print-none p-3">
                             <div class="float-end">
@@ -250,187 +264,72 @@
         }
     });
     
-    // for add cart
-    // $('#ScanBarcode').keypress(function (e) {
-    //     if (e.which == 13) {
-    //         var Barcode = $("#ScanBarcode").val();
-    //         $.post('/addcart', {
-    //                 Barcode: Barcode
-    //             }, function(data) {
-    //                 window.location.href = "/admin/cart";
-    //         });
-    //     }
-    // });
-    
-    // // for update quantity
-    // $('.Cart_Quantity').focusin(function () {
-    //     var Cart_Quantity = $(this).val();
-
-    //     $('.Cart_Quantity').focusout(function () {
-    //         $(this).val(Cart_Quantity)
-    //     });
-
-    // });
-
-    // $('.Cart_Quantity').keypress(function (e) {
-    //     if (e.which == 13) {
-    //         var Cart_Quantity = $(this).val();
-    //         var current_row = $(this).closest('tr');
-    //         var Cart_Id = current_row.find('td').eq(1).text().trim();
-
-    //         $.post('/updatecartquantity', {
-    //             Cart_Quantity: Cart_Quantity,
-    //             Cart_Id: Cart_Id
-    //         }, function(data) {
-    //             window.location.href = "/admin/cart";
-    //         });
-    //     }
-    // });
-    
-    // // for delete cart
-    //     $(".BtnDeleteCart").click(function() {
-    //         var current_row = $(this).closest('tr');
-    //         var Cart_Id = current_row.find('td').eq(1).text().trim();
-
-    //         if (confirm("Are you sure you want to delete?")) {
-    //             $.post('/deletecart', {
-    //                 Cart_Id: Cart_Id
-    //             }, function(data) {
-    //                 window.location.href = "/admin/cart";
-    //             });
-    //         }
-    //     });
-    //     $(".BtnClearCart").click(function() {
-    //         if (confirm("Are you sure you clear cart?")) {
-    //             $.post('/clearcart', {
-    //             }, function(data) {
-    //                 window.location.href = "/admin/cart";
-    //             });
-    //         }
-    //     });
-    
-    // // for search product
-    // $('#Product_Search').keypress(function (e) {
-    //     if (e.which == 13) {
-    //         $('#SearchSubmit').click();
-    //     }
-    // });
-
-    // // Customer Search Select
-    // var customer_search = document.querySelector("#Customer_Id");
-
-    // dselect(customer_search, {
-    //     search: true,
-    //     maxHeight: '700px'
-    // });
-
-    // // for update Product
-    // $(function() {
-
-    //     // auto fill form of Product from edit id
-    //     $("#TblMain").on('click', '.BtnEditProduct', function() {
-    //         $("#FormModal").modal("show");
-
-    //         var current_row = $(this).closest('tr');
-    //         var Image = current_row.find('td').eq(0).text().trim();
-    //         var Id = current_row.find('td').eq(1).text().trim();
-    //         var Product_Name = current_row.find('td').eq(2).text().trim();
-    //         var Barcode = current_row.find('td').eq(3).text().trim();
-    //         var Quantity = current_row.find('td').eq(4).text().trim();
-    //         var Price_In = current_row.find('td').eq(5).text().trim().slice(1);
-    //         var Price_Out = current_row.find('td').eq(6).text().trim().slice(1);
-    //         var Category_Id = current_row.find('td').eq(8).text().trim();
-    //         var Supplier_Id = current_row.find('td').eq(9).text().trim();
-
-    //         $('#CurrentImage').val(Image);
-    //         $("#Id").val(Id);
-    //         $("#Product_Name").val(Product_Name);
-    //         $("#Category_Id option[value='" + Category_Id + "']").attr("selected","selected");
-    //         $("#Supplier_Id option[value='" + Supplier_Id + "']").attr("selected","selected");
-    //         $("#Barcode").val(Barcode);
-    //         $("#Quantity").val(Quantity);
-    //         $("#Price_In").val(Price_In);
-    //         $("#Price_Out").val(Price_Out);
-    //     });
-
-    // });
-
-    // // for delete Product
-    // $(function() {
-
-    //     $("#TblMain").on('click', '.BtnDeleteProduct', function() {
-    //         var current_row = $(this).closest('tr');
-    //         var Id = current_row.find('td').eq(1).text();
-
-    //         if (confirm("Are you sure you want to delete?")) {
-    //             $.post('/deleteproduct', {
-    //                 id: Id
-    //             }, function(data) {
-    //                 window.location.href = "/admin/products";
-    //             });
-    //         }
-    //     });
-    // });
-
-    // // open popup form
-    // $("#AddPopup").click(function() {
-    //     $("#FormModal").modal("show");
-    // });
-    
-    // // clear form
-    // $(".btn-close").click(function() {
-    //     $('#CurrentImage').val("");
-    //     $("#Id").val("");
-    //     $("#Product_Name").val("");
-    //     $("#Category_Id option[value='']").attr("selected","selected");
-    //     $("#Supplier_Id option[value='']").attr("selected","selected");
-    //     $("#Barcode").val("");
-    //     $("#Quantity").val("");
-    //     $("#Price_In").val("");
-    //     $("#Price_Out").val("");
-    // });
-    
-    
     // open print receipt
     $(".BtnPrintReceipt").click(function() {
         $("#FormModalReceipt").modal("show");
 
         var current_row = $(this).closest('tr');
-        var Image = current_row.find('td').eq(0).text().trim();
-        var Id = current_row.find('td').eq(1).text().trim();
-        var Product_Name = current_row.find('td').eq(2).text().trim();
-        var Barcode = current_row.find('td').eq(3).text().trim();
-        var Quantity = current_row.find('td').eq(4).text().trim();
-        var Price_In = current_row.find('td').eq(5).text().trim().slice(1);
-        var Price_Out = current_row.find('td').eq(6).text().trim().slice(1);
-        var Category_Name = current_row.find('td').eq(10).text().trim();
-        var Supplier_Name = current_row.find('td').eq(11).text().trim();
+        var order_id = current_row.find('td').eq(0).text().trim();
+        var total = current_row.find('td').eq(3).text().trim();
+        var received = current_row.find('td').eq(4).text().trim();
+        var status = current_row.find('td').eq(5).text().trim();
+        var to_pay = current_row.find('td').eq(6).text().trim();
+        var time = current_row.find('td').eq(7).text().trim();
+        var status_color = "";
 
-        if(Quantity < 1){
-            In_Stock = "<span class='status-btn close-btn text-center'>Out of Stock</span>";
-        }else{
-            In_Stock = " <span class='status-btn success-btn text-center'>In Stock</span>";
+        if(status=='Paid'){
+            status_color = "success";
+        }else if(status=='Unpaid'){
+            status_color = "danger";
+        }else if(status=='Partial'){
+            status_color = "warning";
+        }else if(status=='Change'){
+            status_color = "info";
         }
+
+        var receiptData = '<div class="card"><div class="card-body"><div class="invoice-title">' +
+                            '<h4 class="float-end font-size-15"><span class="badge bg-'+status_color+' font-size-12 ms-2">' + status + '</span></h4>' +
+                            '<div class="mb-4">' +
+                            '<h2 class="mb-1 text-muted">POS Ltd</h2>' +
+                            '</div><div class="text-muted"><p class="mb-1">#1235A Phnom Penh, Cambodia</p><p class="mb-1"><i class="lni lni-envelope"></i> pos@email.com</p><p><i class="lni lni-phone"></i> 069-69-6969</p></div></div>' +
+                            '<hr class="mt-2 mb-2"><div class="row"><div class="col-sm-6"><div class="text-muted"><div class="mt-4"><h5 class="font-size-15 mb-1">Order No:</h5><p>' + order_id + '</p></div></div></div>' +
+                            '<div class="col-sm-6"><div class="text-muted text-sm-end"><div class="mt-4"><h5 class="font-size-15 mb-1">Order Date:</h5><p>' + time + '</p></div></div></div></div>' +
+                            '<div class="py-2"><h5 class="font-size-15">Order Summary</h5><div class="table-responsive"><table class="table table-sm align-middle table-nowrap mb-0 table-striped">' +
+                            '<thead><tr><th>Item</th><th>Price</th><th>Quantity</th><th class="text-end" style="width: 120px;">Total</th></tr></thead> <tbody>';
         
-        $("#ProductViewCard").html(
-        '<div class="col-md-6 justify-content-center p-3">' +
-        '<img src="http://127.0.0.1:8000/'+  Image + '" class="img-fluid rounded-start" alt="Product Image" width="100%">' +
-        '</div>' +
-        '<div class="col-md-1">' +
-        '</div>' + 
-        '<div class="col-md-5 p-2 pt-5 ">' +
-        '<h2>' +  Id + '. ' + Product_Name + '</h2> <br/>' +
-        '<p>' +
-        '<b>Category: </b> ' + Category_Name + ' <br/>' +
-        '<b>Supplier: </b> ' + Supplier_Name + ' <br/>' +
-        '<b>Barcode: </b> ' + Barcode + ' <br/>' +
-        '<b>Quantity: </b> ' + Quantity + ' <br/>' +
-        '<b>Price In: </b> $' + Price_In + ' <br/>' +
-        '<b>Price Out: </b> $' + Price_Out + ' <br/><br/>' +
-        '<b>In Stock: </b> ' + In_Stock +
-        '</p>' +
-        '</div>'
-        );
+        $.ajax({
+            url: '/getorderitem/'+order_id,
+            type: 'GET',
+            dataType: 'json', // Assuming your backend returns JSON data
+            success: function(response) {
+                console.log(response);
+
+                $.each(response, function(index, item) {
+                    receiptData += '<tr><td><div><h5 class="text-truncate font-size-14 mb-1">' + item.product_name + '</h5></div></td>' +
+                        '<td> $' +  parseFloat(item.order_price)+ '</td>' +
+                        '<td class="text-center">' + item.order_quantity + '</td>' +
+                                    '<td class="text-end">$' + parseFloat(item.order_price * item.order_quantity) + '</td></tr>';
+                });
+
+                if(parseFloat(received.slice(1)) > parseFloat(total.slice(1))){
+                    var change = parseFloat(received.slice(1)) - parseFloat(total.slice(1));
+                }else{
+                    var change = 0;
+                }
+
+                receiptData += '<tr><th scope="row" colspan="3" class="text-end">Total</th><td class="text-end"><h4 class="m-0 fw-semibold">' + total + '</h4></td></tr>' +
+                                '<tr><th scope="row" colspan="3" class="text-end">Cash</th><td class="text-end"><h4 class="m-0 fw-semibold">' + received + '</h4></td></tr>' +
+                                '<tr><th scope="row" colspan="3" class="text-end">Change</th><td class="text-end"><h4 class="m-0 fw-semibold">$' + change + '</h4></td></tr>' +
+                                '</tbody></table></div></div><hr class="mt-2 mb-2"><p class="mt-1">**Thank you for purchasing at our store!!**</p></div></div>';
+
+                $("#PrintReceipt").html(receiptData);   
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                // Handle error here
+            }
+        });
+        
 
     });
 

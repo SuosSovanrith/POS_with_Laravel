@@ -2,7 +2,6 @@
 
 @section('title', 'Carts')
 
-@section('sidebar_orders', 'active')
 @section('sidebar_cart', 'active')
 
 @section('content')
@@ -126,13 +125,13 @@
                         <!-- Product Item-->
                         @foreach ($products as $product)
                             <div class="col-md-3 col-lg-2 position-relative">
-                                @if ($product->in_stock == 1)
+                                @if ($product->quantity > 0)
                                     <span class="position-absolute top-0 end translate-middle badge rounded-pill bg-danger"  style="z-index:2;">
                                     {{$product->quantity}}
                                     </span>   
                                 @endif
                                 <div class="card-style-2 mb-30 position-relative px-0">
-                                    @if ($product->in_stock == 0)
+                                    @if ($product->quantity == 0)
                                         <span class="position-absolute bottom-50 text-center" style="background-color: rgba(255, 255, 255, 0.7);">
                                             <h4 class="text-danger">Out of Stock</h4>
                                         </span>

@@ -2,7 +2,6 @@
 
 @section('title', 'Users')
 
-@section('sidebar_people', 'active')
 @section('sidebar_users', 'active')
 
 @section('content')

@@ -27,7 +27,7 @@ class AuthController extends Controller
             session(['auth'=>true, 'user_id'=>$user_id, 'name'=>$name, 'email'=>$email, 'photo'=>$photo, 'position_name'=>$position_name]);
             session(['message'=>'Login Successful!  Welcome Back, ' . $name . '.', 'type'=>'success']);
 
-            return redirect('/admin/index');
+            return redirect('/admin/cart');
         }else{
 
             session(['message'=>'Login Failed!  Please try again.', 'type'=>'danger']);

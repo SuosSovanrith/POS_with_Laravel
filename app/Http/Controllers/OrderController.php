@@ -23,22 +23,11 @@ class OrderController extends Controller
         return view('admin.order', ['orders'=>$orders]);
     }
 
-    public function getTotal($order_id){
-        $orderitem = OrderItemModel::where('order_id', $order_id)->get();
-        $total = 0;
-
-        foreach($orderitem as $item){
-            $total += $item->order_price;
-        }
-
-        return $total;
-    }
-
     public function AddOrder(Request $rq){
 
         $validator = Validator::make($rq->all(),[
-            'Customer_ID' => 'nullable|integer|exists:customer,customer_id',
-            'amount' => 'required|numeric|min:0',
+            'customer_id' => 'nullable|integer|exists:customer,customer_id',
+            'amount' => 'required|numeric|min:0'
         ]);
 
         if ($validator->fails()) {
@@ -98,5 +87,10 @@ class OrderController extends Controller
         ->latest()->paginate(10);
 
         return view('admin.order', ['orders'=>$orders, 'start_date'=>$rq->Start_Date, 'end_date'=>$rq->End_Date]);
+    }
+
+    public function GetOrderItem($order_id){
+
+        return response()->json(OrderItemModel::join('products', 'orderitem.product_id', '=', 'products.product_id')->where('orderitem.order_id', $order_id)->get(), 200);
     }
 }

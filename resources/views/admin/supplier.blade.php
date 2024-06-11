@@ -2,7 +2,6 @@
 
 @section('title', 'Suppliers')
 
-@section('sidebar_people', 'active')
 @section('sidebar_suppliers', 'active')
 
 @section('content')

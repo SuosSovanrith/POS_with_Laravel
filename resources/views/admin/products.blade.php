@@ -2,7 +2,6 @@
 
 @section('title', 'Products')
 
-@section('sidebar_products', 'active')
 @section('sidebar_product', 'active')
 
 @section('content')

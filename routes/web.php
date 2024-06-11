@@ -84,3 +84,4 @@ Route::post('/searchproduct', [CartController::class, 'SearchProduct']);
 // Order
 Route::post('/addorder', [OrderController::class, 'AddOrder']);
 Route::post('/searchorder', [OrderController::class, 'SearchView']);
+Route::get('/getorderitem/{order_id}', [OrderController::class, 'GetOrderItem']);
