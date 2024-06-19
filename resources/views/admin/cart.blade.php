@@ -43,7 +43,7 @@
                                 </div>        
                             @endif
                             
-                            <div class="table-wrapper table-responsive">
+                            <div class="table-wrapper table-responsive border-bottom">
                                 <table class="table table table-hover table-striped" id="TblMain">
                                     <thead>
                                         <tr>
@@ -83,30 +83,48 @@
                         <!-- End Product List -->
 
                         <!-- Discount-->
-                        <div class="row">
+                        <div class="row mb-3">
                             <!-- SubTotal / Btn-->
+                                <div class="d-sm-none col-6"></div>
                                 <div class="col pt-1 pb-1">
-                                    <b>Subtotal: </b>
+                                    <b>Subtotal </b>
                                 </div>
                                 <div class="col pt-1 pb-1">
                                     <h4 class="text-danger" align="right">${{number_format($total, 2, '.', ',')}}</h4>
                                 </div>
+                            </div>
+                            
+                            <!-- Discount-->
+                        <div class="row mb-3">
                             <div class="col pt-1 pb-1">
-                                <b>Discount(%): </b>
+                                <b>Discount(%) </b>
                             </div>
                             <div class="col">
-                                <input type="number" class="form-control" name="Discount" id="Discount"  min="0" max="100" step="0.01" value="0"/>'
+                                <input type="number" class="form-control" name="Discount" id="Discount"  min="0" max="100" step="0.01" value="0"/>
+                            </div>
+                        <!-- Total / Btn-->
+                            <div class="col pt-1 pb-1">
+                                <b>Total</b>
+                            </div>
+                            <div class="col pt-1 pb-1" id="Total_Discount">
+                                <h4 class="text-danger" align="right">${{number_format($total, 2, '.', ',')}}</h4>
                             </div>
                         </div>
-
-                        <!-- Discount-->
-                        <div class="row mb-3">
-                        <!-- Total / Btn-->
+                            
+                            <!-- Payment Method-->
+                        <div class="row mb-4">
                             <div class="col">
-                                <b>Total: </b>
+                                <b>Payment </b>
                             </div>
-                            <div class="col" id="Total_Discount">
-                                <h4 class="text-danger" align="right">${{number_format($total, 2, '.', ',')}}</h4>
+                            <div class="col">
+                                <input class="form-check-input border border-secondary" type="radio" value="0" name="Payment" id="Payment" checked>
+                                <label class="form-check-label" for="Payment">
+                                     Cash <i class="lni lni-dollar text-success"></i></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-check-input border border-secondary" type="radio" value="1" name="Payment" id="Payment">
+                                <label class="form-check-label" for="Payment">
+                                     KHQR <i class="lni lni-frame-expand"></i></label>
                             </div>
                         </div>
 
@@ -174,7 +192,7 @@
             </div>
         <!-- End right side -->
 
-        </div>
+        </div> 
     <!-- End Content -->
 
 @endsection
@@ -261,7 +279,7 @@
         var discount = $(this).val();
         var total = $("#TotalAmount").val();
         var after = total * (1-(discount/100));
-        var data = '<h4 class="text-danger" align="right">$' + after + '</h4>';
+        var data = '<h4 class="text-danger" align="right">$' + parseFloat(after).toFixed(2) + '</h4>';
 
         $("#Total_Discount").html(data); 
 
@@ -269,33 +287,70 @@
         
     // for add order
     $(".BtnSubmitOrder").click(function() {
-        Swal.fire({
-            title: "Enter Recieved Discount and Amount",
-            html:
-                'Amounts($): <input id="swal-input1" class="swal2-input" min="0" step="0.01" value="' + ($('#TotalAmount').val() * (1-($('#Discount').val()/100))) + '"  />',
-            showCancelButton: true,
-            confirmButtonText: "Submit",
-            showLoaderOnConfirm: true,
-            preConfirm: () => {
-                var customer_id = $('#Customer_Id').val();
-                var amount = $('#swal-input1').val();
-                var discount = $('#Discount').val();
+        if( $('input[name="Payment"]:checked').val() == 0){
+            Swal.fire({
+                title: "Enter Recieved Amount",
+                html:
+                    '<b>Amounts($):</b> <input id="swal-input1" class="swal2-input" min="0" step="0.01" value="' + ($('#TotalAmount').val() * (1-($('#Discount').val()/100))) + '"  />',
+                showCancelButton: true,
+                confirmButtonText: "Submit",
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    var customer_id = $('#Customer_Id').val();
+                    var amount = $('#swal-input1').val();
+                    var discount = $('#Discount').val();
+                    var payment_method = $('input[name="Payment"]:checked').val();
 
-                $.post('/addorder', {
-                    customer_id: customer_id,
-                    amount: amount,
-                    discount: discount
-                }, function(data) {
-                    window.location.href = "/admin/order";
+                    $.post('/addorder', {
+                        customer_id: customer_id,
+                        amount: amount,
+                        discount: discount,
+                        payment_method: payment_method
+
+                    }, function(data) {
+                        window.location.href = "/admin/order";
+                    });
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                if (result.isConfirmed) {
+                }
                 });
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-            }).then((result) => {
-            if (result.isConfirmed) {
-            }
-            });
+        }else{
+            Swal.fire({
+                title: "Enter Recieved Amount and KHQR",
+                html:
+                    '<b>Amounts($):</b> <input type="number" id="swal-input1" class="swal2-input" min="0" step="0.01" value="' + ($('#TotalAmount').val() * (1-($('#Discount').val()/100))) + '"  required/> <br/>' +
+                    '<img src="http://127.0.0.1:8000/assets/images/payment/abaQr.jpg" width="180"> <br/>' +
+                    '<b>KHQR:</b> <input type="file" id="swal-input2" class="swal2-file" accept="image/*" required>',
+                showCancelButton: true,
+                confirmButtonText: "Submit",
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    var customer_id = $('#Customer_Id').val();
+                    var amount = $('#swal-input1').val();
+                    var discount = $('#Discount').val();
+                    var payment_method = $('input[name="Payment"]:checked').val();
+                    var khqr = $('#swal-input2').val().split('\\').pop();;
 
-        });
+                    $.post('/addorder', {
+                        customer_id: customer_id,
+                        amount: amount,
+                        discount: discount,
+                        payment_method: payment_method,
+                        khqr: khqr
+
+                    }, function(data) {
+                        window.location.href = "/admin/order";
+                    });
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                if (result.isConfirmed) {
+                }
+                });
+        }
+    });
 
     // Customer Search Select
     var customer_search = document.querySelector("#Customer_Id");

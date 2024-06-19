@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('payment', function (Blueprint $table) {
             $table->id('payment_id');
             $table->decimal('amount', 8, 4);
+            $table->tinyInteger('payment_method')->default(0);
+            $table->string("khqr")->nullable();
             $table->foreignId('user_id');
             $table->foreignId('order_id');
 

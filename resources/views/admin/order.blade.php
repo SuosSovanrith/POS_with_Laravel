@@ -83,7 +83,7 @@
                                     <p>{{$order->name}}</p>
                                 </td>
                                 <td class="min-width p-3">
-                                    <p>%{{$order->discount}}</p>
+                                    <p>{{$order->discount}}%</p>
                                 </td>
                                 <td class="min-width p-3">
                                     <p>${{number_format($order->total, 2, '.', ',')}}</p>
@@ -108,10 +108,15 @@
                                 <td class="min-width p-3">
                                     <p>{{$order->created_at}}</p>
                                 </td>
+                                <td class="min-width p-3" style="display: none">
+                                    <p>{{$order->khqr}}</p>
+                                </td>
                                 <td class="p-3">
                                     <a href="#" class="BtnPrintReceipt text-primary" style="width: 20px;"><i class="lni lni-printer"></i></a>
-                                    {{-- <a href="#" class="BtnViewProduct text-success" style="width: 20px;"><i class="lni lni-eye"></i></a>
-                                    <a href="#" class="BtnDeleteProduct text-danger" style="width: 20px;"><i class="lni lni-trash-can"></i></a> --}}
+                                    @if ($order->khqr != "")
+                                        <a href="#" class="BtnKHQR text-success" style="width: 20px;"><i class="lni lni-frame-expand"></i></a>
+                                    @endif
+                                    {{-- <a href="#" class="BtnDeleteProduct text-danger" style="width: 20px;"><i class="lni lni-trash-can"></i></a> --}}
                                 </td>
                             </tr>
 
@@ -272,6 +277,22 @@
                         </div>
                     </div>
                 </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal KHQR --}}
+<div class="modal fade" id="ModalKHQR" tabindex="-1" aria-labelledby="FormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="col-12">
+                <div class="row">
+                        <div class="col-lg-12"  id="ImageKHQR">
+                            {{--  --}}
+                        </div><!-- end col -->
+                    </div>
+                </div>
+    </div>
     </div>
 </div>
 
@@ -295,7 +316,7 @@
         var order_id = current_row.find('td').eq(0).text().trim();
         var customer = current_row.find('td').eq(1).text().trim();
         var user = current_row.find('td').eq(2).text().trim();
-        var discount = current_row.find('td').eq(3).text().trim().slice(1);
+        var discount = current_row.find('td').eq(3).text().trim().slice(0,4);
         var total = current_row.find('td').eq(4).text().trim().slice(1);
         var received = current_row.find('td').eq(5).text().trim().slice(1);
         var status = current_row.find('td').eq(6).text().trim();
@@ -346,7 +367,7 @@
                 }
 
                 receiptData += '<tr><th scope="row" colspan="3" class="text-end">Subtotal</th><td class="text-end"><h4 class="m-0 fw-semibold">$' + total / (1 - (discount/100)) + '</h4></td></tr>' +
-                                '<tr><th scope="row" colspan="3" class="text-end">Discount</th><td class="text-end"><h4 class="m-0 fw-semibold">%' + discount + '</h4></td></tr>' +
+                                '<tr><th scope="row" colspan="3" class="text-end">Discount</th><td class="text-end"><h4 class="m-0 fw-semibold">' + discount + '%</h4></td></tr>' +
                                 '<tr><th scope="row" colspan="3" class="text-end">Total</th><td class="text-end"><h4 class="m-0 fw-semibold">$' + total + '</h4></td></tr>' +
                                 '<tr><th scope="row" colspan="3" class="text-end">Cash</th><td class="text-end"><h4 class="m-0 fw-semibold">$' + received + '</h4></td></tr>' +
                                 '<tr><th scope="row" colspan="3" class="text-end">Change</th><td class="text-end"><h4 class="m-0 fw-semibold">$' + change + '</h4></td></tr>' +
@@ -382,6 +403,17 @@
             a.print(); 
         }, 1200);
     }
+
+    // Show KHQR
+    $(".BtnKHQR").click(function() {
+        $("#ModalKHQR").modal("show");
+        var current_row = $(this).closest('tr');
+        var khqr = current_row.find('td').eq(9).text().trim();
+
+        var data = '<img src="http://127.0.0.1:8000/'+  khqr + '" alt="KHQR Image" width="100%">';
+        $("#ImageKHQR").html(data);   
+
+    });
 
 </script>
 

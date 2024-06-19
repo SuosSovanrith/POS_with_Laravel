@@ -17,7 +17,7 @@ class OrderController extends Controller
         $orders = OrderModel::join('customer', 'orders.customer_id', '=', 'customer.customer_id')
         ->join('users', 'orders.user_id', '=', 'users.user_id')
         ->join('payment', 'orders.order_id', '=', 'payment.order_id')
-        ->select(['orders.order_id', 'orders.discount', 'orders.total','orders.created_at', 'customer.customer_name', 'users.name', 'payment.amount'])
+        ->select(['orders.order_id', 'orders.discount', 'orders.total','orders.created_at', 'customer.customer_name', 'users.name', 'payment.amount', 'payment.khqr'])
         ->latest()->paginate(10);
 
         return view('admin.order', ['orders'=>$orders]);
@@ -68,6 +68,13 @@ class OrderController extends Controller
             $payment->user_id = $user_id;
             $payment->order_id = $order->order_id;
             $payment->amount = $rq->amount;
+            $payment->payment_method = $rq->payment_method;
+            
+            
+            if(isset($rq->khqr)){
+                $payment->khqr = 'assets/images/payment/'.$rq->khqr;
+            }
+
             $payment->save();
 
             $result = UserCartModel::where('user_id', '=', $user_id);
