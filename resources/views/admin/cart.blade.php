@@ -103,10 +103,10 @@
                                 <input type="number" class="form-control" name="Discount" id="Discount"  min="0" max="100" step="0.01" value="0"/>
                             </div>
                         <!-- Total / Btn-->
-                            <div class="col pt-1 pb-1">
+                            <div class="col pt-2 ">
                                 <b>Total</b>
                             </div>
-                            <div class="col pt-1 pb-1" id="Total_Discount">
+                            <div class="col pt-2 " id="Total_Discount">
                                 <h4 class="text-danger" align="right">${{number_format($total, 2, '.', ',')}}</h4>
                             </div>
                         </div>
@@ -119,12 +119,12 @@
                             <div class="col">
                                 <input class="form-check-input border border-secondary" type="radio" value="0" name="Payment" id="Payment" checked>
                                 <label class="form-check-label" for="Payment">
-                                     Cash <i class="lni lni-dollar text-success"></i></label>
+                                     Cash {{--<i class="lni lni-dollar text-success"></i>--}}</label>
                             </div>
                             <div class="col">
                                 <input class="form-check-input border border-secondary" type="radio" value="1" name="Payment" id="Payment">
                                 <label class="form-check-label" for="Payment">
-                                     KHQR <i class="lni lni-frame-expand"></i></label>
+                                     KHQR {{--<i class="lni lni-frame-expand">--}}</i></label>
                             </div>
                         </div>
 
