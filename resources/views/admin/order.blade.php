@@ -59,6 +59,7 @@
                                 <th class="p-3">ID</th>
                                 <th class="p-3">Customer</th>
                                 <th class="p-3">User</th>
+                                <th class="p-3">Discount</th>
                                 <th class="p-3">Total</th>
                                 <th class="p-3">Recieved</th>
                                 <th class="p-3">Status</th>
@@ -80,6 +81,9 @@
                                 </td>
                                 <td class="min-width p-3">
                                     <p>{{$order->name}}</p>
+                                </td>
+                                <td class="min-width p-3">
+                                    <p>%{{$order->discount}}</p>
                                 </td>
                                 <td class="min-width p-3">
                                     <p>${{number_format($order->total, 2, '.', ',')}}</p>
@@ -106,8 +110,8 @@
                                 </td>
                                 <td class="p-3">
                                     <a href="#" class="BtnPrintReceipt text-primary" style="width: 20px;"><i class="lni lni-printer"></i></a>
-                                    <a href="#" class="BtnViewProduct text-success" style="width: 20px;"><i class="lni lni-eye"></i></a>
-                                    <a href="#" class="BtnDeleteProduct text-danger" style="width: 20px;"><i class="lni lni-trash-can"></i></a>
+                                    {{-- <a href="#" class="BtnViewProduct text-success" style="width: 20px;"><i class="lni lni-eye"></i></a>
+                                    <a href="#" class="BtnDeleteProduct text-danger" style="width: 20px;"><i class="lni lni-trash-can"></i></a> --}}
                                 </td>
                             </tr>
 
@@ -115,6 +119,7 @@
 
                             @endforeach
                             <tr class="bg-secondary">
+                                <td  class="p-3"></td>
                                 <td  class="p-3"></td>
                                 <td  class="p-3"></td>
                                 <td  class="p-3"></td>
@@ -167,7 +172,7 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="text-muted">
-                                                <div class="mt-4">
+                                                <div class="mt-2">
                                                     <h5 class="font-size-15 mb-1">Order No:</h5>
                                                     <p>001-234-5678</p>
                                                 </div>
@@ -176,13 +181,31 @@
                                         <!-- end col -->
                                         <div class="col-sm-6">
                                             <div class="text-muted text-sm-end">
-                                                <div class="mt-4">
+                                                <div class="mt-2">
                                                     <h5 class="font-size-15 mb-1">Order Date:</h5>
                                                     <p>12 Oct, 2020</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- end col -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="text-muted">
+                                                <div class="mt-2">
+                                                    <h5 class="font-size-15 mb-1">Customer:</h5>
+                                                    <p>001-234-5678</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="text-muted text-sm-end">
+                                                <div class="mt-2">
+                                                    <h5 class="font-size-15 mb-1">Served By:</h5>
+                                                    <p>12 Oct, 2020</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- end row -->
                                     
@@ -270,11 +293,14 @@
 
         var current_row = $(this).closest('tr');
         var order_id = current_row.find('td').eq(0).text().trim();
-        var total = current_row.find('td').eq(3).text().trim();
-        var received = current_row.find('td').eq(4).text().trim();
-        var status = current_row.find('td').eq(5).text().trim();
-        var to_pay = current_row.find('td').eq(6).text().trim();
-        var time = current_row.find('td').eq(7).text().trim();
+        var customer = current_row.find('td').eq(1).text().trim();
+        var user = current_row.find('td').eq(2).text().trim();
+        var discount = current_row.find('td').eq(3).text().trim().slice(1);
+        var total = current_row.find('td').eq(4).text().trim().slice(1);
+        var received = current_row.find('td').eq(5).text().trim().slice(1);
+        var status = current_row.find('td').eq(6).text().trim();
+        var to_pay = current_row.find('td').eq(7).text().trim();
+        var time = current_row.find('td').eq(8).text().trim();
         var status_color = "";
 
         if(status=='Paid'){
@@ -292,15 +318,17 @@
                             '<div class="mb-4">' +
                             '<h2 class="mb-1 text-muted">POS Ltd</h2>' +
                             '</div><div class="text-muted"><p class="mb-1">#1235A Phnom Penh, Cambodia</p><p class="mb-1"><i class="lni lni-envelope"></i> pos@email.com</p><p><i class="lni lni-phone"></i> 069-69-6969</p></div></div>' +
-                            '<hr class="mt-2 mb-2"><div class="row"><div class="col-sm-6"><div class="text-muted"><div class="mt-4"><h5 class="font-size-15 mb-1">Order No:</h5><p>' + order_id + '</p></div></div></div>' +
-                            '<div class="col-sm-6"><div class="text-muted text-sm-end"><div class="mt-4"><h5 class="font-size-15 mb-1">Order Date:</h5><p>' + time + '</p></div></div></div></div>' +
+                            '<hr class="mt-2 mb-2"><div class="row"><div class="col-sm-6"><div class="text-muted"><div class="mt-2"><h5 class="font-size-15 mb-1">Order No:</h5><p>' + order_id + '</p></div></div></div>' +
+                            '<div class="col-sm-6"><div class="text-muted text-sm-end"><div class="mt-2"><h5 class="font-size-15 mb-1">Order Date:</h5><p>' + time + '</p></div></div></div></div>' +
+                            '<div class="row"><div class="col-sm-6"><div class="text-muted"><div class="mt-2"><h5 class="font-size-15 mb-1">Customer:</h5><p>' + customer + '</p></div></div></div>' +
+                            '<div class="col-sm-6"><div class="text-muted text-sm-end"><div class="mt-2"><h5 class="font-size-15 mb-1">Served By:</h5><p>' + user + '</p></div></div></div></div>' +
                             '<div class="py-2"><h5 class="font-size-15">Order Summary</h5><div class="table-responsive"><table class="table table-sm align-middle table-nowrap mb-0 table-striped">' +
                             '<thead><tr><th>Item</th><th>Price</th><th>Quantity</th><th class="text-end" style="width: 120px;">Total</th></tr></thead> <tbody>';
         
         $.ajax({
             url: '/getorderitem/'+order_id,
             type: 'GET',
-            dataType: 'json', // Assuming your backend returns JSON data
+            dataType: 'json', 
             success: function(response) {
                 console.log(response);
 
@@ -317,8 +345,10 @@
                     var change = 0;
                 }
 
-                receiptData += '<tr><th scope="row" colspan="3" class="text-end">Total</th><td class="text-end"><h4 class="m-0 fw-semibold">' + total + '</h4></td></tr>' +
-                                '<tr><th scope="row" colspan="3" class="text-end">Cash</th><td class="text-end"><h4 class="m-0 fw-semibold">' + received + '</h4></td></tr>' +
+                receiptData += '<tr><th scope="row" colspan="3" class="text-end">Subtotal</th><td class="text-end"><h4 class="m-0 fw-semibold">$' + total / (1 - (discount/100)) + '</h4></td></tr>' +
+                                '<tr><th scope="row" colspan="3" class="text-end">Discount</th><td class="text-end"><h4 class="m-0 fw-semibold">%' + discount + '</h4></td></tr>' +
+                                '<tr><th scope="row" colspan="3" class="text-end">Total</th><td class="text-end"><h4 class="m-0 fw-semibold">$' + total + '</h4></td></tr>' +
+                                '<tr><th scope="row" colspan="3" class="text-end">Cash</th><td class="text-end"><h4 class="m-0 fw-semibold">$' + received + '</h4></td></tr>' +
                                 '<tr><th scope="row" colspan="3" class="text-end">Change</th><td class="text-end"><h4 class="m-0 fw-semibold">$' + change + '</h4></td></tr>' +
                                 '</tbody></table></div></div><hr class="mt-2 mb-2"><p class="mt-1">**Thank you for purchasing at our store!!**</p></div></div>';
 

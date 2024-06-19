@@ -17,7 +17,7 @@ class OrderController extends Controller
         $orders = OrderModel::join('customer', 'orders.customer_id', '=', 'customer.customer_id')
         ->join('users', 'orders.user_id', '=', 'users.user_id')
         ->join('payment', 'orders.order_id', '=', 'payment.order_id')
-        ->select(['orders.order_id', 'orders.total','orders.created_at', 'customer.customer_name', 'users.name', 'payment.amount'])
+        ->select(['orders.order_id', 'orders.discount', 'orders.total','orders.created_at', 'customer.customer_name', 'users.name', 'payment.amount'])
         ->latest()->paginate(10);
 
         return view('admin.order', ['orders'=>$orders]);
@@ -27,11 +27,12 @@ class OrderController extends Controller
 
         $validator = Validator::make($rq->all(),[
             'customer_id' => 'nullable|integer|exists:customer,customer_id',
-            'amount' => 'required|numeric|min:0'
+            'amount' => 'required|numeric|min:0',
+            'discount' => 'required|numeric|min:0'
         ]);
 
         if ($validator->fails()) {
-            session(['message'=>"Invalid Customer" , 'type'=>'danger']);
+            session(['message'=>"Invalid input!" , 'type'=>'danger']);
         }else{
 
             $user_id = session('user_id');
@@ -39,6 +40,7 @@ class OrderController extends Controller
             $order = new OrderModel();
             $order->customer_id = $rq->customer_id;
             $order->user_id = $user_id;
+            $order->discount = $rq->discount;
             $order->total = 0;
             $order->save();
 
@@ -59,7 +61,7 @@ class OrderController extends Controller
                 $total += $orderitem->order_price * $orderitem->order_quantity;
             }
 
-            $order->total = $total;
+            $order->total = $total * (1 - ($rq->discount/100));
             $order->save();
 
             $payment = new PaymentModel();

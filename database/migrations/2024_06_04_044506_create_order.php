@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('order_id');
             $table->foreignId('customer_id')->nullable();
             $table->foreignId('user_id');
+            $table->decimal('discount', 8, 2)->default(0);
             $table->decimal('total', 8, 4);
             $table->timestamps();
 
