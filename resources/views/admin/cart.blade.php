@@ -167,7 +167,7 @@
                                     </span>   
                                 @endif
                                 <div class="card-style-2 mb-30 position-relative px-0">
-                                    @if ($product->quantity == 0)
+                                    @if ($product->quantity < 1)
                                         <span class="position-absolute bottom-50 text-center" style="background-color: rgba(255, 255, 255, 0.7);">
                                             <h4 class="text-danger">Out of Stock</h4>
                                         </span>
