@@ -57,6 +57,7 @@ Route::post('/deleteposition', [PositionController::class, 'DeletePosition']);
 Route::post('/addproduct', [ProductsController::class, 'AddProduct']);
 Route::post('/updateproduct', [ProductsController::class, 'UpdateProduct']);
 Route::post('/deleteproduct', [ProductsController::class, 'DeleteProduct']);
+Route::post('/importexcel', [ProductsController::class, 'ImportExcel']);
 
 // Category
 Route::post('/addcategory', [CategoryController::class, 'AddCategory']);
@@ -85,3 +86,4 @@ Route::post('/searchproduct', [CartController::class, 'SearchProduct']);
 Route::post('/addorder', [OrderController::class, 'AddOrder']);
 Route::post('/searchorder', [OrderController::class, 'SearchView']);
 Route::get('/getorderitem/{order_id}', [OrderController::class, 'GetOrderItem']);
+

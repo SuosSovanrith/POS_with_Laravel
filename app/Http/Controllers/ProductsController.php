@@ -6,6 +6,9 @@ use App\Models\ProductsModel;
 use App\Models\CategoryModel;
 use App\Models\SupplierModel;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use App\Imports\ProductsImport;
+use Excel;
 use Picqer;
 
 class ProductsController extends Controller
@@ -135,10 +138,9 @@ class ProductsController extends Controller
         }
     }
 
-    // View Single Product
-    // public function ViewProduct(Request $rq){
-    //     $result = ProductsModel::find($rq->id);
-
-    //     return view('admin.productview', ['products'=>$result]);
-    // }
+    // Import Product
+    public function ImportExcel(Request $rq){
+        Excel::import(new ProductsImport, $rq->file('Excel_File'));
+        return redirect('/admin/products');
+    }
 }

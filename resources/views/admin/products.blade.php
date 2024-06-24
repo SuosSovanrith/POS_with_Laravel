@@ -124,6 +124,30 @@
     </div>
 </div>
 
+<!-- Import Excel Modal-->
+<div class="modal fade" id="FormModalImport" tabindex="-1" aria-labelledby="FormModalProductLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="FormModalProductLabel">Import</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/importexcel" method="POST" enctype="multipart/form-data">
+                <div class="row g-0">
+                    @csrf
+                    <div class="mb-3 col-md-12 p-3">
+                        <label for="Image" class="form-label">Excel File</label>
+                        <input type="file" class="form-control" name="Excel_File" id="Excel_File" accept=".xlsx">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" id="BtnImportProduct" class="btn btn-success" value="Import" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- ========== tables-wrapper start ========== -->
 <div class="tables-wrapper shadow-sm">
     <div class="row">
@@ -142,12 +166,19 @@
                     </div>        
                 @endif
 
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-md-6">
                         <h3>Products</h3>
                     </div>
                     <div class="col-md-6">
-                        <div align="right"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Product</b></a></div>
+                        <div class="row">
+                             <div class="col-md-6">
+                                <div align="right"><a href="#" id="ImportPopup" class="main-btn success-btn-outline btn-hover btn-sm"><i class="fa fa-file-excel-o mr-5"></i><b>Import</b></a></div>
+                             </div>
+                             <div class="col-md-6">
+                                <div align="left"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Product</b></a></div>
+                             </div>
+                        </div>
                     </div>
                 </div>
                 <div class="table-wrapper table-responsive">
@@ -301,6 +332,11 @@
     // open popup form
     $("#AddPopup").click(function() {
         $("#FormModal").modal("show");
+    });
+
+    // open import modal form
+    $("#ImportPopup").click(function() {
+        $("#FormModalImport").modal("show");
     });
     
     // clear form
