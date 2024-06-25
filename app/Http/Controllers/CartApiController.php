@@ -61,7 +61,7 @@ class CartApiController extends Controller
             
         }else{
 
-            $user_id = $rq->header('user_id');;
+            $user_id = $rq->header('user_id');
             $barcode = $rq->header('Barcode');
 
             $validator = Validator::make(['barcode' => $barcode],[

@@ -207,7 +207,9 @@ class CartController extends Controller
         
         // Search product
         $search = $rq->input('Product_Search');
-        $searchproducts = ProductsModel::where('product_name', 'LIKE', '%'.$search.'%')->select(['product_id', 'product_name', 'quantity', 'image', 'in_stock'])->orderBy('in_stock', 'desc')->paginate(12);
+        $searchproducts = ProductsModel::where('product_name', 'LIKE', '%'.$search.'%')
+        ->select(['product_id', 'product_name', 'quantity', 'image', 'quantity'])
+        ->orderBy('quantity', 'desc')->paginate(12);
         
         $customer = CustomerModel::select(['customer_id', 'customer_name'])->get();
         $user_id = session('user_id');

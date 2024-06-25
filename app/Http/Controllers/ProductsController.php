@@ -14,9 +14,13 @@ use Picqer;
 class ProductsController extends Controller
 {
     public function ProductsView(){
+
         $category = CategoryModel::all();
         $supplier = SupplierModel::all();
-        $result = ProductsModel::Join('category', 'products.category_id', '=', 'category.category_id')->Join('supplier', 'products.supplier_id', '=', 'supplier.supplier_id')->orderBy('products.product_id', 'desc')->paginate(5);
+        $result = ProductsModel::Join('category', 'products.category_id', '=', 'category.category_id')
+        ->Join('supplier', 'products.supplier_id', '=', 'supplier.supplier_id')
+        ->orderBy('products.product_id', 'desc')->paginate(5);
+
         return view('admin.products', ['products'=>$result, 'category'=>$category, 'supplier'=>$supplier]);
     }
 
@@ -27,7 +31,7 @@ class ProductsController extends Controller
         if($result->contains('barcode', $barcode_rand)){
             $this->GenBarcode();
         }
-
+        
         return $barcode_rand;
 
     }

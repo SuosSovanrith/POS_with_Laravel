@@ -172,10 +172,10 @@
                     </div>
                     <div class="col-md-6">
                         <div class="row">
-                             <div class="col-md-6">
+                             <div class="col-7">
                                 <div align="right"><a href="#" id="ImportPopup" class="main-btn success-btn-outline btn-hover btn-sm"><i class="fa fa-file-excel-o mr-5"></i><b>Import</b></a></div>
                              </div>
-                             <div class="col-md-6">
+                             <div class="col-5">
                                 <div align="left"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Product</b></a></div>
                              </div>
                         </div>
@@ -396,10 +396,19 @@
         '<b>Price Out: </b> $' + Price_Out + ' <br/><br/>' +
         '<b>In Stock: </b> ' + In_Stock +
         '</p>' +
+        '</div>' +
+        '<div class="d-print-none p-3">' +
+        '<div class="float-end">' +
+        '<a href="#" class="btn btn-success" id="Print" onclick="printBarcode('+ Barcode +')"><i class="lni lni-printer"> Print Barcode</i></a>' +
+        '</div>' +
         '</div>'
         );
 
     });
+
+    function printBarcode(barcode){
+        alert(barcode);
+    }
 
 </script>
 

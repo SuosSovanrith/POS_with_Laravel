@@ -117,14 +117,24 @@
                                 <b>Payment </b>
                             </div>
                             <div class="col">
-                                <input class="form-check-input border border-secondary" type="radio" value="0" name="Payment" id="Payment" checked>
+                                <input class="form-check-input border border-secondary" type="radio" value="0" name="Payment" id="PaymentCash" checked>
                                 <label class="form-check-label" for="Payment">
-                                     Cash {{--<i class="lni lni-dollar text-success"></i>--}}</label>
+                                     Cash</label>
                             </div>
                             <div class="col">
-                                <input class="form-check-input border border-secondary" type="radio" value="1" name="Payment" id="Payment">
+                                <input class="form-check-input border border-secondary" type="radio" value="1" name="Payment" id="PaymentAba">
                                 <label class="form-check-label" for="Payment">
-                                     KHQR {{--<i class="lni lni-frame-expand">--}}</i></label>
+                                     Aba</label>
+                            </div>
+                            <div class="col">
+                                <input class="form-check-input border border-secondary" type="radio" value="1" name="Payment" id="PaymentWing">
+                                <label class="form-check-label" for="Payment">
+                                     Wing</i></label>
+                            </div>
+                            <div class="col">
+                                <input class="form-check-input border border-secondary" type="radio" value="1" name="Payment" id="PaymentAcleda">
+                                <label class="form-check-label" for="Payment">
+                                     Acleda</i></label>
                             </div>
                         </div>
 
@@ -317,11 +327,24 @@
                 }
                 });
         }else{
+
+            var khqrimage = "";
+
+            if($('input[id="PaymentAba"]').is(':checked') == true){
+                var khqrimage = "abaQr.jpg";
+            }
+            if($('input[id="PaymentWing"]').is(':checked') == true){
+                var khqrimage = "wingQr.jpg";
+            }
+            if($('input[id="PaymentAcleda"]').is(':checked') == true){
+                var khqrimage = "acQr.jpg";
+            }
+
             Swal.fire({
                 title: "Enter Recieved Amount and KHQR",
                 html:
                     '<b>Amounts($):</b> <input type="number" id="swal-input1" class="swal2-input" min="0" step="0.01" value="' + ($('#TotalAmount').val() * (1-($('#Discount').val()/100))) + '"  required/> <br/>' +
-                    '<img src="http://127.0.0.1:8000/assets/images/payment/abaQr.jpg" width="180"> <br/>' +
+                    '<img src="http://127.0.0.1:8000/assets/images/payment/' + khqrimage + '" width="180"> <br/>' +
                     '<b>KHQR:</b> <input type="file" id="swal-input2" class="swal2-file" accept="image/*" required>',
                 showCancelButton: true,
                 confirmButtonText: "Submit",
