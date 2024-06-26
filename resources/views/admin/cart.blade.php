@@ -119,22 +119,22 @@
                             <div class="col">
                                 <input class="form-check-input border border-secondary" type="radio" value="0" name="Payment" id="PaymentCash" checked>
                                 <label class="form-check-label" for="Payment">
-                                     Cash</label>
+                                    <i class="fa fa-money text-success"></i></label>
                             </div>
                             <div class="col">
                                 <input class="form-check-input border border-secondary" type="radio" value="1" name="Payment" id="PaymentAba">
                                 <label class="form-check-label" for="Payment">
-                                     Aba</label>
+                                     <img src="{{asset('assets/images/payment/Aba.jpg')}}" alt="Aba" width="26" height="26"></label>
                             </div>
                             <div class="col">
                                 <input class="form-check-input border border-secondary" type="radio" value="1" name="Payment" id="PaymentWing">
                                 <label class="form-check-label" for="Payment">
-                                     Wing</i></label>
+                                    <img src="{{asset('assets/images/payment/wing.png')}}" alt="Wing" width="26" height="26"></label>
                             </div>
                             <div class="col">
                                 <input class="form-check-input border border-secondary" type="radio" value="1" name="Payment" id="PaymentAcleda">
                                 <label class="form-check-label" for="Payment">
-                                     Acleda</i></label>
+                                    <img src="{{asset('assets/images/payment/acbank.png')}}" alt="Acleda" width="26" height="26"> </i></label>
                             </div>
                         </div>
 

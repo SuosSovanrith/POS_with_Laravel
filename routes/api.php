@@ -21,3 +21,4 @@ Route::post('/clearcart', [CartApiController::class, 'ClearCart']);
 Route::post('/searchproduct', [CartApiController::class, 'SearchProduct']);
 
 Route::post('/addorder', [OrderApiController::class, 'AddOrder']);
+Route::post('/getlastorder', [OrderApiController::class, 'GetLastOrder']);

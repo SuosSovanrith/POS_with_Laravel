@@ -379,7 +379,7 @@
         }else{
             In_Stock = " <span class='status-btn success-btn text-center'>In Stock</span>";
         }
-        console.log(BarcodeImage);
+
         $("#ProductViewCard").html(
         '<div class="col-md-6 justify-content-center p-3">' +
         '<img src="http://127.0.0.1:8000/'+  Image + '" class="img-fluid rounded-start" alt="Product Image" width="100%">' +
@@ -407,7 +407,34 @@
     });
 
     function printBarcode(barcode){
-        alert(barcode);
+        $.ajax({
+            url: '/getbarcodeimage/'+barcode,
+            type: 'POST',
+            dataType: 'json', 
+            success: function(response) {
+                var data = response.barcode_image;
+                var a = window.open('', 'myWin', 'height=800, width=800');
+                a.document.write('<html>');  
+                a.document.write('<head><style> div{display:inline-block;}</style></head>');  
+                a.document.write('<body >'); 
+                    for(var i=0; i<72; i++){
+                        a.document.write(data + "&emsp;&emsp;"); 
+                    }
+                a.document.write('</body></html>'); 
+                a.document.title = 'Print Barcode'; 
+                a.focus(); 
+                setTimeout(() => {
+                    a.stop();     
+                }, 1000);
+                setTimeout(() => {
+                    a.print(); 
+                }, 1200);
+                },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                // Handle error here
+            }
+        });
     }
 
 </script>

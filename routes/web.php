@@ -57,6 +57,7 @@ Route::post('/deleteposition', [PositionController::class, 'DeletePosition']);
 Route::post('/addproduct', [ProductsController::class, 'AddProduct']);
 Route::post('/updateproduct', [ProductsController::class, 'UpdateProduct']);
 Route::post('/deleteproduct', [ProductsController::class, 'DeleteProduct']);
+Route::post('/getbarcodeimage/{barcode}', [ProductsController::class, 'GetBarcodeImage']);
 Route::post('/importexcel', [ProductsController::class, 'ImportExcel']);
 
 // Category

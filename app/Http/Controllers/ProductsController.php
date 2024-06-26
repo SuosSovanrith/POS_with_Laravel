@@ -142,6 +142,12 @@ class ProductsController extends Controller
         }
     }
 
+    // Get Barcode Image
+    public function GetBarcodeImage($barcode){
+        $barcodeImage = ProductsModel::select(['barcode_image'])->where('barcode', $barcode)->first();
+        return $barcodeImage;
+    }
+
     // Import Product
     public function ImportExcel(Request $rq){
         Excel::import(new ProductsImport, $rq->file('Excel_File'));

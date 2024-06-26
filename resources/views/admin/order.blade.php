@@ -170,7 +170,7 @@
                                 <td class="p-3">
                                     <a href="#" class="BtnPrintReceipt text-primary" style="width: 20px;"><i class="lni lni-printer"></i></a>
                                     @if ($order->khqr != "")
-                                        <a href="#" class="BtnKHQR text-success" style="width: 20px;"><i class="lni lni-frame-expand"></i></a>
+                                        <a href="#" class="BtnKHQR text-success" style="width: 20px;"><i class="fa fa-qrcode"></i></a>
                                     @endif
                                     {{-- <a href="#" class="BtnDeleteProduct text-danger" style="width: 20px;"><i class="lni lni-trash-can"></i></a> --}}
                                 </td>
@@ -448,7 +448,6 @@
         a.document.write('<head> <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"</head>'); 
         a.document.write('<body >'); 
         a.document.write(data); 
-        // a.document.write('<div class="d-print-none p-3"><div class="float-end"><a href="#" class="btn btn-success" id="Print" onclick="window.print()">Print</a></div></div>'); 
         a.document.write('</body></html>'); 
         a.document.title = 'Print Receipt'; 
         a.focus(); 
