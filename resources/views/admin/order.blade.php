@@ -43,7 +43,7 @@
                                 <div class="col-9">
                                     <div class="select-style-1">
                                         <div class="select-position select-sm">
-                                            <select class="border border-dark" name="Filter_Time" id="Filter_Time">
+                                            <select name="Filter_Time" id="Filter_Time">
                                                 <option value="" selected>All</option>
                                                 <option value="Morning" <?php if(isset($filter_time)){ if($filter_time == "Morning") echo("selected");}?>>Morning</option>
                                                 <option value="Afternoon" <?php if(isset($filter_time)){ if($filter_time == "Afternoon") echo("selected");}?>>Afternoon</option>
@@ -63,7 +63,7 @@
                                 <div class="col-8">
                                     <div class="select-style-1">
                                         <div class="select-position select-sm">
-                                            <select class="border border-dark" name="Filter_Period" id="Filter_Period">
+                                            <select name="Filter_Period" id="Filter_Period">
                                                 <option value="" selected>All</option>
                                                 <option value="Today" <?php if(isset($filter_period)){ if($filter_period == "Today") echo("selected");}?>>Today</option>
                                                 <option value="Yesterday" <?php if(isset($filter_period)){ if($filter_period == "Yesterday") echo("selected");}?>>Yesterday</option>
@@ -85,7 +85,7 @@
                                     <label for="Filter_Period">From</label>
                                 </div>
                                 <div class="col-10">
-                                    <input type="date" class="form-control border border-dark" name="Start_Date" value="<?php if(isset($start_date)){echo($start_date);}?>">                            
+                                    <input type="date" class="form-control" name="Start_Date" value="<?php if(isset($start_date)){echo($start_date);}?>">                            
                                 </div>
                             </div>  
                         </div>
@@ -95,14 +95,12 @@
                                     <label for="Filter_Period">To</label>
                                 </div>
                                 <div class="col-10">
-                                    <input type="date" class="form-control border border-dark" name="End_Date" value="<?php if(isset($end_date)){echo($end_date);}?>">
+                                    <input type="date" class="form-control" name="End_Date" value="<?php if(isset($end_date)){echo($end_date);}?>">
                                 </div>
                             </div> 
                         </div>  
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <input type="submit" class="btn btn-primary" id="SearchSubmit" value="Filter">
-                        </div>
-                        <div class="col-md-1">
                             <input type="submit" class="btn btn-danger" id="SearchClear" value="Clear" formaction="/admin/order" formmethod="get">
                         </div>
                     </div>

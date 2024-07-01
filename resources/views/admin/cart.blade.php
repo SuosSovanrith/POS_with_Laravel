@@ -11,8 +11,11 @@
                 <div class="card-style shadow">
                         <div class="row">
                         <!-- Barcode -->
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <input type="text" class="form-control" name="ScanBarcode" id="ScanBarcode" placeholder="Scan Barcode...">
+                            </div>
+                            <div class="col-md-2 p-0">
+                                <button id="BtnBarcodeScanner" class="main-btn primary-btn-outline btn-sm text-primary"><i class="fa fa-qrcode"></i></button>
                             </div>
                         <!-- Customer -->
                             <div class="col-md-6">
@@ -202,13 +205,29 @@
             </div>
         <!-- End right side -->
 
+        <!-- Modal barcode scanner-->
+        <div class="modal fade" id="FormModalBarcode" tabindex="-1" aria-labelledby="FormModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="FormModalLabel">Scan Barcode</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="col-12">
+                        <div id="my-qr-reader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End barcode scanner -->
+
         </div> 
     <!-- End Content -->
 
 @endsection
 
 @section('script')
-
+<script src="https://unpkg.com/html5-qrcode"></script>
 <script src="https://unpkg.com/@jarstone/dselect/dist/js/dselect.js"></script>
 <script>
     $.ajaxSetup({
@@ -374,6 +393,44 @@
                 });
         }
     });
+
+
+// QrCode scanner
+
+$("#BtnBarcodeScanner").click(function() {
+
+    $("#FormModalBarcode").modal("show");
+
+    var continueScanning = true;  // Flag to control scanning
+
+    var e = jQuery.Event("keypress");
+    e.which = 13;
+    e.keyCode = 13;
+
+        // If found you qr code
+        function onScanSuccess(decodeText, decodedResult) {
+
+            if (!continueScanning) return;  // Check flag before processing
+
+            $("#FormModalBarcode").modal("hide");
+            $('#ScanBarcode').val(decodeText);
+            $('#ScanBarcode').trigger(e);
+            $('#ScanBarcode').val("");
+
+            htmlscanner.clear();
+
+            continueScanning = false;  // Set flag to false to stop further scans   
+        }
+ 
+    let htmlscanner = new Html5QrcodeScanner(
+        "my-qr-reader",
+        { fps: 10, qrbos: 250 }
+    );
+
+    htmlscanner.render(onScanSuccess);
+
+});
+
 
     // Customer Search Select
     var customer_search = document.querySelector("#Customer_Id");

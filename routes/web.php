@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Admin;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PositionController;
@@ -30,9 +31,7 @@ Route::get('/logout', [AuthController::class, 'Logout']);
 
 // Admin Middleware
 Route::middleware(Admin::class)->group(function(){
-    Route::get('/admin/index', function () {
-        return view('admin.index');
-    });
+    Route::get('/admin/index', [DashboardController::class, 'DashboardView']);
     Route::get('/admin/users', [UsersController::class, 'UsersView']);
     Route::get('/admin/position', [PositionController::class, 'PositionView']);
     Route::get('/admin/products', [ProductsController::class, 'ProductsView']);
@@ -59,6 +58,8 @@ Route::post('/updateproduct', [ProductsController::class, 'UpdateProduct']);
 Route::post('/deleteproduct', [ProductsController::class, 'DeleteProduct']);
 Route::post('/getbarcodeimage/{barcode}', [ProductsController::class, 'GetBarcodeImage']);
 Route::post('/importexcel', [ProductsController::class, 'ImportExcel']);
+Route::post('/searchproductlist', [ProductsController::class, 'SearchProduct']);
+Route::post('/filterproduct', [ProductsController::class, 'FilterProduct']);
 
 // Category
 Route::post('/addcategory', [CategoryController::class, 'AddCategory']);

@@ -166,11 +166,12 @@
                     </div>        
                 @endif
 
-                <div class="row mb-3">
+                <div class="row mb-2 p-0">
+
                     <div class="col-md-6">
                         <h3>Products</h3>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-4">
                         <div class="row">
                              <div class="col-7">
                                 <div align="right"><a href="#" id="ImportPopup" class="main-btn success-btn-outline btn-hover btn-sm"><i class="fa fa-file-excel-o mr-5"></i><b>Import</b></a></div>
@@ -180,7 +181,116 @@
                              </div>
                         </div>
                     </div>
+
+                    <form action="/filterproduct" method="post" id="SearchForm">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="row">
+                                    <div class="col-4 pt-1">
+                                        <label for="Filter_Period">Period</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="select-style-1">
+                                            <div class="select-position select-sm">
+                                                <select name="Filter_Period" id="Filter_Period">
+                                                    <option value=" " selected>All</option>
+                                                    <option value="Today" <?php if(isset($filter_period)){ if($filter_period == "Today") echo("selected");}?>>Today</option>
+                                                    <option value="Yesterday" <?php if(isset($filter_period)){ if($filter_period == "Yesterday") echo("selected");}?>>Yesterday</option>
+                                                    <option value="This Week" <?php if(isset($filter_period)){ if($filter_period == "This Week") echo("selected");}?>>This Week</option>
+                                                    <option value="Last Week" <?php if(isset($filter_period)){ if($filter_period == "Last Week") echo("selected");}?>>Last Week</option>
+                                                    <option value="This Month" <?php if(isset($filter_period)){ if($filter_period == "This Month") echo("selected");}?>>This Month</option>
+                                                    <option value="Last Month" <?php if(isset($filter_period)){ if($filter_period == "Last Month") echo("selected");}?>>Last Month</option>
+                                                    <option value="This Year" <?php if(isset($filter_period)){ if($filter_period == "This Year") echo("selected");}?>>This Year</option>
+                                                    <option value="Last Year" <?php if(isset($filter_period)){ if($filter_period == "Last Year") echo("selected");}?>>Last Year</option>
+                                                </select>
+                                            </div>
+                                        </div>                                
+                                    </div>
+                                </div>                        
+                            </div>  
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-4 pt-1">
+                                        <label for="Filter_Category">Category</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="select-style-1">
+                                            <div class="select-position select-sm">
+                                                <select name="Filter_Category" id="Filter_Category">
+                                                    <option value=" " selected>All</option>
+                                                    @foreach ($category as $item)
+                                                    <option value="{{$item->category_id}}" <?php if(isset($filter_category)){ if($filter_category == $item->category_id) echo("selected");}?>>{{$item->category_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>                                
+                                    </div>
+                                </div>                        
+                            </div>  
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-4 pt-1">
+                                        <label for="Filter_Supplier">Supplier</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="select-style-1">
+                                            <div class="select-position select-sm">
+                                                <select name="Filter_Supplier" id="Filter_Supplier">
+                                                    <option value=" " selected>All</option>
+                                                    @foreach ($supplier as $item)
+                                                    <option value="{{$item->supplier_id}}" <?php if(isset($filter_supplier)){ if($filter_supplier == $item->supplier_id) echo("selected");}?>>{{$item->supplier_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>                                
+                                    </div>
+                                </div>                        
+                            </div>  
+                            <div class="col-md-2">
+                                <div class="row">
+                                    <div class="col-4 pt-1">
+                                        <label for="Filter_Stock">Stock</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="select-style-1">
+                                            <div class="select-position select-sm">
+                                                <select name="Filter_Stock" id="Filter_Stock">
+                                                    <option value=" " selected>All</option>
+                                                    <option value="Low Stock" <?php if(isset($filter_stock)){ if($filter_stock == "Low Stock") echo("selected");}?>>Low Stock</option>
+                                                    <option value="Out of Stock" <?php if(isset($filter_stock)){ if($filter_stock == "Out of Stock") echo("selected");}?>>Out of Stock</option>
+                                                    <option value="In Stock" <?php if(isset($filter_stock)){ if($filter_stock == "In Stock") echo("selected");}?>>In Stock</option>
+                                                    <option value="Descending" <?php if(isset($filter_stock)){ if($filter_stock == "Descending") echo("selected");}?>>Descending</option>
+                                                    <option value="Ascending" <?php if(isset($filter_stock)){ if($filter_stock == "Ascending") echo("selected");}?>>Ascending</option>
+                                                </select>
+                                            </div>
+                                        </div>                                
+                                    </div>
+                                </div>                        
+                            </div>  
+                            <div class="col-md-2">
+                                <input type="submit" class="btn btn-primary" id="SearchSubmit" value="Filter">
+                                <input type="submit" class="btn btn-danger" id="SearchClear" value="Clear" formaction="/admin/products" formmethod="get">
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <div class="input-style-2">
+                                <form action="/searchproductlist" method="post" id="SearchForm">  
+                                    @csrf
+                                    <input type="text" class="form-control" name="Product_Search" id="Product_Search" placeholder="Search Product...">
+                                    <input type="submit" class="form-control" id="BtnSearchProduct" style="display: none;">
+                                </form>
+                                <span class="icon"> <i class="lni lni-magnifier"></i> </span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+
                 <div class="table-wrapper table-responsive">
                     <table class="table table-sm table-hover" id="TblMain">
                         <thead>
@@ -224,8 +334,10 @@
                                     <p>${{$product->price_out}}</p>
                                 </td>
                                 <td class="min-width p-3">
-                                    @if ($product->in_stock == 0)
+                                    @if ($product->quantity < 1)
                                     <span class="status-btn close-btn text-center" style="width: 100px;">Out of Stock</span>
+                                    @elseif ($product->quantity <= 5)
+                                    <span class="status-btn warning-btn text-center" style="width: 100px;">Low Stock</span>    
                                     @else
                                     <span class="status-btn success-btn text-center" style="width: 100px;">In Stock</span>    
                                     @endif
@@ -242,9 +354,14 @@
                                 <td class="min-width p-3" style="display: none;">
                                     <p>{{$product->supplier_name}}</p>
                                 </td> 
-                                </td>
                                 <td class="min-width p-3" style="display: none;">
                                     <?php echo($product->barcode_image) ?>
+                                </td>
+                                <td class="min-width p-3" style="display: none;">
+                                    <p>{{$product->created_at}}</p>
+                                </td>
+                                <td class="min-width p-3" style="display: none;">
+                                    <p>{{$product->updated_at}}</p>
                                 </td> 
                                 <td class="p-3">
                                     <a href="#" class="BtnEditProduct text-primary" style="width: 20px;"><i class="lni lni-pencil-alt"></i></a>
@@ -272,6 +389,8 @@
 @endsection
 
 @section('script')
+
+<script src="https://unpkg.com/@jarstone/dselect/dist/js/dselect.js"></script>
 
 <script>
     $.ajaxSetup({
@@ -373,9 +492,13 @@
         var Category_Name = current_row.find('td').eq(10).text().trim();
         var Supplier_Name = current_row.find('td').eq(11).text().trim();
         var BarcodeImage = current_row.find('td').eq(12).html();
+        var CreatedAt = current_row.find('td').eq(13).text().trim();
+        var UpdatedAt = current_row.find('td').eq(14).text().trim();
 
         if(Quantity < 1){
             In_Stock = "<span class='status-btn close-btn text-center'>Out of Stock</span>";
+        }else if(Quantity <= 5){
+            In_Stock = " <span class='status-btn warning-btn text-center'>Low Stock</span>";
         }else{
             In_Stock = " <span class='status-btn success-btn text-center'>In Stock</span>";
         }
@@ -384,7 +507,7 @@
         '<div class="col-md-6 justify-content-center p-3">' +
         '<img src="http://127.0.0.1:8000/'+  Image + '" class="img-fluid rounded-start" alt="Product Image" width="100%">' +
         '</div>' +
-        '<div class="col-md-5 p-2 pt-5 ">' +
+        '<div class="col-md-6 p-2 pt-2 ">' +
         '<h2>' +  Id + '. ' + Product_Name + '</h2> <br/>' +
         '<p>' +
         '<b>Category: </b> ' + Category_Name + ' <br/>' +
@@ -394,7 +517,9 @@
         ' <br/>' +'<b>Quantity: </b> ' + Quantity + ' <br/>' +
         '<b>Price In: </b> $' + Price_In + ' <br/>' +
         '<b>Price Out: </b> $' + Price_Out + ' <br/><br/>' +
-        '<b>In Stock: </b> ' + In_Stock +
+        '<b>In Stock: </b> ' + In_Stock + ' <br/><br/>' +
+        '<b>Created At: </b>' + CreatedAt + ' <br/>' +
+        '<b>Updated At: </b>' + UpdatedAt +
         '</p>' +
         '</div>' +
         '<div class="d-print-none p-3">' +
@@ -436,6 +561,31 @@
             }
         });
     }
+
+
+    // Category Search Select
+    var category_search = document.querySelector("#Filter_Category");
+
+    dselect(category_search, {
+        search: true,
+        maxHeight: '700px'
+    });
+
+    // Supplier Search Select
+    var supplier_search = document.querySelector("#Filter_Supplier");
+
+    dselect(supplier_search, {
+        search: true,
+        maxHeight: '700px'
+    });
+
+        
+    // for search product
+    $('#Product_Search').keypress(function (e) {
+        if (e.which == 13) {
+            $('#BtnSearchProduct').click();
+        }
+    });
 
 </script>
 

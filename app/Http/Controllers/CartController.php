@@ -56,7 +56,7 @@ class CartController extends Controller
                     $checkInCart->cart_quantity = $checkInCart->cart_quantity + 1;
                     $checkInCart->save();
                     
-                    session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'danger']);
+                    session(['message'=>"Added 1 ". $checkInCart->product_name . " to cart.", 'type'=>'success']);
 
                 }else{
                     $result = new UserCartModel();
@@ -223,5 +223,6 @@ class CartController extends Controller
 
         return view('admin.cart', ['cart'=>$cart, 'customer'=>$customer, 'products'=>$searchproducts]);
     }
+
 
 }
