@@ -65,53 +65,42 @@
             <!-- End Col -->
             <div class="col-xl-3 col-lg-4 col-sm-6">
               <div class="icon-card mb-30">
-                <div class="icon success">
-                  <i class="lni lni-dollar"></i>
+                <div class="icon primary">
+                  <i class="lni lni-credit-cards"></i>
                 </div>
                 <div class="content">
-                  <h6 class="mb-10">Total Income</h6>
-                  <h3 class="text-bold mb-10">${{$income}}</h3>
-                  {{-- <p class="text-sm text-success">
-                    <i class="lni lni-arrow-up"></i> +5.45%
-                    <span class="text-gray">Increased</span>
-                  </p> --}}
+                  <h6 class="mb-10">Total Sale</h6>
+                  <h3 class="text-bold mb-10">${{number_format($sale, 3)}}</h3>
                 </div>
               </div>
               <!-- End Icon Cart -->
             </div>
             <!-- End Col -->
-            {{-- <div class="col-xl-3 col-lg-4 col-sm-6">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
               <div class="icon-card mb-30">
-                <div class="icon primary">
-                  <i class="lni lni-credit-cards"></i>
+                <div class="icon success">
+                  <i class="lni lni-dollar"></i>
                 </div>
                 <div class="content">
-                  <h6 class="mb-10">Total Expense</h6>
-                  <h3 class="text-bold mb-10">${{$income}}</h3>
-                  <p class="text-sm text-danger">
-                    <i class="lni lni-arrow-down"></i> -2.00%
-                    <span class="text-gray">Expense</span>
-                  </p>
+                  <h6 class="mb-10">Total Income</h6>
+                  <h3 class="text-bold mb-10">${{number_format($income, 3)}}</h3>
                 </div>
               </div>
               <!-- End Icon Cart -->
-            </div> --}}
+            </div>
             <!-- End Col -->
-            {{-- <div class="col-xl-3 col-lg-4 col-sm-6">
+
+            <div class="col-xl-3 col-lg-4 col-sm-6">
               <div class="icon-card mb-30">
                 <div class="icon orange">
-                  <i class="lni lni-user"></i>
+                  <i class="lni lni-clipboard"></i>
                 </div>
                 <div class="content">
-                  <h6 class="mb-10">New User</h6>
-                  <h3 class="text-bold mb-10">34567</h3>
-                  <p class="text-sm text-danger">
-                    <i class="lni lni-arrow-down"></i> -25.00%
-                    <span class="text-gray"> Earning</span>
-                  </p>
+                  <h6 class="mb-10">Expense</h6>
+                  <h3 class="text-bold mb-10">${{number_format($expense, 3)}}</h3>
                 </div>
               </div>
-            </div> --}}
+            </div>
             <!-- End Col -->
           </div>
           <!-- End Row -->
@@ -120,10 +109,10 @@
               <div class="card-style mb-30">
                 <div class="title d-flex flex-wrap justify-content-between">
                   <div class="left">
-                    <h6 class="text-medium mb-10">Yearly Stats</h6>
-                    <h3 class="text-bold">$245,479</h3>
+                    <h6 class="text-medium mb-10">Yearly Income</h6>
+                    <h3 class="text-bold" id="yearly_income"></h3>
                   </div>
-                  <div class="right">
+                  {{-- <div class="right">
                     <div class="select-style-1">
                       <div class="select-position select-sm">
                         <select class="light-bg">
@@ -134,7 +123,7 @@
                       </div>
                     </div>
                     <!-- end select -->
-                  </div>
+                  </div> --}}
                 </div>
                 <!-- End Title -->
                 <div class="chart">
@@ -150,7 +139,7 @@
                   <div class="left">
                     <h6 class="text-medium mb-30">Sales/Revenue</h6>
                   </div>
-                  <div class="right">
+                  {{-- <div class="right">
                     <div class="select-style-1">
                       <div class="select-position select-sm">
                         <select class="light-bg">
@@ -161,7 +150,7 @@
                       </div>
                     </div>
                     <!-- end select -->
-                  </div>
+                  </div> --}}
                 </div>
                 <!-- End Title -->
                 <div class="chart">
@@ -174,7 +163,7 @@
           </div>
           <!-- End Row -->
           <div class="row">
-            <div class="col-lg-5">
+            {{-- <div class="col-lg-5">
               <div class="card-style mb-30">
                 <div class="title d-flex justify-content-between align-items-center">
                   <div class="left">
@@ -185,7 +174,7 @@
                 <div id="map" style="width: 100%; height: 400px; overflow: hidden;"></div>
                 <p>Last updated: 7 days ago</p>
               </div>
-            </div>
+            </div> --}}
             <!-- End Col -->
             <div class="col-lg-7">
               <div class="card-style mb-30">
@@ -193,7 +182,7 @@
                   <div class="left">
                     <h6 class="text-medium mb-30">Top Selling Products</h6>
                   </div>
-                  <div class="right">
+                  {{-- <div class="right">
                     <div class="select-style-1">
                       <div class="select-position select-sm">
                         <select class="light-bg">
@@ -204,205 +193,51 @@
                       </div>
                     </div>
                     <!-- end select -->
-                  </div>
+                  </div> --}}
                 </div>
                 <!-- End Title -->
                 <div class="table-responsive">
                   <table class="table top-selling-table">
                     <thead>
                       <tr>
-                        <th></th>
                         <th>
                           <h6 class="text-sm text-medium">Products</h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">Category</h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">Price</h6>
                         </th>
                         <th class="min-width">
                           <h6 class="text-sm text-medium">Sold</h6>
                         </th>
                         <th class="min-width">
+                          <h6 class="text-sm text-medium">Sales</h6>
+                        </th>
+                        <th class="min-width">
                           <h6 class="text-sm text-medium">Profit</h6>
                         </th>
-                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <div class="check-input-primary">
-                            <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                          </div>
-                        </td>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="{{ asset('assets/images/products/product-mini-1.jpg') }}" alt="" />
+
+                      @foreach ( $topproduct as $item)
+                        <tr>
+                          <td>
+                            <div class="product">
+                              <div class="image">
+                                <img src="{{ asset($item->image) }}" alt="" />
+                              </div>
+                              <p class="text-sm">{{$item->product_name}}</p>
                             </div>
-                            <p class="text-sm">Arm Chair</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">43</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$45</p>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="check-input-primary">
-                            <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                          </div>
-                        </td>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="{{ asset('assets/images/products/product-mini-2.jpg') }}" alt="" />
-                            </div>
-                            <p class="text-sm">SOfa</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$145</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">13</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$15</p>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="check-input-primary">
-                            <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                          </div>
-                        </td>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="{{ asset('assets/images/products/product-mini-3.jpg') }}" alt="" />
-                            </div>
-                            <p class="text-sm">Dining Table</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$95</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">32</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$215</p>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="check-input-primary">
-                            <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                          </div>
-                        </td>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="{{ asset('assets/images/products/product-mini-4.jpg') }}" alt="" />
-                            </div>
-                            <p class="text-sm">Office Chair</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$105</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">23</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
+                          </td>
+                          <td>
+                            <p class="text-sm">{{$item->total_sold}}</p>
+                          </td>
+                          <td>
+                            <p class="text-sm">${{number_format($item->total_sale, 2)}}</p>
+                          </td>
+                          <td>
+                            <p class="text-sm">${{number_format($item->total_profit, 2)}}</p>
+                          </td>
+                        </tr>
+                      @endforeach
+
                     </tbody>
                   </table>
                   <!-- End Table -->
@@ -412,345 +247,7 @@
             <!-- End Col -->
           </div>
           <!-- End Row -->
-          <div class="row">
-            <div class="col-lg-7">
-              <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                  <div class="left">
-                    <h6 class="text-medium mb-2">Sales Forecast</h6>
-                  </div>
-                  <div class="right">
-                    <div class="select-style-1 mb-2">
-                      <div class="select-position select-sm">
-                        <select class="light-bg">
-                          <option value="">Last Month</option>
-                          <option value="">Last 3 Months</option>
-                          <option value="">Last Year</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- end select -->
-                  </div>
-                </div>
-                <!-- End Title -->
-                <div class="chart">
-                  <div id="legend3">
-                    <ul class="legend3 d-flex flex-wrap align-items-center mb-30">
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color primary-bg"> </span>
-                          <div class="text">
-                            <p class="text-sm text-success">
-                              <span class="text-dark">Revenue</span> +25.55%
-                              <i class="lni lni-arrow-up"></i>
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color purple-bg"></span>
-                          <div class="text">
-                            <p class="text-sm text-success">
-                              <span class="text-dark">Net Profit</span> +45.55%
-                              <i class="lni lni-arrow-up"></i>
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color orange-bg"></span>
-                          <div class="text">
-                            <p class="text-sm text-danger">
-                              <span class="text-dark">Order</span> -4.2%
-                              <i class="lni lni-arrow-down"></i>
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <canvas id="Chart3" style="width: 100%; height: 450px; margin-left: -35px;"></canvas>
-                </div>
-              </div>
-            </div>
-            <!-- End Col -->
-            <div class="col-lg-5">
-              <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                  <div class="left">
-                    <h6 class="text-medium mb-2">Traffic</h6>
-                  </div>
-                  <div class="right">
-                    <div class="select-style-1 mb-2">
-                      <div class="select-position select-sm">
-                        <select class="bg-ligh">
-                          <option value="">Last 6 Months</option>
-                          <option value="">Last 3 Months</option>
-                          <option value="">Last Year</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- end select -->
-                  </div>
-                </div>
-                <!-- End Title -->
-                <div class="chart">
-                  <div id="legend4">
-                    <ul class="legend3 d-flex flex-wrap gap-3 gap-sm-0 align-items-center mb-30">
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color primary-bg"> </span>
-                          <div class="text">
-                            <p class="text-sm text-success">
-                              <span class="text-dark">Store Visits</span>
-                              +25.55%
-                              <i class="lni lni-arrow-up"></i>
-                            </p>
-                            <h2>3456</h2>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color danger-bg"></span>
-                          <div class="text">
-                            <p class="text-sm text-danger">
-                              <span class="text-dark">Visitors</span> -2.05%
-                              <i class="lni lni-arrow-down"></i>
-                            </p>
-                            <h2>3456</h2>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <canvas id="Chart4" style="width: 100%; height: 420px; margin-left: -35px;"></canvas>
-                </div>
-                <!-- End Chart -->
-              </div>
-            </div>
-            <!-- End Col -->
-          </div>
-          <!-- End Row -->
-          <div class="row">
-            <div class="col-lg-5">
-              <div class="card-style calendar-card mb-30">
-                <div id="calendar-mini"></div>
-              </div>
-            </div>
-            <!-- End Col -->
-            <div class="col-lg-7">
-              <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                  <div class="left">
-                    <h6 class="text-medium mb-30">Sales History</h6>
-                  </div>
-                  <div class="right">
-                    <div class="select-style-1">
-                      <div class="select-position select-sm">
-                        <select class="light-bg">
-                          <option value="">Today</option>
-                          <option value="">Yesterday</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- end select -->
-                  </div>
-                </div>
-                <!-- End Title -->
-                <div class="table-responsive">
-                  <table class="table top-selling-table">
-                    <thead>
-                      <tr>
-                        <th>
-                          <h6 class="text-sm text-medium">Products</h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">
-                            Category <i class="lni lni-arrows-vertical"></i>
-                          </h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">
-                            Revenue <i class="lni lni-arrows-vertical"></i>
-                          </h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">
-                            Status <i class="lni lni-arrows-vertical"></i>
-                          </h6>
-                        </th>
-                        <th>
-                          <h6 class="text-sm text-medium text-end">
-                            Actions <i class="lni lni-arrows-vertical"></i>
-                          </h6>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="{{ asset('assets/images/products/product-mini-1.jpg') }}" alt="" />
-                            </div>
-                            <p class="text-sm">Bedroom</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <span class="status-btn close-btn">Pending</span>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="edit">
-                              <i class="lni lni-pencil"></i>
-                            </button>
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="{{ asset('assets/images/products/product-mini-2.jpg') }}" alt="" />
-                            </div>
-                            <p class="text-sm">Arm Chair</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <span class="status-btn warning-btn">Refund</span>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="edit">
-                              <i class="lni lni-pencil"></i>
-                            </button>
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="{{ asset('assets/images/products/product-mini-3.jpg') }}" alt="" />
-                            </div>
-                            <p class="text-sm">Sofa</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <span class="status-btn success-btn">Completed</span>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="edit">
-                              <i class="lni lni-pencil"></i>
-                            </button>
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="{{ asset('assets/images/products/product-mini-4.jpg') }}" alt="" />
-                            </div>
-                            <p class="text-sm">Kitchen</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <span class="status-btn close-btn">Canceled</span>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="edit">
-                              <i class="lni lni-pencil"></i>
-                            </button>
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <!-- End Table -->
-                </div>
-              </div>
-            </div>
-            <!-- End Col -->
-          </div>
-          <!-- End Row -->
+
 @endsection
 
 @section('script')
@@ -814,244 +311,256 @@
     calendarMini.render();
   });
 
-  // =========== chart one start
-  const ctx1 = document.getElementById("Chart1").getContext("2d");
-  const chart1 = new Chart(ctx1, {
-    type: "line",
-    data: {
-      labels: [
-        "Jan",
-        "Fab",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      datasets: [
-        {
-          label: "",
-          backgroundColor: "transparent",
-          borderColor: "#365CF5",
-          data: [
-            600, 800, 750, 880, 940, 880, 900, 770, 920, 890, 976, 1100,
+  // =========== chart yearly income
+
+  $.ajax({
+    url: '/yearlyincome',
+    type: 'GET',
+    dataType: 'json', 
+    success: function(response) {
+      $('#yearly_income').text('$' + (response.yearly_income).toFixed(3));
+                
+      const ctx1 = document.getElementById("Chart1").getContext("2d");
+      const chart1 = new Chart(ctx1, {
+        type: "line",
+        data: {
+          labels: [
+            "Jan",
+            "Fab",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
           ],
-          pointBackgroundColor: "transparent",
-          pointHoverBackgroundColor: "#365CF5",
-          pointBorderColor: "transparent",
-          pointHoverBorderColor: "#fff",
-          pointHoverBorderWidth: 5,
-          borderWidth: 5,
-          pointRadius: 8,
-          pointHoverRadius: 8,
-          cubicInterpolationMode: "monotone", // Add this line for curved line
+          datasets: [
+            {
+              label: "",
+              backgroundColor: "transparent",
+              borderColor: "#365CF5",
+              data: response.monthly_income,
+              pointBackgroundColor: "transparent",
+              pointHoverBackgroundColor: "#365CF5",
+              pointBorderColor: "transparent",
+              pointHoverBorderColor: "#fff",
+              pointHoverBorderWidth: 5,
+              borderWidth: 5,
+              pointRadius: 8,
+              pointHoverRadius: 8,
+              cubicInterpolationMode: "monotone", // Add this line for curved line
+            },
+          ],
         },
-      ],
-    },
-    options: {
-      plugins: {
-        tooltip: {
-          callbacks: {
-            labelColor: function (context) {
-              return {
-                backgroundColor: "#ffffff",
-                color: "#171717"
-              };
+        options: {
+          plugins: {
+            tooltip: {
+              callbacks: {
+                labelColor: function (context) {
+                  return {
+                    backgroundColor: "#ffffff",
+                    color: "#171717"
+                  };
+                },
+              },
+              intersect: false,
+              backgroundColor: "#f9f9f9",
+              title: {
+                fontFamily: "Plus Jakarta Sans",
+                color: "#8F92A1",
+                fontSize: 12,
+              },
+              body: {
+                fontFamily: "Plus Jakarta Sans",
+                color: "#171717",
+                fontStyle: "bold",
+                fontSize: 16,
+              },
+              multiKeyBackground: "transparent",
+              displayColors: false,
+              padding: {
+                x: 30,
+                y: 10,
+              },
+              bodyAlign: "center",
+              titleAlign: "center",
+              titleColor: "#8F92A1",
+              bodyColor: "#171717",
+              bodyFont: {
+                family: "Plus Jakarta Sans",
+                size: "16",
+                weight: "bold",
+              },
+            },
+            legend: {
+              display: false,
             },
           },
-          intersect: false,
-          backgroundColor: "#f9f9f9",
+          responsive: true,
+          maintainAspectRatio: false,
           title: {
-            fontFamily: "Plus Jakarta Sans",
-            color: "#8F92A1",
-            fontSize: 12,
-          },
-          body: {
-            fontFamily: "Plus Jakarta Sans",
-            color: "#171717",
-            fontStyle: "bold",
-            fontSize: 16,
-          },
-          multiKeyBackground: "transparent",
-          displayColors: false,
-          padding: {
-            x: 30,
-            y: 10,
-          },
-          bodyAlign: "center",
-          titleAlign: "center",
-          titleColor: "#8F92A1",
-          bodyColor: "#171717",
-          bodyFont: {
-            family: "Plus Jakarta Sans",
-            size: "16",
-            weight: "bold",
-          },
-        },
-        legend: {
-          display: false,
-        },
-      },
-      responsive: true,
-      maintainAspectRatio: false,
-      title: {
-        display: false,
-      },
-      scales: {
-        y: {
-          grid: {
             display: false,
-            drawTicks: false,
-            drawBorder: false,
           },
-          ticks: {
-            padding: 35,
-            max: 1200,
-            min: 500,
+          scales: {
+            y: {
+              grid: {
+                display: false,
+                drawTicks: false,
+                drawBorder: false,
+              },
+              ticks: {
+                padding: 35,
+                max: 1200,
+                min: 500,
+              },
+            },
+            x: {
+              grid: {
+                drawBorder: false,
+                color: "rgba(143, 146, 161, .1)",
+                zeroLineColor: "rgba(143, 146, 161, .1)",
+              },
+              ticks: {
+                padding: 20,
+              },
+            },
           },
         },
-        x: {
-          grid: {
-            drawBorder: false,
-            color: "rgba(143, 146, 161, .1)",
-            zeroLineColor: "rgba(143, 146, 161, .1)",
-          },
-          ticks: {
-            padding: 20,
-          },
-        },
-      },
-    },
-  });
-  // =========== chart one end
-
-  // =========== chart two start
-  const ctx2 = document.getElementById("Chart2").getContext("2d");
-  const chart2 = new Chart(ctx2, {
-    type: "bar",
-    data: {
-      labels: [
-        "Jan",
-        "Fab",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      datasets: [
-        {
-          label: "",
-          backgroundColor: "#365CF5",
-          borderRadius: 30,
-          barThickness: 6,
-          maxBarThickness: 8,
-          data: [
-            600, 700, 1000, 700, 650, 800, 690, 740, 720, 1120, 876, 900,
+      });
+      // =========== chart yearly income end
+      
+      // =========== chart monthly sale start
+      const ctx2 = document.getElementById("Chart2").getContext("2d");
+      const chart2 = new Chart(ctx2, {
+        type: "bar",
+        data: {
+          labels: [
+            "Jan",
+            "Fab",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ],
+          datasets: [
+            {
+              label: "",
+              backgroundColor: "#365CF5",
+              borderRadius: 30,
+              barThickness: 6,
+              maxBarThickness: 8,
+              data: response.monthly_sale,
+            },
           ],
         },
-      ],
-    },
-    options: {
-      plugins: {
-        tooltip: {
-          callbacks: {
-            titleColor: function (context) {
-              return "#8F92A1";
-            },
-            label: function (context) {
-              let label = context.dataset.label || "";
+        options: {
+          plugins: {
+            tooltip: {
+              callbacks: {
+                titleColor: function (context) {
+                  return "#8F92A1";
+                },
+                label: function (context) {
+                  let label = context.dataset.label || "";
 
-              if (label) {
-                label += ": ";
-              }
-              label += context.parsed.y;
-              return label;
+                  if (label) {
+                    label += ": ";
+                  }
+                  label += context.parsed.y;
+                  return label;
+                },
+              },
+              backgroundColor: "#F3F6F8",
+              titleAlign: "center",
+              bodyAlign: "center",
+              titleFont: {
+                size: 12,
+                weight: "bold",
+                color: "#8F92A1",
+              },
+              bodyFont: {
+                size: 16,
+                weight: "bold",
+                color: "#171717",
+              },
+              displayColors: false,
+              padding: {
+                x: 30,
+                y: 10,
+              },
+          },
+          },
+          legend: {
+            display: false,
+            },
+          legend: {
+            display: false,
+          },
+          layout: {
+            padding: {
+              top: 15,
+              right: 15,
+              bottom: 15,
+              left: 15,
             },
           },
-          backgroundColor: "#F3F6F8",
-          titleAlign: "center",
-          bodyAlign: "center",
-          titleFont: {
-            size: 12,
-            weight: "bold",
-            color: "#8F92A1",
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              grid: {
+                display: false,
+                drawTicks: false,
+                drawBorder: false,
+              },
+              ticks: {
+                padding: 35,
+                max: 1200,
+                min: 0,
+              },
+            },
+            x: {
+              grid: {
+                display: false,
+                drawBorder: false,
+                color: "rgba(143, 146, 161, .1)",
+                drawTicks: false,
+                zeroLineColor: "rgba(143, 146, 161, .1)",
+              },
+              ticks: {
+                padding: 20,
+              },
+            },
           },
-          bodyFont: {
-            size: 16,
-            weight: "bold",
-            color: "#171717",
-          },
-          displayColors: false,
-          padding: {
-            x: 30,
-            y: 10,
-          },
-      },
-      },
-      legend: {
-        display: false,
-        },
-      legend: {
-        display: false,
-      },
-      layout: {
-        padding: {
-          top: 15,
-          right: 15,
-          bottom: 15,
-          left: 15,
-        },
-      },
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          grid: {
-            display: false,
-            drawTicks: false,
-            drawBorder: false,
-          },
-          ticks: {
-            padding: 35,
-            max: 1200,
-            min: 0,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            title: {
+              display: false,
+            },
           },
         },
-        x: {
-          grid: {
-            display: false,
-            drawBorder: false,
-            color: "rgba(143, 146, 161, .1)",
-            drawTicks: false,
-            zeroLineColor: "rgba(143, 146, 161, .1)",
-          },
-          ticks: {
-            padding: 20,
-          },
-        },
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-        title: {
-          display: false,
-        },
-      },
-    },
-  });
+      });
   // =========== chart two end
+    },
+    error: function(xhr, status, error) {
+      console.error(xhr.responseText);
+      // Handle error here
+    }
+});
+
+
 
   // =========== chart three start
   const ctx3 = document.getElementById("Chart3").getContext("2d");

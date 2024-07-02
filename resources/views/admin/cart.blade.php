@@ -227,7 +227,9 @@
 @endsection
 
 @section('script')
+
 <script src="https://unpkg.com/html5-qrcode"></script>
+
 <script src="https://unpkg.com/@jarstone/dselect/dist/js/dselect.js"></script>
 <script>
     $.ajaxSetup({
@@ -407,20 +409,20 @@ $("#BtnBarcodeScanner").click(function() {
     e.which = 13;
     e.keyCode = 13;
 
-        // If found you qr code
-        function onScanSuccess(decodeText, decodedResult) {
+    // If found you qr code
+    function onScanSuccess(decodeText, decodedResult) {
 
-            if (!continueScanning) return;  // Check flag before processing
+        if (!continueScanning) return;  // Check flag before processing
 
-            $("#FormModalBarcode").modal("hide");
-            $('#ScanBarcode').val(decodeText);
-            $('#ScanBarcode').trigger(e);
-            $('#ScanBarcode').val("");
+        $("#FormModalBarcode").modal("hide");
+        $('#ScanBarcode').val(decodeText);
+        $('#ScanBarcode').trigger(e);
+        $('#ScanBarcode').val("");
 
-            htmlscanner.clear();
+        htmlscanner.clear();
 
-            continueScanning = false;  // Set flag to false to stop further scans   
-        }
+        continueScanning = false;  // Set flag to false to stop further scans   
+    }
  
     let htmlscanner = new Html5QrcodeScanner(
         "my-qr-reader",

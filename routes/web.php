@@ -42,6 +42,9 @@ Route::middleware(Admin::class)->group(function(){
     Route::get('/admin/order', [OrderController::class, 'OrderView']);
 });
 
+// Dashboard YearlyIncome
+Route::get('/yearlyincome', [DashboardController::class, 'YearlyIncome']);
+
 // User
 Route::post('/adduser', [UsersController::class, 'AddUser']);
 Route::post('/updateuser', [UsersController::class, 'UpdateUser']);
