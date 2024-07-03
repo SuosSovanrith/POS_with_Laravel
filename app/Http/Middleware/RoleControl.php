@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Admin
+class RoleControl
 {
     /**
      * Handle an incoming request.
@@ -15,14 +15,18 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!session()->has('auth')) {
-            session(['message'=>'You are Unauthorized! Please login.', 'type'=>'warning']);
+        if(session()->has('auth')){
 
-            return redirect('/auth/login');
+            if(session('position_name') != 'Admin') {
+                session(['message'=>'You are Unauthorized to access the page! Please contact admin for more information.', 'type'=>'warning']);
+    
+                return redirect('/admin/cart');
+            }
+        }else{
+            session(['message'=>'You are Unauthorized! Please login.', 'type'=>'warning']);
+    
+            return redirect('/admin/login');
         }
         return $next($request);
     }
 }
-
-
-

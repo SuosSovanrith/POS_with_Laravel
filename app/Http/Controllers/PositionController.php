@@ -8,8 +8,10 @@ use App\Models\PositionModel;
 class PositionController extends Controller
 {
     public function PositionView(){
+
         $result = PositionModel::paginate(10);
         return view('admin.position', ['position'=>$result]);
+        
     }
 
     public function AddPosition(Request $rq){

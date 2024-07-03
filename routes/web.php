@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Admin;
+use App\Http\Middleware\RoleControl;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
@@ -31,15 +32,17 @@ Route::get('/logout', [AuthController::class, 'Logout']);
 
 // Admin Middleware
 Route::middleware(Admin::class)->group(function(){
-    Route::get('/admin/index', [DashboardController::class, 'DashboardView']);
-    Route::get('/admin/users', [UsersController::class, 'UsersView']);
-    Route::get('/admin/position', [PositionController::class, 'PositionView']);
-    Route::get('/admin/products', [ProductsController::class, 'ProductsView']);
-    Route::get('/admin/category', [CategoryController::class, 'CategoryView']);
-    Route::get('/admin/supplier', [SupplierController::class, 'SupplierView']);
-    Route::get('/admin/customer', [CustomerController::class, 'CustomerView']);
+    Route::middleware(RoleControl::class)->group(function(){
+        Route::get('/admin/index', [DashboardController::class, 'DashboardView']);
+        Route::get('/admin/users', [UsersController::class, 'UsersView']);
+        Route::get('/admin/position', [PositionController::class, 'PositionView']);
+        Route::get('/admin/products', [ProductsController::class, 'ProductsView']);
+        Route::get('/admin/category', [CategoryController::class, 'CategoryView']);
+        Route::get('/admin/supplier', [SupplierController::class, 'SupplierView']);
+        Route::get('/admin/customer', [CustomerController::class, 'CustomerView']);
+        Route::get('/admin/order', [OrderController::class, 'OrderView']);
+    });
     Route::get('/admin/cart', [CartController::class, 'CartView']);
-    Route::get('/admin/order', [OrderController::class, 'OrderView']);
 });
 
 // Dashboard YearlyIncome
