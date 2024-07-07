@@ -141,6 +141,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <a href="{{ asset('assets/files/Products.xlsx') }}" download class="btn btn-primary">Download Format</a>
                     <input type="submit" id="BtnImportProduct" class="btn btn-success" value="Import" />
                 </div>
             </form>
@@ -542,8 +543,11 @@
                 a.document.write('<html>');  
                 a.document.write('<head><style> div{display:inline-block;}</style></head>');  
                 a.document.write('<body >'); 
-                    for(var i=0; i<72; i++){
+                    for(var i=0; i<36; i++){
+                        a.document.write("<div style='border: 1px dashed black; padding-left: 20px;'>"); 
+                        a.document.write('<p style="font-size: 10px;">' + response.product_id + '. ' + response.product_name + ' [' + response.barcode + ']' + '</p>'); 
                         a.document.write(data + "&emsp;&emsp;"); 
+                        a.document.write("</div>"); 
                     }
                 a.document.write('</body></html>'); 
                 a.document.title = 'Print Barcode'; 

@@ -145,7 +145,7 @@ class ProductsController extends Controller
 
     // Get Barcode Image
     public function GetBarcodeImage($barcode){
-        $barcodeImage = ProductsModel::select(['barcode_image'])->where('barcode', $barcode)->first();
+        $barcodeImage = ProductsModel::select(['barcode_image', 'product_id', 'barcode', 'product_name'])->where('barcode', $barcode)->first();
         return $barcodeImage;
     }
 
