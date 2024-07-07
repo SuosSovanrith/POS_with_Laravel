@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\ProductsModel;
-use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Picqer;
 

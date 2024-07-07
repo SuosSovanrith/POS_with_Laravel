@@ -64,6 +64,7 @@ Route::post('/updateproduct', [ProductsController::class, 'UpdateProduct']);
 Route::post('/deleteproduct', [ProductsController::class, 'DeleteProduct']);
 Route::post('/getbarcodeimage/{barcode}', [ProductsController::class, 'GetBarcodeImage']);
 Route::post('/importexcel', [ProductsController::class, 'ImportExcel']);
+Route::get('/exportexcel', [ProductsController::class, 'ExportExcel']);
 Route::post('/searchproductlist', [ProductsController::class, 'SearchProduct']);
 Route::post('/filterproduct', [ProductsController::class, 'FilterProduct']);
 

@@ -141,8 +141,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{ asset('assets/files/Products.xlsx') }}" download class="btn btn-primary">Download Format</a>
+                    <a href="{{ asset('assets/files/products_import_format.xlsx') }}" download class="btn btn-primary">Download Format</a>
                     <input type="submit" id="BtnImportProduct" class="btn btn-success" value="Import" />
+                    <input type="submit" class="btn btn-danger" value="Export" formaction="/exportexcel" formmethod="GET"/>
                 </div>
             </form>
         </div>
@@ -175,7 +176,7 @@
                     <div class="col-md-6 mb-4">
                         <div class="row">
                              <div class="col-7">
-                                <div align="right"><a href="#" id="ImportPopup" class="main-btn success-btn-outline btn-hover btn-sm"><i class="fa fa-file-excel-o mr-5"></i><b>Import</b></a></div>
+                                <div align="right"><a href="#" id="ImportPopup" class="main-btn success-btn-outline btn-hover btn-sm"><i class="fa fa-file-excel-o mr-5"></i><b>Import/Export</b></a></div>
                              </div>
                              <div class="col-5">
                                 <div align="left"><a href="#" id="AddPopup" class="main-btn primary-btn-outline btn-hover btn-sm"><i class="lni lni-plus mr-5"></i><b>New Product</b></a></div>

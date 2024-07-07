@@ -6,9 +6,9 @@ use App\Models\ProductsModel;
 use App\Models\CategoryModel;
 use App\Models\SupplierModel;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ProductsImport;
-use Excel;
+use App\Exports\ProductsExport;
 use Picqer;
 use Illuminate\Support\Carbon;
 
@@ -153,6 +153,11 @@ class ProductsController extends Controller
     public function ImportExcel(Request $rq){
         Excel::import(new ProductsImport, $rq->file('Excel_File'));
         return redirect('/admin/products');
+    }
+
+    // Export Product
+    public function ExportExcel(){
+        return Excel::download(new ProductsExport, 'products.xlsx');
     }
 
     // Search Product
