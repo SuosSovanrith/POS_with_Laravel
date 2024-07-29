@@ -63,26 +63,40 @@
                     Start creating the best possible user experience for you
                     customers.
                   </p>
-                  <form action="#">
+
+                  <!-- Alert Message -->
+                  @if (session('message'))
+                    <div class="alert-box {{session('type')}}-alert">
+                      <div class="alert">
+                        <p class="text-medium">
+                          {{session('message')}}
+                          {{session()->forget(['message','type']);}}
+                        </p>
+                      </div>
+                    </div>        
+                  @endif
+
+                  <form action="/register" method="POST">
+                    @csrf
                     <div class="row">
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Name</label>
-                          <input type="text" placeholder="Name" />
+                          <input type="text" name="Name" placeholder="Name" required/>
                         </div>
                       </div>
                       <!-- end col -->
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Email</label>
-                          <input type="email" placeholder="Email" />
+                          <input type="email" name="Email" placeholder="Email" required/>
                         </div>
                       </div>
                       <!-- end col -->
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Password</label>
-                          <input type="password" placeholder="Password" />
+                          <input type="password" name="Password" placeholder="Password" required/>
                         </div>
                       </div>
                       <!-- end col -->

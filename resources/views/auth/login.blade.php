@@ -101,13 +101,12 @@
                     </div>
                     <!-- end row -->
                   </form>
-<!-- 
                   <div class="singin-option pt-40">
                     <p class="text-sm text-medium text-dark text-center">
                       Don’t have any account yet?
                       <a href="/auth/register">Create an account</a>
                     </p>
-                  </div> -->
+                  </div>
                 </div>
               </div>
             </div>

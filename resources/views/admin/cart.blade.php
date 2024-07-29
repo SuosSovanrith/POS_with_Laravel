@@ -186,7 +186,7 @@
                                         </span>
                                     @endif      
                                     <div class="card-image" >
-                                        <a href="/addcartimage/{{$product->product_id}}" <?php if($product->in_stock < 1) echo('style="pointer-events: none"'); ?>>
+                                        <a href="/addcartimage/{{$product->product_id}}" <?php if($product->quantity < 1) echo('style="pointer-events: none"'); ?>>
                                             <img src="{{asset($product->image)}}" alt="">
                                         </a>
                                     </div>

@@ -13,6 +13,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ShopController;
 
 // Auth
 Route::get('/', function () {
@@ -28,6 +29,7 @@ Route::get('/auth/register', function () {
 });
 
 Route::post('/login', [AuthController::class, 'Login']);
+Route::post('/register', [AuthController::class, 'Register']);
 Route::get('/logout', [AuthController::class, 'Logout']);
 
 // Admin Middleware
@@ -96,3 +98,6 @@ Route::post('/addorder', [OrderController::class, 'AddOrder']);
 Route::post('/searchorder', [OrderController::class, 'SearchView']);
 Route::get('/getorderitem/{order_id}', [OrderController::class, 'GetOrderItem']);
 
+// Ecommerce
+Route::get('/ecommerce/shop', [ShopController::class, 'ProductsView']);
+Route::get('/addtocart/{product_id}', [ShopController::class, 'AddToCart']);

@@ -19,6 +19,12 @@ class Admin
             session(['message'=>'You are Unauthorized! Please login.', 'type'=>'warning']);
 
             return redirect('/auth/login');
+        }else{
+            if(session('position_name') == "Customer"){
+                session(['message'=>'You are Unauthorized!', 'type'=>'warning']);
+
+                return redirect('/ecommerce/shop');
+            }
         }
         return $next($request);
     }

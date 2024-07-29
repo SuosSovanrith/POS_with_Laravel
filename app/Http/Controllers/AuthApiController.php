@@ -31,12 +31,16 @@ class AuthApiController extends Controller
             $Email = $rq->header('Email');
             $Password = $rq->header('Password');
 
-            $result = DB::table('users')->join('position', 'users.position_id', '=', 'position.position_id')
+            $auth = DB::table('users')
             ->where('users.email', '=', $Email)
             ->where('users.password', '=', $Password)
             ->first();
 
-            if(isset($result)){
+            if(isset($auth)){
+                $result = DB::table('users')->join('position', 'users.position_id', '=', 'position.position_id')
+                ->where('users.email', '=', $Email)
+                ->where('users.password', '=', $Password)->first();
+                
                 $user_id = $result->user_id;
                 $name = $result->name;
                 $email = $result->email;
