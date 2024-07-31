@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\CustomerModel;
 
 class AuthController extends Controller
 {
@@ -61,6 +62,12 @@ class AuthController extends Controller
         $user->password = $Password;
         $user->position_id = $position_id->position_id;
         $user->save();
+
+        $customer = new CustomerModel();
+        $customer->user_id = $user->user_id;
+        $customer->customer_name = $Name;
+        $customer->customer_email = $Email;
+        $customer->save();
         
         session(['message'=>'Register Successful!', 'type'=>'success']);
         return redirect('/auth/login');

@@ -165,6 +165,9 @@
                                 <td class="min-width p-3" style="display: none">
                                     <p>{{$order->khqr}}</p>
                                 </td>
+                                <td class="min-width p-3" style="display: none">
+                                    <p>{{$order->address}}</p>
+                                </td>
                                 <td class="p-3">
                                     <a href="#" class="BtnPrintReceipt text-primary" style="width: 20px;"><i class="lni lni-printer"></i></a>
                                     @if ($order->khqr != "")
@@ -376,6 +379,7 @@
         var status = current_row.find('td').eq(6).text().trim();
         var to_pay = current_row.find('td').eq(7).text().trim();
         var time = current_row.find('td').eq(8).text().trim();
+        var address = current_row.find('td').eq(10).text().trim();
         var status_color = "";
 
         if(status=='Paid'){
@@ -397,6 +401,7 @@
                             '<div class="col-sm-6"><div class="text-muted text-sm-end"><div class="mt-2"><h5 class="font-size-15 mb-1">Order Date:</h5><p>' + time + '</p></div></div></div></div>' +
                             '<div class="row"><div class="col-sm-6"><div class="text-muted"><div class="mt-2"><h5 class="font-size-15 mb-1">Customer:</h5><p>' + customer + '</p></div></div></div>' +
                             '<div class="col-sm-6"><div class="text-muted text-sm-end"><div class="mt-2"><h5 class="font-size-15 mb-1">Served By:</h5><p>' + user + '</p></div></div></div></div>' +
+                            '<div class="row"><div class="col-sm-6"><div class="text-muted"><div class="mt-2"><h5 class="font-size-15 mb-1">Address:</h5><p>' + address + '</p></div></div></div>' +
                             '<div class="py-2"><h5 class="font-size-15">Order Summary</h5><div class="table-responsive"><table class="table table-sm align-middle table-nowrap mb-0 table-striped">' +
                             '<thead><tr><th>Item</th><th>Price</th><th>Quantity</th><th class="text-end" style="width: 120px;">Total</th></tr></thead> <tbody>';
         

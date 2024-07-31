@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -16,6 +17,15 @@ return new class extends Migration
             $table->string('position_name');
             $table->timestamps();
         });
+
+        DB::table('Position')
+        ->insert(array(
+            array('position_name' => 'Admin'),
+            array('position_name' => 'N/A'),
+            array('position_name' => 'Cashier'),
+            array('position_name' => 'Stock Manager'),
+            array('position_name' => 'Customer')
+        ));
     }
 
     /**

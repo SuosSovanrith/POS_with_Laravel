@@ -19,9 +19,6 @@ return new class extends Migration
             $table->decimal('total', 8, 4);
             $table->timestamps();
 
-            $table->foreign('customer_id')->references('customer_id')->on('customer')->onDelete('set null');
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
-
         });
     }
 

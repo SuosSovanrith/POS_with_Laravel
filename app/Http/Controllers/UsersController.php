@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\CustomerModel;
 use App\Models\PositionModel;
 
 class UsersController extends Controller
@@ -72,6 +73,12 @@ class UsersController extends Controller
         } //when update image, if no image us chosen, then don't update
 
         $result->save();
+
+        // update customer info
+        $customer = CustomerModel::where('user_id', $rq->Id)->firstOrFail();;
+        $customer->Address = $rq->Address;
+        $customer->Phone_number = $rq->Phone;
+        $customer->save();
 
         if (isset($result)){
             session(['message'=>'User updated successfully!', 'type'=>'success']);

@@ -14,6 +14,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ECartController;
+use App\Http\Controllers\EOrderController;
 
 // Auth
 Route::get('/', function () {
@@ -98,6 +100,20 @@ Route::post('/addorder', [OrderController::class, 'AddOrder']);
 Route::post('/searchorder', [OrderController::class, 'SearchView']);
 Route::get('/getorderitem/{order_id}', [OrderController::class, 'GetOrderItem']);
 
-// Ecommerce
-Route::get('/ecommerce/shop', [ShopController::class, 'ProductsView']);
-Route::get('/addtocart/{product_id}', [ShopController::class, 'AddToCart']);
+// Ecommerce 
+
+// Shop
+Route::get('/ecommerce/shop', [ShopController::class, 'ShopView']);
+Route::post('/filtershop', [ShopController::class, 'FilterShop']);
+Route::post('/searchshop', [ShopController::class, 'SearchShop']);
+
+// Cart
+Route::get('/ecommerce/cart', [ECartController::class, 'CartView']);
+Route::get('/addtocart/{product_id}', [ECartController::class, 'AddToCart']);
+Route::post('/ecommerce/updatecartquantity', [ECartController::class, 'UpdateCartQuantity']);
+Route::post('/ecommerce/deletecart', [ECartController::class, 'DeleteCart']);
+Route::post('/ecommerce/clearcart', [ECartController::class, 'ClearCart']);
+
+// Order
+Route::get('/ecommerce/order', [EOrderController::class, 'OrderView']);
+Route::post('/ecommerce/addorder', [EOrderController::class, 'AddOrder']);

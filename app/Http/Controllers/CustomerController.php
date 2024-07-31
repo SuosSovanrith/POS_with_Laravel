@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CustomerModel;
+use App\Models\User;
 
 class CustomerController extends Controller
 {
@@ -53,6 +54,13 @@ class CustomerController extends Controller
         } //when update image, if no image is chosen, then don't update
 
         $result->save();
+
+        if ($result->user_id != null){
+            $user = User::find($result->user_id);
+            $user->Phone_number = $rq->Phone;
+            $user->Address = $rq->Address;
+            $user->save();
+        }
 
         if (isset($result)){
             session(['message'=>'Customer updated successfully!', 'type'=>'success']);

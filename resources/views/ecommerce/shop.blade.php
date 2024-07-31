@@ -6,7 +6,7 @@
 
 @section('content')
 
-<form action="/filtershop" method="post" class="mb-3">
+<form action="/filtershop" method="post" class="mb-2">
     @csrf   
     <div class="row">
         <div class="col-md-12 col-lg-3">
@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-md-0 col-lg-3"></div>
                 <div class="col-md-5 pt-1">
-                    <label for="Filter_Period">Price from</label>
+                    <label for="Start_Price">Price from</label>
                 </div>
                 <div class="col-md-4">
                     <input type="number" min="0" step="0.01" class="form-control" name="Start_Price" value="<?php if(isset($start_price)){ echo($start_price); }else{ echo("0");} ?>">                            
@@ -42,60 +42,81 @@
         <div class="col-md-6 col-lg-3">
             <div class="row">
                 <div class="col-md-2 pt-1">
-                    <label for="Filter_Period">To</label>
+                    <label for="End_Price">To</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="number" min="0" step="0.01" class="form-control" name="End_Price" value="<?php if(isset($end_price)){ echo($end_price); }else{ echo("0");} ?>">
+                    <input type="number" min="0" step="0.01" class="form-control" name="End_Price" value="<?php if(isset($end_price)){ echo($end_price); }else{ echo("9999");} ?>">
                 </div>
             </div> 
         </div> 
         <div class="col-lg-2 p-1">
             <input type="submit" class="btn btn-primary" id="SearchSubmit" value="Filter">
-            <input type="submit" class="btn btn-danger" id="SearchClear" value="Clear" formaction="/admin/order" formmethod="get">
+            <input type="submit" class="btn btn-danger" id="SearchClear" value="Clear" formaction="/ecommerce/shop" formmethod="get">
         </div>
     </div>
 </form>
 
 <div class="row">
-    @foreach ($products as $product)
-        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
-            <div class="card-style-1 mb-30">
-                <div class="card-image">
-                    <a href="#" class="BtnViewProduct">
-                        <img src="{{asset($product->image)}}" >
-                    </a>
-                </div>
-                <div class="card-content">  
-                    <h6><a href="#" class="BtnViewProduct">{{$product->product_name}}</a></h6>
-                    <p>${{$product->price_out}}</p>
-                </div>
-                <table style="display: none">
-                    <tr>
-                        <td class="min-width p-3" style="width:69px;">
-                            <img src="{{asset($product->image)}}" alt="Image" width="69"/>
-                            <p style="display:none;">{{$product->image}}</p>
-                        </td>
-                        <td class="min-width p-3">
-                            <p>{{$product->product_id}}</p>
-                        </td>
-                        <td class="min-width p-3"  style="width: 150px;">
-                            <p>{{$product->product_name}}</p>
-                        </td>
-                        <td class="min-width p-3">
-                            <p>{{$product->quantity}}</p>
-                        </td>
-                        <td class="min-width p-3">
-                            <p>{{$product->price_out}}</p>
-                        </td>
-                        <td class="min-width p-3" style="display: none;">
-                            <p>{{$product->category_name}}</p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>  
-    @endforeach
+    <div class="col-md-6 col-lg-8"></div>
+    <div class="col-md-6 col-lg-4">
+        <div class="input-style-2">
+            <form action="/searchshop" method="post" id="SearchForm">  
+                @csrf
+                <input type="text" class="form-control" name="Shop_Search" id="Shop_Search" placeholder="Search Shop...">
+                <input type="submit" class="form-control" id="BtnSearchShop" style="display: none;">
+            </form>
+            <span class="icon"> <i class="lni lni-magnifier"></i> </span>
+        </div>
+    </div>
 </div>
+
+<div class="row">
+    @if (!$products->isEmpty())
+        @foreach ($products as $product)
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                <div class="card-style-1 mb-30">
+                    <div class="card-image">
+                        <a href="#" class="BtnViewProduct">
+                            <img src="{{asset($product->image)}}" >
+                        </a>
+                    </div>
+                    <div class="card-content">  
+                        <h6><a href="#" class="BtnViewProduct">{{$product->product_name}}</a></h6>
+                        <p>${{$product->price_out}}</p>
+                    </div>
+                    <table style="display: none">
+                        <tr>
+                            <td class="min-width p-3" style="width:69px;">
+                                <img src="{{asset($product->image)}}" alt="Image" width="69"/>
+                                <p style="display:none;">{{$product->image}}</p>
+                            </td>
+                            <td class="min-width p-3">
+                                <p>{{$product->product_id}}</p>
+                            </td>
+                            <td class="min-width p-3"  style="width: 150px;">
+                                <p>{{$product->product_name}}</p>
+                            </td>
+                            <td class="min-width p-3">
+                                <p>{{$product->quantity}}</p>
+                            </td>
+                            <td class="min-width p-3">
+                                <p>{{$product->price_out}}</p>
+                            </td>
+                            <td class="min-width p-3" style="display: none;">
+                                <p>{{$product->category_name}}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>  
+        @endforeach
+        {{$products->render()}}
+    @else
+        {{"No products data..."}}
+    @endif
+
+</div>
+
 
 <!-- Product View Modal-->
 <div class="modal fade" id="FormModalProduct" tabindex="-1" aria-labelledby="FormModalProductLabel" aria-hidden="true">
@@ -115,8 +136,9 @@
 @endsection
 
 @section('script')
-    <script>
-        // open product view form
+<script>
+        
+    // open product view form
     $(".BtnViewProduct").click(function() {
         $("#FormModalProduct").modal("show");
 
@@ -153,8 +175,15 @@
         '</div>' 
         );
 
-        
-
     });
-    </script>
+
+            
+    // for search shop
+    $('#Shop_Search').keypress(function (e) {
+        if (e.which == 13) {
+            $('#BtnSearchShop').click();
+        }
+    });
+
+</script>
 @endsection

@@ -18,7 +18,7 @@ class OrderController extends Controller
         $orders = OrderModel::join('customer', 'orders.customer_id', '=', 'customer.customer_id')
         ->join('users', 'orders.user_id', '=', 'users.user_id')
         ->join('payment', 'orders.order_id', '=', 'payment.order_id')
-        ->select(['orders.order_id', 'orders.discount', 'orders.total','orders.created_at', 'customer.customer_name', 'users.name', 'payment.amount', 'payment.khqr'])
+        ->select(['orders.order_id', 'orders.discount', 'orders.total','orders.created_at', 'customer.customer_name', 'customer.address', 'users.name', 'payment.amount', 'payment.khqr'])
         ->latest()->paginate(10);
 
         return view('admin.order', ['orders'=>$orders]);
