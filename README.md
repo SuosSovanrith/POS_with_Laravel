@@ -37,7 +37,18 @@ This is a Point of Sale (POS) system built using the Laravel framework. The proj
    ```bash
    cp .env.example .env
    ```
-4. Run migrations:
+4. Set up your MySQL database in .env:
+   ```bash
+   DB_CONNECTION=mysql
+   DB_HOST='your_host'
+   DB_PORT='your_port'
+   DB_DATABASE='your_database_name'
+   DB_USERNAME='your_username'
+   DB_PASSWORD='your_password'
+   DB_COLLATION=utf8mb4_unicode_ci
+   ```
+
+5. Run migrations:
    ```bash
    php artisan migrate
    ```
