@@ -19,11 +19,37 @@ This is a Point of Sale (POS) system built using the Laravel framework. The proj
 
 - **PHP**: ^8.2
 - **Composer**: Dependency management
-- **Node.js**: For frontend asset compilation (if applicable)
+- **jQuery & Bootstrap**: For frontend
 
 ## Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/pos-project.git
-   cd pos-project
+   git clone https://github.com/SuosSovanrith/POS_with_Laravel
+   cd POS_with_Laravel
+   ```
+2. Install dependencies:
+   ```bash
+   composer install
+   npm install
+   ```
+3. Set up the environment file:
+   ```bash
+   cp .env.example .env
+   ```
+4. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
+
+## Usage
+
+1. Start the development server:
+   ```bash
+   php artisan serve
+   ```
+2. Access the application in your browser at `http://localhost:8000`.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
