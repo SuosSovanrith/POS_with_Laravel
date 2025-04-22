@@ -47,7 +47,6 @@ This is a Point of Sale (POS) system built using the Laravel framework. The proj
    DB_PASSWORD='your_password'
    DB_COLLATION=utf8mb4_unicode_ci
    ```
-
 5. Run migrations:
    ```bash
    php artisan migrate
