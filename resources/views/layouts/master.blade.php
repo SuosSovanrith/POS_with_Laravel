@@ -151,10 +151,10 @@
                   </button>
                 </div>
                 <div class="header-search d-none d-md-flex">
-                  <form action="#">
+                  {{-- <form action="#">
                     <input type="text" placeholder="Search..." />
                     <button><i class="lni lni-search-alt"></i></button>
-                  </form>
+                  </form> --}}
                 </div>
               </div>
             </div>

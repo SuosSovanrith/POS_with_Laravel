@@ -59,7 +59,7 @@ class ShopController extends Controller
     
         $result = $result->paginate(24);
         
-        return view('ecommerce.shop', ['products'=>$result, 'category'=>$category, 'start_price'=>$rq->Start_Price, 'end_price'=>$rq->End_Price]);
+        return view('ecommerce.shop', ['products'=>$result, 'category'=>$category, 'filter_category'=>$rq->Filter_Category, 'start_price'=>$rq->Start_Price, 'end_price'=>$rq->End_Price]);
     }
 
 }

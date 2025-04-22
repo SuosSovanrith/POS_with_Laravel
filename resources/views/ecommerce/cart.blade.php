@@ -296,13 +296,11 @@
                     var amount = $('#swal-input1').val();
                     var discount = 0;
                     var payment_method = $('input[name="Payment"]:checked').val();
-                    var khqr = $('#swal-input2').val().split('\\').pop();;
 
                     $.post('/ecommerce/addorder', {
                         amount: amount,
                         discount: discount,
-                        payment_method: payment_method,
-                        khqr: khqr
+                        payment_method: payment_method
 
                     }, function(data) {
                         window.location.href = "/ecommerce/order";
